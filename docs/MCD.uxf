@@ -1,0 +1,99 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLClass</id><coordinates><x>412</x><y>192</y><w>168</w><h>128</h></coordinates><panel_attributes>Movie
+--
+id: Long
+imdb_id: String
+title: String
+year:int
+duration: Int
+description: String
+minimum_age: Int
+is_team_favorite: Boolean
+dateAdded: Date</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>772</x><y>136</y><w>128</w><h>64</h></coordinates><panel_attributes>Theater
+--
+id: Long
+city: String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>156</x><y>120</y><w>168</w><h>120</h></coordinates><panel_attributes>MovieSession
+--
+id: Long
+movie_id: Long
+room_id: Long
+startdate: Datetime
+enddate: Datetime
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>884</x><y>296</y><w>128</w><h>104</h></coordinates><panel_attributes>Issue
+--
+id: Long
+user_id: Long
+date: Datetime
+title: String
+description: String
+status: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>212</x><y>520</y><w>168</w><h>88</h></coordinates><panel_attributes>Ticket
+--
+id: Long
+moviesession_id: Long
+user_id: Long
+seat_id: Long
+price: Double
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>676</x><y>336</y><w>120</w><h>88</h></coordinates><panel_attributes>Review
+--
+id: Long
+user_id: Long
+movie_id: Long
+rating: Int
+comment: String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>572</x><y>288</y><w>120</w><h>96</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>130;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>284</x><y>232</y><w>40</w><h>304</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;360;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>692</x><y>496</y><w>168</w><h>104</h></coordinates><panel_attributes>User
+--
+id: Long
+firstname: String
+lastname: String
+nickname: String
+email: String
+role: Int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>692</x><y>632</y><w>168</w><h>48</h></coordinates><panel_attributes>Employee
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>764</x><y>592</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>692</x><y>712</y><w>168</w><h>48</h></coordinates><panel_attributes>Administrator
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>812</x><y>392</y><w>128</w><h>120</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>130;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>764</x><y>672</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>316</x><y>208</y><w>112</w><h>32</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>924</x><y>88</y><w>40</w><h>224</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;260;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>828</x><y>0</y><w>144</w><h>96</h></coordinates><panel_attributes>Room
+--
+id: Long
+number: String
+capacity: Int
+columns: Int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>844</x><y>88</y><w>40</w><h>64</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>252</x><y>72</y><w>592</w><h>64</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;60;10;10;720;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1028</x><y>8</y><w>112</w><h>64</h></coordinates><panel_attributes>Quality
+--
+id: Long
+name: String
+price: Double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>964</x><y>40</y><w>80</w><h>32</h></coordinates><panel_attributes>lt=-
+m1=1..1</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>12</x><y>16</y><w>120</w><h>72</h></coordinates><panel_attributes>Seat
+--
+id: Long
+number: String
+room_id: Long
+for_disabled: Boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>124</x><y>56</y><w>720</w><h>32</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;10;880;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>676</x><y>256</y><w>112</w><h>56</h></coordinates><panel_attributes>Genre
+--
+id: Long
+name: String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>572</x><y>272</y><w>120</w><h>32</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>130;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>212</x><y>656</y><w>168</w><h>88</h></coordinates><panel_attributes>OrderTickets
+--
+id: Long
+user_id: Long
+status: Int
+price: Double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>300</x><y>600</y><w>40</w><h>72</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>372</x><y>576</y><w>336</w><h>128</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;140;400;10</additional_attributes></element><element><id>Relation</id><coordinates><x>724</x><y>416</y><w>40</w><h>96</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1068</x><y>296</y><w>128</w><h>72</h></coordinates><panel_attributes>Equipement
+--
+id: Long
+issue_id: Long
+description: String
+status: int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1004</x><y>320</y><w>80</w><h>32</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>60</x><y>80</y><w>168</w><h>496</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;10;10;600;190;600</additional_attributes></element></diagram>
