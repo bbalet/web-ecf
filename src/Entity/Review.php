@@ -29,6 +29,9 @@ class Review
     #[ORM\JoinColumn(nullable: false)]
     private ?Movie $movie = null;
 
+    #[ORM\Column]
+    private ?bool $validated = null;
+
     public function __construct()
     {
 
@@ -83,6 +86,18 @@ class Review
     public function setMovie(?Movie $movie): static
     {
         $this->movie = $movie;
+
+        return $this;
+    }
+
+    public function isValidated(): ?bool
+    {
+        return $this->validated;
+    }
+
+    public function setValidated(bool $validated): static
+    {
+        $this->validated = $validated;
 
         return $this;
     }

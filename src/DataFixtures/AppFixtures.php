@@ -112,24 +112,24 @@ class AppFixtures extends Fixture
         }
 
         //Add the movies (source: https://gist.github.com/stungeye/a3af50385215b758637e73eaacac93a3)
-        $movies = [
+        $movies = array(
             'tt0111161' => ['The Shawshank Redemption', 1994, 142, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Godfather', 1972, 175, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Godfather: Part II', 1974, 202, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Dark Knight', 2008, 152, [$genres['Action'], $genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['12 Angry Men', 1957, 96, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Schindler\'s List', 1993, 195, [$genres['Biographie'], $genres['Drame'], $genres['Histoire']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Pulp Fiction', 1994, 154, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Lord of the Rings: The Return of the King', 2003, 201, [$genres['Action'], $genres['Aventure'], $genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Il buono, il brutto, il cattivo', 1966, 161, [$genres['Western']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Forrest Gump', 1994, 142, [$genres['Drame'], $genres['Romance']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Lord of the Rings: The Fellowship of the Ring', 2001, 178, [$genres['Action'], $genres['Aventure'], $genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Fight Club', 1999, 139, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Inception', 2010, 148, [$genres['Action'], $genres['Aventure'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Dag II', 2016, 135, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Dil Bechara', 2020, 101, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['One Flew Over the Cuckoo\'s Nest', 1975, 133, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Star Wars: Episode V - The Empire Strikes Back', 1980, 124, [$genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0068646' => ['The Godfather', 1972, 175, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0071562' => ['The Godfather: Part II', 1974, 202, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0468569' => ['The Dark Knight', 2008, 152, [$genres['Action'], $genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0050083' => ['12 Angry Men', 1957, 96, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0108052' => ['Schindler\'s List', 1993, 195, [$genres['Biographie'], $genres['Drame'], $genres['Histoire']], 'description', 13, false, new Movie()],
+            'tt0110912' => ['Pulp Fiction', 1994, 154, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0167260' => ['The Lord of the Rings: The Return of the King', 2003, 201, [$genres['Action'], $genres['Aventure'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0060196' => ['Il buono, il brutto, il cattivo', 1966, 161, [$genres['Western']], 'description', 13, false, new Movie()],
+            'tt0109830' => ['Forrest Gump', 1994, 142, [$genres['Drame'], $genres['Romance']], 'description', 13, false, new Movie()],
+            'tt0120737' => ['The Lord of the Rings: The Fellowship of the Ring', 2001, 178, [$genres['Action'], $genres['Aventure'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0137523' => ['Fight Club', 1999, 139, [$genres['Drame']], 'description', 13, false, new Movie()],
+            'tt1375666' => ['Inception', 2010, 148, [$genres['Action'], $genres['Aventure'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
+            'tt5813916' => ['Dag II', 2016, 135, [$genres['Action'], $genres['Drame'], $genres['Guerre']], 'description', 13, false, new Movie()],
+            'tt8110330' => ['Dil Bechara', 2020, 101, [$genres['Comédie'], $genres['Drame'], $genres['Romance']], 'description', 13, false, new Movie()],
+            'tt0073486' => ['One Flew Over the Cuckoo\'s Nest', 1975, 133, [$genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0080684' => ['Star Wars: Episode V - The Empire Strikes Back', 1980, 124, [$genres['Action'], $genres['Aventure'], $genres['Fantasy']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Goodfellas', 1990, 146, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['The Matrix', 1999, 136, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['The Lord of the Rings: The Two Towers', 2002, 179, [$genres['Drame']], 'description', 13, false, new Movie()],
@@ -208,13 +208,13 @@ class AppFixtures extends Fixture
             'tt0111161' => ['2001: A Space Odyssey', 1968, 149, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['A Clockwork Orange', 1971, 136, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['The Sting', 1973, 129, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Taxi Driver', 1976, 114, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Das Boot', 1981, 149, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Star Wars: Episode VI - Return of the Jedi', 1983, 131, [$genres['Action'], $genres['Aventure'], $genres['Fantasy']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Scarface', 1983, 170, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Amadeus', 1984, 160, [$genres['Biographie'], $genres['Drame'], $genres['Histoire']], 'description', 13, false, new Movie()],
-            
-        ];
+            'tt0075314' => ['Taxi Driver', 1976, 114, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0082096' => ['Das Boot', 1981, 149, [$genres['Guerre'], $genres['Thriller'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0086190' => ['Star Wars: Episode VI - Return of the Jedi', 1983, 131, [$genres['Action'], $genres['Aventure'], $genres['Fantasy']], 'description', 13, false, new Movie()],
+            'tt0086250' => ['Scarface', 1983, 170, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0086879' => ['Amadeus', 1984, 160, [$genres['Biographie'], $genres['Drame'], $genres['Histoire']], 'description', 13, false, new Movie()]
+        );
+
         foreach ($movies as $key => &$movie) {
             //the added movie must be added on any wednesday between last week and in two months in the future
             //due to the algorithm it can be two weeks ago but we don't care
@@ -235,8 +235,8 @@ class AppFixtures extends Fixture
             $objMovie->setDescription($movie[4]);
             $objMovie->setMinimumAge($movie[5]);
             $objMovie->setIsTeamFavorite($faker->boolean(20));
+            $manager->persist($objMovie);
             $movie[7] = $objMovie;
-            $manager->persist($movie[7]);
             //Visitors can review movies
             for ($i = 0; $i < 10; $i++) {
                 $review = new Review();
@@ -244,6 +244,7 @@ class AppFixtures extends Fixture
                 $review->setUser($visitors[array_rand($visitors)]);
                 $review->setRating($faker->numberBetween(1, 5));
                 $review->setComment($faker->text(200));
+                $review->setValidated($faker->boolean(80));
                 $manager->persist($review);
             }
         }
