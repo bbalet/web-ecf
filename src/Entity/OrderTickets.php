@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderRepository;
+use App\Repository\OrderTicketsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: OrderRepository::class)]
+#[ORM\Entity(repositoryClass: OrderTicketsRepository::class)]
 #[ORM\Table(name: '`ordertickets`')]
 class OrderTickets
 {

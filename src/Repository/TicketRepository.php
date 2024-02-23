@@ -21,28 +21,40 @@ class TicketRepository extends ServiceEntityRepository
         parent::__construct($registry, Ticket::class);
     }
 
-//    /**
-//     * @return Ticket[] Returns an array of Ticket objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Find all future sessions or of the current day for a given user
+     * 
+     * @param mixed $userId User Id
+     * @return array
+     */
+    public function findAllFutureSessionsOrOfTheDay($userId): array
+    {
+         $dateTime = new \DateTime();
+         return $this->createQueryBuilder('Ticket')
+            ->join('Ticket.ordertickets', 'OrderTickets')
+            ->join('Ticket.movieSession', 'MovieSession')
+            //->andWhere('MovieSession.id = Ticket.movieSession')
+            ->andWhere('OrderTickets.user = :userId')
+            ->andWhere('MovieSession.startdate >= :dateMin')
+            ->setParameter('dateMin', $dateTime->format('Y-m-d 00:00:00'))
+            ->setParameter('userId', $userId)
+            ->orderBy('MovieSession.startdate', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Ticket
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Find a ticket by its id and the user id
+     * 
+     * @param [type] $id Ticket Id (not obfuscated id)
+     * @return Ticket|null
+     */
+    public function findTicketById($id): ?Ticket
+    {
+        return $this->createQueryBuilder('Ticket')
+            ->andWhere('Ticket.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

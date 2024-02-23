@@ -26,11 +26,10 @@ user_id: Long
 date: Datetime
 title: String
 description: String
-status: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>212</x><y>520</y><w>168</w><h>88</h></coordinates><panel_attributes>Ticket
+status: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>212</x><y>520</y><w>168</w><h>80</h></coordinates><panel_attributes>Ticket
 --
 id: Long
 moviesession_id: Long
-user_id: Long
 seat_id: Long
 price: Double
 
@@ -85,8 +84,8 @@ m1=0..n</panel_attributes><additional_attributes>130;10;10;10</additional_attrib
 id: Long
 user_id: Long
 status: Int
-price: Double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>300</x><y>600</y><w>40</w><h>72</h></coordinates><panel_attributes>lt=-
-m1=0..n</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>372</x><y>576</y><w>336</w><h>128</h></coordinates><panel_attributes>lt=-
+price: Double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>300</x><y>592</y><w>40</w><h>80</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>372</x><y>576</y><w>336</w><h>128</h></coordinates><panel_attributes>lt=-
 m1=0..n</panel_attributes><additional_attributes>10;140;400;10</additional_attributes></element><element><id>Relation</id><coordinates><x>724</x><y>416</y><w>40</w><h>96</h></coordinates><panel_attributes>lt=-
 m1=0..n</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1068</x><y>296</y><w>128</w><h>72</h></coordinates><panel_attributes>Equipement
 --
@@ -95,5 +94,5 @@ issue_id: Long
 description: String
 status: int
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1004</x><y>320</y><w>80</w><h>32</h></coordinates><panel_attributes>lt=-
-m1=0..n</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>60</x><y>80</y><w>168</w><h>496</h></coordinates><panel_attributes>lt=-
-m1=0..n</panel_attributes><additional_attributes>10;10;10;600;190;600</additional_attributes></element></diagram>
+m1=0..n</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>60</x><y>80</y><w>168</w><h>640</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;10;10;780;190;780</additional_attributes></element></diagram>

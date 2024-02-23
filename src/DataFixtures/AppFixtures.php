@@ -130,20 +130,20 @@ class AppFixtures extends Fixture
             'tt8110330' => ['Dil Bechara', 2020, 101, [$genres['Comédie'], $genres['Drame'], $genres['Romance']], 'description', 13, false, new Movie()],
             'tt0073486' => ['One Flew Over the Cuckoo\'s Nest', 1975, 133, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0080684' => ['Star Wars: Episode V - The Empire Strikes Back', 1980, 124, [$genres['Action'], $genres['Aventure'], $genres['Fantasy']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Goodfellas', 1990, 146, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Matrix', 1999, 136, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Lord of the Rings: The Two Towers', 2002, 179, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['It\'s a Wonderful Life', 1946, 130, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Shichinin no samurai', 1954, 207, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Star Wars', 1977, 121, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Silence of the Lambs', 1991, 118, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Se7en', 1995, 127, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['La vita è bella', 1997, 116, [$genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0099685' => ['Goodfellas', 1990, 146, [$genres['Biographie'], $genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0133093' => ['The Matrix', 1999, 136, [$genres['Action'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
+            'tt0167261' => ['The Lord of the Rings: The Two Towers', 2002, 179, [$genres['Action'], $genres['Aventure'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0038650' => ['It\'s a Wonderful Life', 1946, 130, [$genres['Drame'], $genres['Famille'], $genres['Fantasy']], 'description', 13, false, new Movie()],
+            'tt0047478' => ['Shichinin no samurai', 1954, 207, [$genres['Action'], $genres['Aventure'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0076759' => ['Star Wars', 1977, 121, [$genres['Action'], $genres['Aventure'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0102926' => ['The Silence of the Lambs', 1991, 118, [$genres['Crime'], $genres['Drame'], $genres['Thriller']], 'The Silence of the Lambs" is a psychological horror film featuring an FBI trainee who enlists the help of imprisoned cannibalistic serial killer Dr. Hannibal Lecter to catch another serial killer, Buffalo Bill. The narrative weaves together themes of psychology, crime, and horror.', 16, false, new Movie()],
+            'tt0114369' => ['Se7en', 1995, 127, [$genres['Crime'], $genres['Drame'], $genres['Mystère']], 'description', 13, false, new Movie()],
+            'tt0118799' => ['La vita è bella', 1997, 116, [$genres['Comédie'], $genres['Drame'], $genres['Romance']], 'description', 13, false, new Movie()],
             'tt0111161' => ['The Green Mile', 1999, 189, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Saving Private Ryan', 1998, 169, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Sen to Chihiro no kamikakushi', 2001, 125, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Cidade de Deus', 2002, 130, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Interstellar', 2014, 169, [$genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0816692' => ['Interstellar', 2014, 169, [$genres['Aventure'], $genres['Drame'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Gisaengchung', 2019, 132, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['City Lights', 1931, 87, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Modern Times', 1936, 87, [$genres['Drame']], 'description', 13, false, new Movie()],
@@ -205,9 +205,9 @@ class AppFixtures extends Fixture
             'tt0111161' => ['The Apartment', 1960, 125, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Lawrence of Arabia', 1962, 228, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Per qualche dollaro in più', 1965, 132, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['2001: A Space Odyssey', 1968, 149, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['A Clockwork Orange', 1971, 136, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Sting', 1973, 129, [$genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0062622' => ['2001: A Space Odyssey', 1968, 149, [$genres['Aventure'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
+            'tt0066921' => ['A Clockwork Orange', 1971, 136, [$genres['Crime'], $genres['Drame'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
+            'tt0070735' => ['The Sting', 1973, 129, [$genres['Comédie'], $genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
             'tt0075314' => ['Taxi Driver', 1976, 114, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
             'tt0082096' => ['Das Boot', 1981, 149, [$genres['Guerre'], $genres['Thriller'], $genres['Drame']], 'description', 13, false, new Movie()],
             'tt0086190' => ['Star Wars: Episode VI - Return of the Jedi', 1983, 131, [$genres['Action'], $genres['Aventure'], $genres['Fantasy']], 'description', 13, false, new Movie()],
@@ -290,7 +290,7 @@ class AppFixtures extends Fixture
                     $key = array_rand($movies);
                     $session->setMovie($movies[$key][7]);
                     $startDate = $faker->dateTimeBetween('-1 week', '+2 months');
-                    $endDate = new $startDate;
+                    $endDate = clone $startDate;
                     $endDate->modify('+' . $movies[$key][7]->getDuration() . ' minutes');
                     $session->setStartDate($startDate);
                     $session->setEndDate($endDate);
