@@ -9,4 +9,3 @@ import './styles/app.css';
 import { Tooltip, Toast, Popover } from 'bootstrap';
 require('bootstrap-icons/font/bootstrap-icons.css');
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
