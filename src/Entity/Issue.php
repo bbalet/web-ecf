@@ -4,13 +4,17 @@ namespace App\Entity;
 
 use App\Repository\IssueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: IssueRepository::class)]
 class Issue
 {
+    // Class constants for the status of an issue
+    public const STATUS_NEW = 1;
+    public const STATUS_OPEN = 2;
+    public const STATUS_CLOSED = 3;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -33,16 +37,8 @@ class Issue
     #[ORM\JoinColumn(nullable: false)]
     private ?Room $room = null;
 
-    #[ORM\OneToMany(targetEntity: Equipment::class, mappedBy: 'issue', orphanRemoval: true)]
-    private Collection $equipments;
-
     #[ORM\Column]
     private ?int $status = null;
-
-    public function __construct()
-    {
-        $this->equipments = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -109,39 +105,23 @@ class Issue
         return $this;
     }
 
-    /**
-     * @return Collection<int, Equipment>
-     */
-    public function getEquipments(): Collection
-    {
-        return $this->equipments;
-    }
-
-    public function addEquipment(Equipment $equipment): static
-    {
-        if (!$this->equipments->contains($equipment)) {
-            $this->equipments->add($equipment);
-            $equipment->setIssue($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipment(Equipment $equipment): static
-    {
-        if ($this->equipments->removeElement($equipment)) {
-            // set the owning side to null (unless already changed)
-            if ($equipment->getIssue() === $this) {
-                $equipment->setIssue(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getStatus(): ?int
     {
         return $this->status;
+    }
+
+    public function getStatusAsString(): ?string
+    {
+        switch ($this->status) {
+            case Issue::STATUS_NEW:
+                return 'Nouveau';
+            case Issue::STATUS_OPEN:
+                return 'Ouvert';
+            case Issue::STATUS_CLOSED:
+                return 'Terminé';
+            default:
+                return 'Inconnu';
+        }
     }
 
     public function setStatus(int $status): static

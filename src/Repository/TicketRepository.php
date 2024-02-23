@@ -33,7 +33,6 @@ class TicketRepository extends ServiceEntityRepository
          return $this->createQueryBuilder('Ticket')
             ->join('Ticket.ordertickets', 'OrderTickets')
             ->join('Ticket.movieSession', 'MovieSession')
-            //->andWhere('MovieSession.id = Ticket.movieSession')
             ->andWhere('OrderTickets.user = :userId')
             ->andWhere('MovieSession.startdate >= :dateMin')
             ->setParameter('dateMin', $dateTime->format('Y-m-d 00:00:00'))

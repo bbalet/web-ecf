@@ -87,12 +87,5 @@ status: Int
 price: Double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>300</x><y>592</y><w>40</w><h>80</h></coordinates><panel_attributes>lt=-
 m1=0..n</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>372</x><y>576</y><w>336</w><h>128</h></coordinates><panel_attributes>lt=-
 m1=0..n</panel_attributes><additional_attributes>10;140;400;10</additional_attributes></element><element><id>Relation</id><coordinates><x>724</x><y>416</y><w>40</w><h>96</h></coordinates><panel_attributes>lt=-
-m1=0..n</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1068</x><y>296</y><w>128</w><h>72</h></coordinates><panel_attributes>Equipement
---
-id: Long
-issue_id: Long
-description: String
-status: int
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1004</x><y>320</y><w>80</w><h>32</h></coordinates><panel_attributes>lt=-
-m1=0..n</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>60</x><y>80</y><w>168</w><h>640</h></coordinates><panel_attributes>lt=-
+m1=0..n</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>60</x><y>80</y><w>168</w><h>640</h></coordinates><panel_attributes>lt=-
 m1=0..n</panel_attributes><additional_attributes>10;10;10;780;190;780</additional_attributes></element></diagram>

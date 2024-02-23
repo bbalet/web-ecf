@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240222202131 extends AbstractMigration
+final class Version20240223103347 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,6 @@ final class Version20240222202131 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE equipment (id INT AUTO_INCREMENT NOT NULL, issue_id INT NOT NULL, description LONGTEXT NOT NULL, status INT NOT NULL, INDEX IDX_D338D5835E7AA58C (issue_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE genre (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE issue (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, room_id INT NOT NULL, date DATETIME NOT NULL, title VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, status INT NOT NULL, INDEX IDX_12AD233EA76ED395 (user_id), INDEX IDX_12AD233E54177093 (room_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE movie (id INT AUTO_INCREMENT NOT NULL, imdb_id VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, year INT NOT NULL, duration INT NOT NULL, description LONGTEXT NOT NULL, minimum_age INT NOT NULL, is_team_favorite TINYINT(1) NOT NULL, date_added DATE NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -35,7 +34,6 @@ final class Version20240222202131 extends AbstractMigration
         $this->addSql('CREATE TABLE ticket (id INT AUTO_INCREMENT NOT NULL, movie_session_id INT NOT NULL, ordertickets_id INT NOT NULL, seat_id INT NOT NULL, price DOUBLE PRECISION NOT NULL, INDEX IDX_97A0ADA388CF9CE3 (movie_session_id), INDEX IDX_97A0ADA37EC7D47F (ordertickets_id), UNIQUE INDEX UNIQ_97A0ADA3C1DAFE35 (seat_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE messenger_messages (id BIGINT AUTO_INCREMENT NOT NULL, body LONGTEXT NOT NULL, headers LONGTEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', available_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', delivered_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_75EA56E0FB7336F0 (queue_name), INDEX IDX_75EA56E0E3BD61CE (available_at), INDEX IDX_75EA56E016BA31DB (delivered_at), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE equipment ADD CONSTRAINT FK_D338D5835E7AA58C FOREIGN KEY (issue_id) REFERENCES issue (id)');
         $this->addSql('ALTER TABLE issue ADD CONSTRAINT FK_12AD233EA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE issue ADD CONSTRAINT FK_12AD233E54177093 FOREIGN KEY (room_id) REFERENCES room (id)');
         $this->addSql('ALTER TABLE movie_genre ADD CONSTRAINT FK_FD1229648F93B6FC FOREIGN KEY (movie_id) REFERENCES movie (id) ON DELETE CASCADE');
@@ -56,7 +54,6 @@ final class Version20240222202131 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE equipment DROP FOREIGN KEY FK_D338D5835E7AA58C');
         $this->addSql('ALTER TABLE issue DROP FOREIGN KEY FK_12AD233EA76ED395');
         $this->addSql('ALTER TABLE issue DROP FOREIGN KEY FK_12AD233E54177093');
         $this->addSql('ALTER TABLE movie_genre DROP FOREIGN KEY FK_FD1229648F93B6FC');
@@ -72,7 +69,6 @@ final class Version20240222202131 extends AbstractMigration
         $this->addSql('ALTER TABLE ticket DROP FOREIGN KEY FK_97A0ADA388CF9CE3');
         $this->addSql('ALTER TABLE ticket DROP FOREIGN KEY FK_97A0ADA37EC7D47F');
         $this->addSql('ALTER TABLE ticket DROP FOREIGN KEY FK_97A0ADA3C1DAFE35');
-        $this->addSql('DROP TABLE equipment');
         $this->addSql('DROP TABLE genre');
         $this->addSql('DROP TABLE issue');
         $this->addSql('DROP TABLE movie');

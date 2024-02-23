@@ -38,7 +38,7 @@ class TicketStateProvider implements ProviderInterface
             throw new AuthenticationException('Not authenticated or invalid token.');
         }
         if ($operation instanceof CollectionOperationInterface) {
-            return $this->getListOfTickets($context, $user->getId());
+            return $this->getListOfTickets($user->getId());
         }
         return $this->getOneTicket($uriVariables['id']);
     }
@@ -47,11 +47,10 @@ class TicketStateProvider implements ProviderInterface
      * Return the list of tickets for a given user id
      * that are linked to all future sessions or of the current day
      *
-     * @param [type] $context
      * @param integer $userId
      * @return array
      */
-    private function getListOfTickets($context, int $userId): array
+    private function getListOfTickets(int $userId): array
     {
         $tickets = [];
         $dbTickets = $this->ticketRepository->findAllFutureSessionsOrOfTheDay($userId);

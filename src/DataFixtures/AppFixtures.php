@@ -82,29 +82,28 @@ class AppFixtures extends Fixture
         //Add the movie genres
         $genres = [
             'Action' => new Genre(),
+            'Animation' => new Genre(),
             'Aventure' => new Genre(),
             'Biographie' => new Genre(),
             'Comédie' => new Genre(),
             'Crime' => new Genre(),
+            'Documentaire' => new Genre(),
             'Drame' => new Genre(),
             'Fantasy' => new Genre(),
+            'Film noir' => new Genre(),
             'Horreur' => new Genre(),
-            'Mystère' => new Genre(),
-            'Romance' => new Genre(),
-            'Science-fiction' => new Genre(),
-            'Thriller' => new Genre(),
-            'Crime' => new Genre(),
-            'Documentaire' => new Genre(),
             'Famille' => new Genre(),
             'Guerre' => new Genre(),
             'Histoire' => new Genre(),
             'Musical' => new Genre(),
+            'Musique' => new Genre(),
+            'Mystère' => new Genre(),
             'Biographie' => new Genre(),
+            'Romance' => new Genre(),
+            'Science-fiction' => new Genre(),
             'Sport' => new Genre(),
-            'Western' => new Genre(),
-            'Animation' => new Genre(),
-            'Film noir' => new Genre(),
-            'Musique' => new Genre()
+            'Thriller' => new Genre(),
+            'Western' => new Genre()
         ];
         foreach ($genres as $key => &$genre) {
             $genre->setName($key);
@@ -139,30 +138,30 @@ class AppFixtures extends Fixture
             'tt0102926' => ['The Silence of the Lambs', 1991, 118, [$genres['Crime'], $genres['Drame'], $genres['Thriller']], 'The Silence of the Lambs" is a psychological horror film featuring an FBI trainee who enlists the help of imprisoned cannibalistic serial killer Dr. Hannibal Lecter to catch another serial killer, Buffalo Bill. The narrative weaves together themes of psychology, crime, and horror.', 16, false, new Movie()],
             'tt0114369' => ['Se7en', 1995, 127, [$genres['Crime'], $genres['Drame'], $genres['Mystère']], 'description', 13, false, new Movie()],
             'tt0118799' => ['La vita è bella', 1997, 116, [$genres['Comédie'], $genres['Drame'], $genres['Romance']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Green Mile', 1999, 189, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Saving Private Ryan', 1998, 169, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Sen to Chihiro no kamikakushi', 2001, 125, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Cidade de Deus', 2002, 130, [$genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0120689' => ['The Green Mile', 1999, 189, [$genres['Crime'], $genres['Drame'], $genres['Fantasy']], 'description', 13, false, new Movie()],
+            'tt0120815' => ['Saving Private Ryan', 1998, 169, [$genres['Drame'], $genres['Guerre']], 'description', 13, false, new Movie()],
+            'tt0245429' => ['Sen to Chihiro no kamikakushi', 2001, 125, [$genres['Animation'], $genres['Aventure'], $genres['Famille']], 'description', 13, false, new Movie()],
+            'tt0317248' => ['Cidade de Deus', 2002, 130, [$genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
             'tt0816692' => ['Interstellar', 2014, 169, [$genres['Aventure'], $genres['Drame'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Gisaengchung', 2019, 132, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['City Lights', 1931, 87, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Modern Times', 1936, 87, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Casablanca', 1942, 102, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Psycho', 1960, 109, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['C\'era una volta il West', 1968, 165, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Back to the Future', 1985, 116, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Hotaru no haka', 1988, 89, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Nuovo Cinema Paradiso', 1988, 155, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Terminator 2: Judgment Day', 1991, 137, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Lion King', 1994, 88, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Léon', 1994, 110, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Usual Suspects', 1995, 106, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['American History X', 1998, 119, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Gladiator', 2000, 155, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Pianist', 2002, 150, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Departed', 2006, 151, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['The Prestige', 2006, 130, [$genres['Drame']], 'description', 13, false, new Movie()],
-            'tt0111161' => ['Intouchables', 2011, 112, [$genres['Biographie'], $genres['Comédie'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt6751668' => ['Gisaengchung', 2019, 132, [$genres['Comédie'], $genres['Drame'], $genres['Thriller']], 'description', 13, false, new Movie()],
+            'tt0021749' => ['City Lights', 1931, 87, [$genres['Comédie'], $genres['Drame'], $genres['Romance']], 'description', 13, false, new Movie()],
+            'tt0027977' => ['Modern Times', 1936, 87, [$genres['Comédie'], $genres['Drame'], $genres['Famille']], 'description', 13, false, new Movie()],
+            'tt0034583' => ['Casablanca', 1942, 102, [$genres['Drame'], $genres['Romance'], $genres['Guerre']], 'description', 13, false, new Movie()],
+            'tt0054215' => ['Psycho', 1960, 109, [$genres['Horreur'], $genres['Mystère'], $genres['Thriller']], 'description', 13, false, new Movie()],
+            'tt0064116' => ['C\'era una volta il West', 1968, 165, [$genres['Western']], 'description', 13, false, new Movie()],
+            'tt0088763' => ['Back to the Future', 1985, 116, [$genres['Aventure'], $genres['Comédie'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
+            'tt0095327' => ['Hotaru no haka', 1988, 89, [$genres['Animation'], $genres['Drame'], $genres['Guerre']], 'description', 13, false, new Movie()],
+            'tt0095765' => ['Nuovo Cinema Paradiso', 1988, 155, [$genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0103064' => ['Terminator 2: Judgment Day', 1991, 137, [$genres['Action'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
+            'tt0110357' => ['The Lion King', 1994, 88, [$genres['Animation'], $genres['Aventure'],  $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0110413' => ['Léon', 1994, 110, [$genres['Action'], $genres['Crime'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0114814' => ['The Usual Suspects', 1995, 106, [$genres['Crime'], $genres['Mystère'], $genres['Thriller']], 'description', 13, false, new Movie()],
+            'tt0120586' => ['American History X', 1998, 119, [$genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0172495' => ['Gladiator', 2000, 155, [$genres['Action'], $genres['Aventure'], $genres['Drame']], 'description', 13, false, new Movie()],
+            'tt0253474' => ['The Pianist', 2002, 150, [$genres['Biographie'], $genres['Drame'], $genres['Musique']], 'description', 13, false, new Movie()],
+            'tt0407887' => ['The Departed', 2006, 151, [$genres['Crime'], $genres['Drame'], $genres['Thriller']], 'description', 13, false, new Movie()],
+            'tt0482571' => ['The Prestige', 2006, 130, [$genres['Drame'], $genres['Mystère'], $genres['Science-fiction']], 'description', 13, false, new Movie()],
+            'tt1675434' => ['Intouchables', 2011, 112, [$genres['Biographie'], $genres['Comédie'], $genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Whiplash', 2014, 106, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['Joker', 2019, 122, [$genres['Drame']], 'description', 13, false, new Movie()],
             'tt0111161' => ['The Great Dictator', 1940, 125, [$genres['Drame']], 'description', 13, false, new Movie()],
@@ -315,8 +314,9 @@ class AppFixtures extends Fixture
                     }
                 }
 
-                //Create equipments and issues
-                for ($k = 0; $k < 5; $k++) {
+                //Create issues on equipment(s) of a room
+                $nbIssues = $faker->numberBetween(1, 20);
+                for ($k = 0; $k < $nbIssues; $k++) {
                     $issue = new Issue();
                     $issue->setUser($employee);
                     $issue->setRoom($room);
@@ -325,13 +325,6 @@ class AppFixtures extends Fixture
                     $issue->setStatus($faker->numberBetween(1, 4));
                     $issue->setDate($faker->dateTimeBetween('-3 month', 'now'));
                     $manager->persist($issue);
-                    for ($l = 0; $l < 5; $l++) {
-                        $equipment = new Equipment();
-                        $equipment->setDescription($faker->text(200));
-                        $equipment->setStatus($faker->numberBetween(1, 2));
-                        $equipment->setIssue($issue);
-                        $manager->persist($equipment);    
-                    }
                 }
             }
             $manager->persist($theater);
