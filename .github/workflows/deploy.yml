@@ -57,8 +57,8 @@ jobs:
           envkey_APP_SECRET: ${{ secrets.APP_SECRET }}
           envkey_MESSENGER_TRANSPORT_DSN: doctrine://default?auto_setup=0
           envkey_CORS_ALLOW_ORIGIN: '^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
-          envkey_JWT_SECRET_KEY: %kernel.project_dir%/config/jwt/private.pem
-          envkey_JWT_PUBLIC_KEY: %kernel.project_dir%/config/jwt/public.pem
+          envkey_JWT_SECRET_KEY: '%kernel.project_dir%/config/jwt/private.pem'
+          envkey_JWT_PUBLIC_KEY: '%kernel.project_dir%/config/jwt/public.pem'
           envkey_JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
           envkey_MESSENGER_TRANSPORT_DSN: doctrine://default?auto_setup=0
           file_name: .env
