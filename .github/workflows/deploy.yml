@@ -60,6 +60,7 @@ jobs:
           envkey_JWT_SECRET_KEY: '%kernel.project_dir%/config/jwt/private.pem'
           envkey_JWT_PUBLIC_KEY: '%kernel.project_dir%/config/jwt/public.pem'
           envkey_JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
+          enkey_MAILER_DSN: 'smtp://127.0.0.1:1025'
           file_name: .env
 
       #Setup SSH
