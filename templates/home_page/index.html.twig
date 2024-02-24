@@ -11,5 +11,27 @@
             <h1 class="">Bienvenue sur le site de Cinéphoria</h1>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 class="">Les films ajoutés récemment</h2>
+                <div id="carouselNewMovies" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for movie in movies %}
+                    <div class="carousel-item {{ (loop.first) ? 'active' : '' }}">
+                    <img src="{{ asset("posters/#{movie.imdbId}.jpg") }}" class="img-fluid" alt="{{ movie.title }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselNewMovies" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Précédent</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselNewMovies" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Suivant</span>
+                </button>
+                </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
