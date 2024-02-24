@@ -21,21 +21,21 @@ class MovieRepository extends ServiceEntityRepository
         parent::__construct($registry, Movie::class);
     }
 
-    //    /**
-    //     * @return Movie[] Returns an array of Movie objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('m.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
+    /**
+    * Return the list of movies that were added wednesday last week
+    * @return MovieSession[] Returns an array of MovieSession objects
+    */
+    public function findMoviesAddedLastWednesday(): array
+    {
+        $lastWednesday = new \DateTime('wednesday last week');
+        return $this->createQueryBuilder('Movie')
+            ->andWhere('Movie.dateAdded BETWEEN :dateMin AND :dateMax')
+            ->setParameter('dateMin', $lastWednesday->format('Y-m-d 00:00:00'))
+            ->setParameter('dateMax', $lastWednesday->format('Y-m-d 23:59:59'))
+            ->orderBy('Movie.title', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
     public function getAverageScore($id): ?int
     {
