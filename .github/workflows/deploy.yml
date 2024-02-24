@@ -60,7 +60,6 @@ jobs:
           envkey_JWT_SECRET_KEY: '%kernel.project_dir%/config/jwt/private.pem'
           envkey_JWT_PUBLIC_KEY: '%kernel.project_dir%/config/jwt/public.pem'
           envkey_JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
-          envkey_MESSENGER_TRANSPORT_DSN: doctrine://default?auto_setup=0
           file_name: .env
 
       #Setup SSH
