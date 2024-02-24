@@ -15,7 +15,13 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="d-flex flex-column vh-100">
+        {% include 'menu.html.twig' %}
+
+        <main class="flex-shrink-0">
+            {% block body %}{% endblock %}
+        </main>
+
+        {% include 'footer.html.twig' %}
     </body>
 </html>
