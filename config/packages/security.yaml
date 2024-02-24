@@ -21,6 +21,15 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            entry_point: 'form_login'
+
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
+
+            logout:
+                path: app_logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -42,7 +51,7 @@ security:
         - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/intranet, roles: ROLE_EMPLOYEE }
-        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/userspace, roles: ROLE_USER }
         - { path: ^/docs, roles: PUBLIC_ACCESS }
         - { path: ^/auth, roles: PUBLIC_ACCESS }
 
