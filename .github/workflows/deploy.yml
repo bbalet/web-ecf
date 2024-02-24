@@ -51,12 +51,16 @@ jobs:
       - name: Make production envfile
         uses: SpicyPizza/create-envfile@v2
         with:
-          envkey_DATABASE_URL: mysql://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_SERVER }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}
+          envkey_DATABASE_URL: mysql://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_SERVER }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}?serverVersion=8.0.32&charset=utf8mb4
           envkey_APP_ENV: prod
           envkey_APP_DEBUG: false
           envkey_APP_SECRET: ${{ secrets.APP_SECRET }}
           envkey_MESSENGER_TRANSPORT_DSN: doctrine://default?auto_setup=0
           envkey_CORS_ALLOW_ORIGIN: '^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+          envkey_JWT_SECRET_KEY: %kernel.project_dir%/config/jwt/private.pem
+          envkey_JWT_PUBLIC_KEY: %kernel.project_dir%/config/jwt/public.pem
+          envkey_JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
+          envkey_MESSENGER_TRANSPORT_DSN: doctrine://default?auto_setup=0
           file_name: .env
 
       #Setup SSH
