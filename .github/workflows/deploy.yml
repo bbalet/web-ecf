@@ -88,5 +88,5 @@ jobs:
             php bin/console secrets:generate-keys
             php bin/console doctrine:schema:drop --full-database --force
             php bin/console doctrine:migrations:migrate --no-interaction
-            php bin/console doctrine:fixtures:load --no-interaction
+            php bin/console doctrine:fixtures:load --env=dev --no-interaction
             composer install --no-progress --prefer-dist --optimize-autoloader

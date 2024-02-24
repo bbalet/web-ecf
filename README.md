@@ -1,4 +1,4 @@
-[![GitHub CI](https://github.com/bbalet/web-ecf/web/actions/workflows/symfony.yml/badge.svg)]
+[![GitHub CI](https://github.com/bbalet/web-ecf/actions/workflows/symfony.yml/badge.svg)]
 [![codecov](https://codecov.io/gh/bbalet/web-ecf/graph/badge.svg?token=JARJRZD07D)](https://codecov.io/gh/bbalet/web-ecf)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d319208984315580dace/maintainability)](https://codeclimate.com/github/bbalet/web-ecf/maintainability)
 
