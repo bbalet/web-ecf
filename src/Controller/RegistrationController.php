@@ -37,7 +37,7 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
             $email = (new TemplatedEmail())
             ->from('do-not-reply@cinephoria.cloud')
-            ->to('you@example.com')
+            ->to($user->getEmail())
             ->subject('Bienvenue sur Cinéphoria')
             ->text('Confirmation de création de compte sur Cinéphoria.')
             ->htmlTemplate('registration/confirmation_email.html.twig')

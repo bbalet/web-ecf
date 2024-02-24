@@ -26,15 +26,15 @@
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" id="cmdMyProfile" href="#">Mon espace</a>
+            <a class="nav-link" id="cmdMyProfile" href="{{ path('app_userspace') }}">Mon espace</a>
           </li>        
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link" id="cmdLogout" href="#}">Se déconnecter</a>
+            <a class="nav-link" id="cmdLogout" href="{{ path('app_logout') }}">Se déconnecter</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" id="cmdLogin" href="#">Se connecter</a>
+            <a class="nav-link" id="cmdLogin" href="{{ path('app_login') }}">Se connecter</a>
           </li>
           {% endif %}
         </ul>
