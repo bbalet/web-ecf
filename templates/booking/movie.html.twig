@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation Cinéphoria{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="">Réserver une scéance</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>Cinéma sélectionné : {{ theater.city }} <a href="{{ path('app_booking') }}"><i class="bi bi-x-circle-fill"></i></a></p>
+            <p>Film sélectionné : {{ movie.title }} <a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}"><i class="bi bi-x-circle-fill"></i></a></p>
+            <h2 class="">Choisissez votre scéance</h2>
+            <ul>
+                {% for session in sessions %}
+                    {% if session.seats_left > 0 %}
+                        <li><a href="{{ path('app_booking_seats', {movieSessionId: session.movie_session_id}) }}">
+                            {{ session.startdate }}</a> &mdash; {{ session.enddate }}, il reste {{ session.seats_left }} place(s) disponible(s) à {{ session.price }}€ (qualité {{ session.name }}).
+                        </li>
+                    {% else %}
+                        <li>{{ session.startdate }} &mdash; {{ session.enddate }}, complet.</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

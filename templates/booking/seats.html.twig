@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation Cinéphoria{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="">Réserver une scéance</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>Cinéma sélectionné : {{ theater.city }} <a href="{{ path('app_booking') }}"><i class="bi bi-x-circle-fill"></i></a></p>
+            <p>Film sélectionné : {{ movie.title }} <a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}"><i class="bi bi-x-circle-fill"></i></a></p>
+            <p>
+                Session : {{ sessionDetails.startdate }}</a> &mdash; {{ sessionDetails.enddate }}, il reste {{ sessionDetails.seats_left }} place(s) disponible(s) à {{ sessionDetails.price }}€ (qualité {{ sessionDetails.name }}).
+                 <a href="{{ path('app_booking_theater_movie', {theaterId: theater.id, movieId: movie.id }) }}"><i class="bi bi-x-circle-fill"></i></a>
+            </p>
+            <h2 class="">Choisissez vos sièges</h2>
+            {% set seatsByRow = (sessionDetails.columns * sessionDetails.columns) - 1 %}
+            {% set rows = (sessionDetails.capacity / seatsByRow) - 1 %}
+            {% set indexSeat = 0 %}
+            <table>
+                {% for i in 1..rows %}
+                    <tr>
+                        {% for j in 1..sessionDetails.columns %}
+                            {% for j in 1..sessionDetails.columns %}
+                                <td>
+                                    <span>
+                                        {% if seats[indexSeat].ticket_id is null %}
+                                            {% if seats[indexSeat].for_disabled %}
+                                                <img src="{{ asset('icons/wheelchair.png') }}" />
+                                            {% else %}
+                                                <a href="{{ path('app_booking_booking', {movieSessionId: session.id, seats: seats[indexSeat].id}) }}">
+                                                <img src="{{ asset('icons/seat_free.png') }}" />
+                                                </a>
+                                            {% endif %}
+                                        {% else %}
+                                                <img src="{{ asset('icons/seat_booked.png') }}" />
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                {% set indexSeat = indexSeat + 1 %}
+                            {% endfor %}
+                                {% if not loop.last %}
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

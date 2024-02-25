@@ -19,6 +19,6 @@ class UserSpaceController extends AbstractController
         // User needs to be authenticated to access the personal page
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        return $this->render('user_space/index.html.twig');
+        return $this->render('userspace/index.html.twig');
     }
 }

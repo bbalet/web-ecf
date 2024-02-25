@@ -17,7 +17,7 @@ jobs:
           php-version: '8.3'
           coverage: none
           tools: composer:v2
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo, gmp
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo, gmp, mongodb
 
       - name: Get composer cache directory
         id: composer-cache
@@ -61,6 +61,9 @@ jobs:
           envkey_JWT_PUBLIC_KEY: '%kernel.project_dir%/config/jwt/public.pem'
           envkey_JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
           envkey_MAILER_DSN: 'smtp://127.0.0.1:1025'
+          envkey_MONGODB_DSN: ${{ secrets.MONGODB_DSN }}
+          envkey_MONGODB_DB: ${{ secrets.MONGODB_DB }}
+          envkey_MONGODB_COLLECTION: ${{ secrets.MONGODB_COLLECTION }}
           file_name: .env
 
       #Setup SSH

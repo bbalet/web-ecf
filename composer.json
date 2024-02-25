@@ -15,6 +15,7 @@
         "doctrine/orm": "^3.0",
         "fakerphp/faker": "^1.23",
         "lexik/jwt-authentication-bundle": "^2.20",
+        "mongodb/mongodb": "^1.17",
         "nelmio/cors-bundle": "^2.4",
         "nesbot/carbon": "^3.0",
         "phpdocumentor/reflection-docblock": "^5.3",
