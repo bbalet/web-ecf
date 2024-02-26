@@ -6,12 +6,15 @@ use App\Repository\TheaterRepository;
 use App\Repository\MovieRepository;
 use App\Repository\MovieSessionRepository;
 use App\Repository\SeatRepository;
+use App\Entity\OrderTickets;
+use App\Entity\Ticket;
 use Exception;
 use MongoDB\Client;
 use MongoDB\Driver\ServerApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 class BookingController extends AbstractController
 {
@@ -23,9 +26,6 @@ class BookingController extends AbstractController
     #[Route('/booking', name: 'app_booking')]
     public function index(TheaterRepository $theaterRepository): Response
     {
-        // User needs to be authenticated to access the personal page
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         // Get all theaters
         $theaters = $theaterRepository->findAllOrderByCity();
         return $this->render('booking/index.html.twig', [
@@ -41,8 +41,6 @@ class BookingController extends AbstractController
     #[Route('/booking/theaters/{theaterId}', name: 'app_booking_theater')]
     public function theater(int $theaterId, TheaterRepository $theaterRepository, MovieSessionRepository $movieSessionRepository): Response
     {
-        // User needs to be authenticated to access the personal page
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // Get the theater
         $theater = $theaterRepository->findOneById($theaterId);
         // Get all movies
@@ -64,8 +62,6 @@ class BookingController extends AbstractController
     public function movie(int $theaterId, int $movieId, TheaterRepository $theaterRepository,
         MovieSessionRepository $movieSessionRepository, MovieRepository $movieRepository): Response
     {
-        // User needs to be authenticated to access the personal page
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // Get the theater
         $theater = $theaterRepository->findOneById($theaterId);
         // Get the movies
@@ -93,8 +89,12 @@ class BookingController extends AbstractController
         // User needs to be authenticated to access the personal page
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // Get the movie session
-        $sessionDetails = $movieSessionRepository->getSessionDetails($movieSessionId)[0];
         $session = $movieSessionRepository->findOneById($movieSessionId);
+        if (is_null($session)) {
+            throw $this->createNotFoundException('Scéance non trouvée');
+        }
+        $sessionDetails = $movieSessionRepository->getSessionDetails($movieSessionId)[0];
+
         // Get the theater
         $theater = $theaterRepository->findOneById($session->getRoom()->getTheater()->getId());
         // Get the movies
@@ -116,15 +116,31 @@ class BookingController extends AbstractController
      * @return Response
      */
     #[Route('/booking/moviesessions/{movieSessionId}/seats/{seats}', name: 'app_booking_booking')]
-    public function booking(int $movieSessionId, string $seats, MovieSessionRepository $movieSessionRepository): Response
+    public function booking(int $movieSessionId, string $seats, MovieSessionRepository $movieSessionRepository,
+        SeatRepository $seatRepository, EntityManagerInterface $entityManager): Response
     {
         // User needs to be authenticated to access the personal page
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
         $seatIds = explode(",", $seats);
         $session = $movieSessionRepository->findOneById($movieSessionId);
 
         // Book the seats => Order and one ticket per seat
-
+        $orderTicketsticket = new OrderTickets();
+        $orderTicketsticket->setUser($user);
+        $orderTicketsticket->setPurchaseDate(new \DateTime());
+        $orderTicketsticket->setStatus(OrderTickets::STATUS_PAID);
+        $entityManager->persist($orderTicketsticket);
+        foreach ($seatIds as $seatId) {
+            $seat = $seatRepository->findOneById($seatId);
+            $ticket = new Ticket();
+            $ticket->setMovieSession($session);
+            $ticket->setSeat($seat);
+            $ticket->setPrice($session->getRoom()->getQuality()->getPrice());
+            $ticket->setOrderTickets($orderTicketsticket);
+            $entityManager->persist($ticket);
+        }
+        $entityManager->flush();
 
         // Create a new MongoDB client and store the booking for later analysis
         $date = new \MongoDB\BSON\UTCDateTime();
@@ -138,7 +154,7 @@ class BookingController extends AbstractController
             'timestamp' => $date
         ]);
 
-        // TODO : redirect
-        return $this->redirectToRoute('app_booking');
+        // TODO : encourage user to register before processing
+        return $this->redirectToRoute('app_userspace');
     }
 }

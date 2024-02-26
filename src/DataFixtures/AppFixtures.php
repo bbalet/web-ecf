@@ -27,9 +27,8 @@ class AppFixtures extends Fixture
         $visitors = [];  // used later for creating movie reviews
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
-            $account = 'visitor' . $i . '@example.org';
-            $user->setEmail($account);
-            $password = $this->hasher->hashPassword($user, $account);
+            $user->setEmail('visitor' . $i . '@example.org');
+            $password = $this->hasher->hashPassword($user, 'visitor' . $i);
             $user->setPassword($password);
             $user->setLastname($faker->lastName());
             $user->setFirstname($faker->firstName());
@@ -248,26 +247,28 @@ class AppFixtures extends Fixture
             }
         }
 
-        //Add the theaters
+        //Add the theaters (and their lat,long)
         $theaters = [
-            'Nantes' => new Theater(),
-            'Bordeaux' => new Theater(),
-            'Paris' => new Theater(),
-            'Toulouse' => new Theater(),
-            'Lille' => new Theater(),
-            'Charleroi' => new Theater(),
-            'Liège' => new Theater()
+            'Nantes' => [new Theater(), 47.218371, -1.553621],
+            'Bordeaux' => [new Theater(), 44.833328, -0.566667],
+            'Paris' => [new Theater(), 48.856613, 2.352222],
+            'Toulouse' => [new Theater(), 43.600000, 1.433333],
+            'Lille' => [new Theater(), 50.633333, 3.066667],
+            'Charleroi' => [new Theater(), 50.416667, 4.433333],
+            'Liège' => [new Theater(), 50.633333, 5.566667],
         ];
         $orders = [];   //used later for creating QR codes
         foreach ($theaters as $key => &$theater) {
-            $theater->setCity($key);
+            $theater[0]->setCity($key);
+            $theater[0]->setLatitude($theater[1]);
+            $theater[0]->setLongitude($theater[2]);
             $seats = [];
             for ($i = 1; $i <= 5; $i++) {
                 $room = new Room();
                 $room->setNumber('Salle ' . $i);
                 $room->setCapacity(99);
                 $room->setColumns(3);
-                $room->setTheater($theater);
+                $room->setTheater($theater[0]);
                 $quality = $qualities[array_rand($qualities)];
                 $room->setQuality($quality);
                 for ($j = 1; $j <= 99; $j++) {
@@ -299,7 +300,11 @@ class AppFixtures extends Fixture
                         $nbTickets = $faker->numberBetween(1, 5);
                         $order->setUser($visitors[array_rand($visitors)]);
                         $order->setStatus($faker->numberBetween(1, 2));
-                        $order->setPrice($session->getRoom()->getQuality()->getPrice() * $nbTickets);
+                        //Set the purchase date to a date between six days and one day before start date of the session
+                        $purchaseDate = clone $startDate;
+                        $order->setPurchaseDate(
+                            $faker->dateTimeBetween($purchaseDate->modify('-6 days')->format('Y-m-d H:i:s'), 
+                            $purchaseDate->modify('+7 days')->format('Y-m-d H:i:s')));
                         $manager->persist($order);
                         array_push($orders, $order);
                         for ($m = 0; $m < $nbTickets; $m++) {
@@ -327,7 +332,7 @@ class AppFixtures extends Fixture
                     $manager->persist($issue);
                 }
             }
-            $manager->persist($theater);
+            $manager->persist($theater[0]);
         }
         $manager->flush();
     }

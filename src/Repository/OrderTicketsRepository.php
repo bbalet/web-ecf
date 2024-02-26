@@ -20,4 +20,24 @@ class OrderTicketsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, OrderTickets::class);
     }
+
+    /**
+     * Find all orders for a given user. A subquery count the number of tickets for each order.
+     *
+     * @param [type] $userId The user id
+     * @return void list of OrderTickets
+     */
+    public function findOderTicketsByUser($userId):array
+    {
+        return $this->createQueryBuilder('OrderTickets')
+            ->select('OrderTickets.purchaseDate, COUNT(Ticket.id) as tickets, SUM(Ticket.price) as total')
+            ->leftJoin('OrderTickets.tickets', 'Ticket')
+            ->where('OrderTickets.user = :userId')
+            ->setParameter('userId', $userId)
+            ->groupBy('OrderTickets.id')
+            ->orderBy('OrderTickets.purchaseDate', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+    }
 }
