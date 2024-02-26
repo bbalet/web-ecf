@@ -10,46 +10,53 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            <p>Cinéma sélectionné : {{ theater.city }} <a href="{{ path('app_booking') }}"><i class="bi bi-x-circle-fill"></i></a></p>
-            <p>Film sélectionné : {{ movie.title }} <a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}"><i class="bi bi-x-circle-fill"></i></a></p>
-            <p>
-                Session : {{ sessionDetails.startdate }}</a> &mdash; {{ sessionDetails.enddate }}, il reste {{ sessionDetails.seats_left }} place(s) disponible(s) à {{ sessionDetails.price }}€ (qualité {{ sessionDetails.name }}).
-                 <a href="{{ path('app_booking_theater_movie', {theaterId: theater.id, movieId: movie.id }) }}"><i class="bi bi-x-circle-fill"></i></a>
-            </p>
-            <h2 class="">Choisissez vos sièges</h2>
-            {% set seatsByRow = (sessionDetails.columns * sessionDetails.columns) - 1 %}
-            {% set rows = (sessionDetails.capacity / seatsByRow) - 1 %}
-            {% set indexSeat = 0 %}
-            <table>
-                {% for i in 1..rows %}
-                    <tr>
-                        {% for j in 1..sessionDetails.columns %}
-                            {% for j in 1..sessionDetails.columns %}
-                                <td>
-                                    <span>
-                                        {% if seats[indexSeat].ticket_id is null %}
-                                            {% if seats[indexSeat].for_disabled %}
-                                                <img src="{{ asset('icons/wheelchair.png') }}" />
+        <div data-controller="booking" data-booking-action-url-value="{{ path('app_booking_booking', {movieSessionId: session.id, seats: '.'}) }}" 
+            data-booking-img-wheelchair-selected-value="{{ asset('icons/wheelchair_selected.png') }}"
+            data-booking-img-wheelchair-value="{{ asset('icons/wheelchair.png') }}"
+            data-booking-img-seat-selected-value="{{ asset('icons/seat_selected.png') }}"
+            data-booking-img-seat-value="{{ asset('icons/seat_free.png') }}">
+            <div class="col-8">
+                <p>Cinéma sélectionné : {{ theater.city }} <a href="{{ path('app_booking') }}"><i class="bi bi-x-circle-fill"></i></a></p>
+                <p>Film sélectionné : {{ movie.title }} <a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}"><i class="bi bi-x-circle-fill"></i></a></p>
+                <p>
+                    Session : {{ sessionDetails.startdate }}</a> &mdash; {{ sessionDetails.enddate }}, il reste {{ sessionDetails.seats_left }} place(s) disponible(s) à {{ sessionDetails.price }}€ (qualité {{ sessionDetails.name }}).
+                    <a href="{{ path('app_booking_theater_movie', {theaterId: theater.id, movieId: movie.id }) }}"><i class="bi bi-x-circle-fill"></i></a>
+                </p>
+                <h2 class="">Choisissez vos sièges</h2>
+                {% set seatsByRow = (sessionDetails.columns * sessionDetails.columns) - 1 %}
+                {% set rows = (sessionDetails.capacity / seatsByRow) - 1 %}
+                {% set indexSeat = 0 %}
+                    <table>
+                        {% for i in 1..rows %}
+                            <tr>
+                                {% for j in 1..sessionDetails.columns %}
+                                    {% for j in 1..sessionDetails.columns %}
+                                        <td>
+                                            {% if seats[indexSeat].ticket_id is null %}
+                                                {% if seats[indexSeat].for_disabled %}
+                                                    <img class="clickable" src="{{ asset('icons/wheelchair.png') }}" data-action="click->booking#toggleBook" data-booking-target="seat" data-booking-type-param="wheelchair" data-booking-seatid-param="{{ seats[indexSeat].id }}" />
+                                                {% else %}
+                                                    <img class="clickable" src="{{ asset('icons/seat_free.png') }}" data-action="click->booking#toggleBook" data-booking-target="seat" data-booking-type-param="seat" data-booking-seatid-param="{{ seats[indexSeat].id }}" />
+                                                {% endif %}
                                             {% else %}
-                                                <a href="{{ path('app_booking_booking', {movieSessionId: session.id, seats: seats[indexSeat].id}) }}">
-                                                <img src="{{ asset('icons/seat_free.png') }}" />
-                                                </a>
+                                                    <img src="{{ asset('icons/seat_booked.png') }}" />
                                             {% endif %}
-                                        {% else %}
-                                                <img src="{{ asset('icons/seat_booked.png') }}" />
+                                        </td>
+                                        {% set indexSeat = indexSeat + 1 %}
+                                    {% endfor %}
+                                        {% if not loop.last %}
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                         {% endif %}
-                                    </span>
-                                </td>
-                                {% set indexSeat = indexSeat + 1 %}
-                            {% endfor %}
-                                {% if not loop.last %}
-                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                {% endif %}
+                                {% endfor %}
+                            </tr>
                         {% endfor %}
-                    </tr>
-                {% endfor %}
-            </table>
+                    </table>
+                
+            </div>
+            <div class="col-4">
+                <h2 class="">Récapitulatif</h2>
+                <button class="btn btn-primary" data-action="click->booking#book">Réserver</button>
+            </div>
         </div>
     </div>
 </div>
