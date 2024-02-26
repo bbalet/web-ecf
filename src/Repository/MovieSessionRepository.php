@@ -134,9 +134,10 @@ class MovieSessionRepository extends ServiceEntityRepository
             ->join('movie_session', 'quality', 'ON room.quality_id = quality.id')
             ->join('movie_session', 'theater', 'ON room.theater_id = theater.id')
             ->leftJoin('movie_session', sprintf('(%s)', $subSelect), 'bookings', 'movie_session.id = bookings.movie_session_id')
+            ->andWhere('movie_session.id = :movieSessionId')
             ->setParameter('movieSessionId', $movieSessionId)
             ->orderBy('movie_session.startdate', 'ASC');
 
-            return $q->executeQuery()->fetchAllAssociative();
+            return $q->executeQuery()->fetchAllAssociative()[0];
     }
 }
