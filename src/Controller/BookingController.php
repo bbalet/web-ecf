@@ -45,7 +45,7 @@ class BookingController extends AbstractController
         $theater = $theaterRepository->findOneById($theaterId);
         // Get all movies
         //$movies = $movieSessionRepository->findMoviesScheduledInTheater($theaterId);
-        $movies = $movieSessionRepository->findMoviesToBeScheduledInTheFuture($theaterId);
+        $movies = $movieSessionRepository->findMoviesToBeScheduledInTheFutureByTheaterId($theaterId);
 
         return $this->render('booking/theater.html.twig', [
             'theater' => $theater,

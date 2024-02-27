@@ -21,6 +21,28 @@ class MovieSessionRepository extends ServiceEntityRepository
         parent::__construct($registry, MovieSession::class);
     }
 
+    public function findMoviesToBeScheduledInTheFuture(): array
+    {
+        $dbConnection = $this->getEntityManager()->getConnection();
+        $subSelect = $dbConnection->createQueryBuilder()
+            ->select('movie_id', 'avg(rating) as movie_avg_rating')
+            ->from('review') 
+            ->groupBy('movie_id')->getSQL();
+
+        $today = new \DateTime();
+        $q = $dbConnection->createQueryBuilder()
+            ->from('movie_session')
+            ->select('movie.id, movie.imdb_id, movie.title, movie.description, movie.minimum_age, movie.is_team_favorite, movie_avg_rating as rating')
+            ->join('movie_session', 'movie', 'ON movie_session.movie_id = movie.id')
+            ->leftJoin('movie_session', sprintf('(%s)', $subSelect), 'reviews', 'movie_session.movie_id = reviews.movie_id')
+            ->andWhere('movie_session.startdate > :startdate')
+            ->setParameter('startdate', $today->format('Y-m-d H:i:s'))
+            ->groupBy('movie.id, movie.imdb_id, movie.title, movie.description, movie.minimum_age, movie.is_team_favorite, movie_avg_rating')
+            ->addOrderBy('movie.date_added', 'DESC');
+
+        return $q->executeQuery()->fetchAllAssociative();
+    }
+
     /**
      * Return the list of movies to be scheduled in the future for a given theater
      * regardless if they are fully booked or not
@@ -28,7 +50,7 @@ class MovieSessionRepository extends ServiceEntityRepository
      * @param integer $theaterId
      * @return array
      */
-    public function findMoviesToBeScheduledInTheFuture(int $theaterId): array
+    public function findMoviesToBeScheduledInTheFutureByTheaterId(int $theaterId): array
     {
         $movies = $this->findMoviesScheduledInTheater($theaterId);
         $moviesToBeScheduled = [];

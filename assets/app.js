@@ -5,7 +5,8 @@ import './bootstrap.js';
  * This file will be included onto the page via the importmap() Twig function,
  * which should already be in your base.html.twig.
  */
-import './styles/app.scss';
-import { Tooltip, Toast, Popover } from 'bootstrap';
-require('bootstrap-icons/font/bootstrap-icons.css');
+import './styles/app.scss'
+import { Tooltip, Toast, Popover } from 'bootstrap'
+import Masonry from 'masonry-layout'
+require('bootstrap-icons/font/bootstrap-icons.css')
 
