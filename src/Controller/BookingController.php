@@ -154,7 +154,7 @@ class BookingController extends AbstractController
             'timestamp' => $date
         ]);
 
-        // TODO : encourage user to register before processing
+        $this->addFlash('success', 'Séance réservée avec succès !');
         return $this->redirectToRoute('app_userspace');
     }
 }

@@ -26,6 +26,7 @@
     "dependencies": {
         "bootstrap": "^5.3.3",
         "bootstrap-icons": "^1.11.3",
-        "masonry-layout": "^4.2.2"
+        "masonry-layout": "^4.2.2",
+        "sweetalert2": "^11.10.5"
     }
 }

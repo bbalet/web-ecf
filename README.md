@@ -8,7 +8,7 @@
 
 ## Prerequis
 
-Cinephoria nécessite un serveur de basse de données relationel (e.g. MySQL, MariaDB...) et un serveur MongoDB pour fonctionner.
+Cinephoria nécessite un serveur de basse de données MySQL (ou MariaDB) et un serveur MongoDB pour fonctionner.
 
 ## Installation
 
