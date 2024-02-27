@@ -22,13 +22,62 @@ class MovieSessionRepository extends ServiceEntityRepository
     }
 
     /**
+     * Find the list of movies to be scheduled in the future
+     * the list can be filtered by theater, genre and day number
+     *
+     * @param [type] $theaterId Identifier of the theater
+     * @param [type] $genreId Identifier of the genre
+     * @param [type] $dayNumber Day of the week (0 = Sunday, 1 = Monday, etc.)
+     * @return array List of movies to be scheduled in the future
+     */
+    public function findMoviesToBeScheduledInTheFuture($theaterId = null, $genreId = null, $dayNumber = null): array
+    {
+        $dbConnection = $this->getEntityManager()->getConnection();
+        $subSelect = $dbConnection->createQueryBuilder()
+            ->select('movie_id', 'avg(rating) as movie_avg_rating')
+            ->from('review') 
+            ->groupBy('movie_id')->getSQL();
+
+        $today = new \DateTime();
+        $q = $dbConnection->createQueryBuilder()
+            ->from('movie_session')
+            ->select('movie.id, movie.imdb_id, movie.title, movie.description, movie.minimum_age, movie.is_team_favorite, movie_avg_rating as rating')
+            ->join('movie_session', 'movie', 'ON movie_session.movie_id = movie.id')
+            ->leftJoin('movie_session', sprintf('(%s)', $subSelect), 'reviews', 'movie_session.movie_id = reviews.movie_id')
+            ->andWhere('movie_session.startdate > :startdate')
+            ->setParameter('startdate', $today->format('Y-m-d H:i:s'))
+            ->groupBy('movie.id, movie.imdb_id, movie.title, movie.description, movie.minimum_age, movie.is_team_favorite, movie_avg_rating')
+            ->addOrderBy('movie.date_added', 'DESC');
+
+        if (!is_null($theaterId)) {
+            $q->join('movie_session', 'room', 'ON movie_session.room_id = room.id')
+            ->join('movie_session', 'theater', 'ON room.theater_id = theater.id')
+            ->andWhere('theater.id = :theaterId')
+            ->setParameter('theaterId', $theaterId);
+        }
+
+        if (!is_null($genreId)) {
+            $q->join('movie_session', 'movie_genre', 'ON movie_genre.movie_id = movie.id')
+            ->andWhere('movie_genre.genre_id = :genreId')
+            ->setParameter('genreId', $genreId);
+        }
+
+        if (!is_null($dayNumber)) {
+            $q->andWhere('DAYOFWEEK(movie_session.startdate) = :dayNumber')
+            ->setParameter('dayNumber', $dayNumber);
+        }
+
+        return $q->executeQuery()->fetchAllAssociative();
+    }
+
+    /**
      * Return the list of movies to be scheduled in the future for a given theater
      * regardless if they are fully booked or not
      *
      * @param integer $theaterId
      * @return array
      */
-    public function findMoviesToBeScheduledInTheFuture(int $theaterId): array
+    public function findMoviesToBeScheduledInTheFutureByTheaterId(int $theaterId): array
     {
         $movies = $this->findMoviesScheduledInTheater($theaterId);
         $moviesToBeScheduled = [];

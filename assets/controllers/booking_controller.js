@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
-import * as Turbo from "@hotwired/turbo"
+import * as Turbo from '@hotwired/turbo'
 
 /*
  * This controller is used to manage the booking of seats in a cinema room.
@@ -20,7 +20,7 @@ export default class extends Controller {
 
     /**
      * This method is called when the controller is connected to the page.
-     * Intialize the clas variables
+     * Intialize the class variables
      */
     connect() {
         this.selectedSeatsString = ''
