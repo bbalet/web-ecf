@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation Cinéphoria{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="">Réserver une scéance</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 class="">Choisissez votre cinéma</h2>
+            <ul>
+                {% for theater in theaters %}
+                    <li><a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}">{{ theater.city }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

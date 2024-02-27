@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: '`ordertickets`')]
 class OrderTickets
 {
+    // Class constants for the status of an issue
+    public const STATUS_NEW = 1;
+    public const STATUS_PAID = 2;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -20,15 +24,15 @@ class OrderTickets
     #[ORM\Column]
     private ?int $status = null;
 
-    #[ORM\Column]
-    private ?float $price = null;
-
     #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'ordertickets', orphanRemoval: true)]
     private Collection $tickets;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $purchaseDate = null;
 
     public function __construct()
     {
@@ -48,18 +52,6 @@ class OrderTickets
     public function setStatus(int $status): static
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
 
         return $this;
     }
@@ -102,6 +94,18 @@ class OrderTickets
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPurchaseDate(): ?\DateTimeInterface
+    {
+        return $this->purchaseDate;
+    }
+
+    public function setPurchaseDate(\DateTimeInterface $purchaseDate): static
+    {
+        $this->purchaseDate = $purchaseDate;
 
         return $this;
     }

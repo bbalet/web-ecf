@@ -6,28 +6,39 @@
 
 **Cinephoria** est une application fictive de gestion de cinéma
 
+## Prerequis
+
+Cinephoria nécessite un serveur de basse de données relationel (e.g. MySQL, MariaDB...) et un serveur MongoDB pour fonctionner.
+
 ## Installation
 
 Executez les commandes suivantes :
 
     composer install --no-progress --prefer-dist --optimize-autoloader
+    php bin/console secrets:generate-keys
     npm install
     npm run build
 
-## Installation avec jeu d'essai
+## Installation avec un jeu d'essai
 
+    composer install
     php bin/console secrets:generate-keys
     php bin/console doctrine:schema:drop --full-database --force
     php bin/console doctrine:migrations:migrate --no-interaction
     php bin/console doctrine:fixtures:load --no-interaction
-    composer install
 
-L'application est accessible avec les comptes suivants
+L'application est alors accessible avec les comptes suivants
 
-admin@example.org   admin
-employee@example.org   employee
-visitor@example.org   visitor
-et 10 comptes visitor (i.e. visitor1, visitor2....)
+| **Login**             | **Mot de passe**  |
+|-----------------------|-------------------|
+| admin@example.org     | admin             |
+| employee@example.org  | employee          |
+| visitor@example.org   | visitor           |
+| visitor0@example.org  | visitor0          |
+| visitor...            | ...               |
+| visitor19@example.org | visitor19         |
+
+## Librairies
 
 https://github.com/chillerlan/php-qrcode
 For the QRCode reader, either ext-gd or ext-imagick is required!
