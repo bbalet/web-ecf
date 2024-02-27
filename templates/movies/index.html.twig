@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les films Cinéphoria{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div data-controller="movies" data-movies-action-url-value="{{ path('app_movies') }}" data-movies-base-url-value="{{ app.request.baseUrl }}">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="">Tous les films proposés chez Cinéphoria</h1>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <div class="form-floating gx-2">
+                                <select class="form-select" id="cboTheater" name="cboTheater" data-action="change->movies#setFilters">
+                                    <option value="0">Tous les cinémas</option>
+                                    {% for theater in theaters %}
+                                        {% set selected = '' %}
+                                        {% if (theater.id == theaterId) %}
+                                        {% set selected = 'selected' %}
+                                        {% endif %}
+                                        <option value="{{ theater.id }}" {{ selected }}>{{ theater.city }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="cboTheater" class="form-label">Cinéma</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="mb-3">
+                            <div class="form-floating gx-2">
+                                <select class="form-select" id="cboGenre" name="cboGenre" data-action="change->movies#setFilters">
+                                    <option value="0">Tous les genres</option>
+                                    {% for genre in genres %}
+                                        {% set selected = '' %}
+                                        {% if (genre.id == genreId) %}
+                                        {% set selected = 'selected' %}
+                                        {% endif %}
+                                        <option value="{{ genre.id }}" {{ selected }}>{{ genre.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="cboGenre" class="form-label">Genre</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="mb-3">
+                            <div class="form-floating gx-2">
+                                <select class="form-select" id="cboDay" name="cboDay" data-action="change->movies#setFilters">
+                                    <option value="8">N'importe quel jour</option>
+                                    {% for day in days %}
+                                        {% set selected = '' %}
+                                        {% if (day.id is same as(dayNumber) ) %}
+                                        {% set selected = 'selected' %}
+                                        {% endif %}
+                                        <option value="{{ day.id }}" {{ selected }}>{{ day.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="cboDay" class="form-label">Jour de projection</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-12" id="moviesDeck" data-masonry='{"percentPosition": true }'>
+            {% for movie in movies %}
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ asset("posters/#{ movie.imdb_id }.jpg") }}" class="card-img-top" alt="{{ movie.title }}">
+                    <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    {% if movie.is_team_favorite  %}
+                    <p class="card-text"><i class="bi bi-award-fill"></i> Coup de cœur de l'équipe</p>
+                    {% endif %}
+                    <p class="card-text">à partir de {{ movie.minimum_age }} ans</p>
+                    <div class="d-flex" style="color: orange;">
+                        {% for i in range(0, 4) %}
+                            {% if movie.rating - i + 0.0000000001 >= 0.8 %}
+                                <i class="bi bi-star-fill"></i>
+                            {% elseif movie.rating - i - 0.0000000001 <= 0.2 %}
+                                <i class="bi bi-star"></i>
+                            {% else %}
+                                <i class="bi bi-star-half"></i>
+                            {% endif %}
+                        {% endfor %}
+                            <span class="ps-1">{{ movie.rating|round(1, 'floor') }}</span>
+                    </div>
+                    <p class="card-text">{{ movie.description }}</p>
+                    <button class="btn btn-primary" data-action="click->movies#seeSessions" data-movies-movie-id-param="{{ movie.id }}">Voir les séances</button>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
