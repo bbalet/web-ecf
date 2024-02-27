@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon espace Cinéphoria{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="">Mon espace personnel</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <h2 class="">Mes commandes</h2>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Date de commande</th>
+                        <th>Film</th>
+                        <th>Tickets</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.purchaseDate|date('d/m/Y') }}</td>
+                        <td>{{ order.title }}</td>
+                        <td>{{ order.tickets }}</td>
+                        <td>{{ order.total }} €</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-8">&nbsp;</div>
+    </div>
+</div>
+{% endblock %}

@@ -24,7 +24,7 @@ class Ticket
     #[ORM\JoinColumn(nullable: false)]
     private ?OrderTickets $ordertickets = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne()]
     #[ORM\JoinColumn(nullable: false)]
     private ?Seat $seat = null;
 
