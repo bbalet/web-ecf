@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Entity\{Genre, Movie, Review};
 use App\Entity\{Quality, Theater, Room, Seat, Issue, Equipment};
 use App\Entity\{MovieSession, Ticket, OrderTickets};
+use DateTime;
 
 class AppFixtures extends Fixture
 {
@@ -300,11 +301,10 @@ class AppFixtures extends Fixture
                         $nbTickets = $faker->numberBetween(1, 5);
                         $order->setUser($visitors[array_rand($visitors)]);
                         $order->setStatus($faker->numberBetween(1, 2));
-                        //Set the purchase date to a date between six days and one day before start date of the session
+                        //Set the purchase date to a date between 2 months ago and yesterday
                         $purchaseDate = clone $startDate;
                         $order->setPurchaseDate(
-                            $faker->dateTimeBetween($purchaseDate->modify('-6 days')->format('Y-m-d H:i:s'), 
-                            $purchaseDate->modify('+7 days')->format('Y-m-d H:i:s')));
+                            $faker->dateTimeBetween((new DateTime())->modify('-2 months'), (new DateTime())->modify('-1 days')));
                         $manager->persist($order);
                         array_push($orders, $order);
                         for ($m = 0; $m < $nbTickets; $m++) {

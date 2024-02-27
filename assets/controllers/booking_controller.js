@@ -11,7 +11,12 @@ import * as Turbo from "@hotwired/turbo"
  */
 export default class extends Controller {
     static targets = [ "seat" ]
-    static values = { actionUrl: String, imgWheelchairSelected: String, imgWheelchair: String, imgSeatSelected: String, imgSeat: String }
+    static values = {   seatPrice: Number,
+                        actionUrl: String,
+                        imgWheelchairSelected: String,
+                        imgWheelchair: String,
+                        imgSeatSelected: String,
+                        imgSeat: String }
 
     /**
      * This method is called when the controller is connected to the page.
@@ -28,16 +33,15 @@ export default class extends Controller {
      */
     toggleBook(event) {
         let img = event.currentTarget
-        let type = event.params.type
         if (img.dataset.selected ==="true") {
-            if (type == "wheelchair") {
+            if (event.params.type == "wheelchair") {
                 img.src = this.imgWheelchairValue
             } else {
                 img.src = this.imgSeatValue
             }
             img.dataset.selected = "false"
         } else {
-            if (type == "wheelchair") {
+            if (event.params.type == "wheelchair") {
                 img.src = this.imgWheelchairSelectedValue
             } else {
                 img.src = this.imgSeatSelectedValue
@@ -54,6 +58,13 @@ export default class extends Controller {
         let selectedSeats = this.seatTargets.filter(seat => seat.dataset.selected === "true")
         this.selectedSeatsString = selectedSeats.map(seat => seat.dataset.bookingSeatidParam).join(",")
         this.nbOfSelectedSeats = selectedSeats.length
+        if (this.nbOfSelectedSeats > 0) {
+            document.getElementById("numberOfSeats").textContent = this.nbOfSelectedSeats;
+            document.getElementById("orderTotal").textContent = this.nbOfSelectedSeats * this.seatPriceValue;
+            document.getElementById("cardBooking").style.display = "block";
+        } else {
+            document.getElementById("cardBooking").style.display = "none";
+        }
     }
 
     /**

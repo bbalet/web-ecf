@@ -3,61 +3,68 @@
 {% block title %}Réservation Cinéphoria{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="">Réserver une scéance</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div data-controller="booking" data-booking-action-url-value="{{ path('app_booking_booking', {movieSessionId: session.id, seats: '.'}) }}" 
-            data-booking-img-wheelchair-selected-value="{{ asset('icons/wheelchair_selected.png') }}"
-            data-booking-img-wheelchair-value="{{ asset('icons/wheelchair.png') }}"
-            data-booking-img-seat-selected-value="{{ asset('icons/seat_selected.png') }}"
-            data-booking-img-seat-value="{{ asset('icons/seat_free.png') }}">
-            <div class="col-8">
+<div data-controller="booking"
+    data-booking-seat-price-value="{{ sessionDetails.price }}" 
+    data-booking-action-url-value="{{ path('app_booking_booking', {movieSessionId: session.id, seats: '.'}) }}" 
+    data-booking-img-wheelchair-selected-value="{{ asset('icons/wheelchair_selected.png') }}"
+    data-booking-img-wheelchair-value="{{ asset('icons/wheelchair.png') }}"
+    data-booking-img-seat-selected-value="{{ asset('icons/seat_selected.png') }}"
+    data-booking-img-seat-value="{{ asset('icons/seat_free.png') }}">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="">Réserver une scéance</h1>
                 <p>Cinéma sélectionné : {{ theater.city }} <a href="{{ path('app_booking') }}"><i class="bi bi-x-circle-fill"></i></a></p>
                 <p>Film sélectionné : {{ movie.title }} <a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}"><i class="bi bi-x-circle-fill"></i></a></p>
                 <p>
-                    Session : {{ sessionDetails.startdate }}</a> &mdash; {{ sessionDetails.enddate }}, il reste {{ sessionDetails.seats_left }} place(s) disponible(s) à {{ sessionDetails.price }}€ (qualité {{ sessionDetails.name }}).
+                    Session : {{ sessionDetails.startdate }}</a> &mdash; {{ sessionDetails.enddate }}, il reste {{ sessionDetails.seats_left }} place(s) disponible(s) à {{ sessionDetails.price }} € (qualité {{ sessionDetails.name }}).
                     <a href="{{ path('app_booking_theater_movie', {theaterId: theater.id, movieId: movie.id }) }}"><i class="bi bi-x-circle-fill"></i></a>
                 </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
                 <h2 class="">Choisissez vos sièges</h2>
                 {% set seatsByRow = (sessionDetails.columns * sessionDetails.columns) - 1 %}
                 {% set rows = (sessionDetails.capacity / seatsByRow) - 1 %}
                 {% set indexSeat = 0 %}
-                    <table>
-                        {% for i in 1..rows %}
-                            <tr>
+                <table>
+                    {% for i in 1..rows %}
+                        <tr>
+                            {% for j in 1..sessionDetails.columns %}
                                 {% for j in 1..sessionDetails.columns %}
-                                    {% for j in 1..sessionDetails.columns %}
-                                        <td>
-                                            {% if seats[indexSeat].ticket_id is null %}
-                                                {% if seats[indexSeat].for_disabled %}
-                                                    <img class="clickable" src="{{ asset('icons/wheelchair.png') }}" data-action="click->booking#toggleBook" data-booking-target="seat" data-booking-type-param="wheelchair" data-booking-seatid-param="{{ seats[indexSeat].id }}" />
-                                                {% else %}
-                                                    <img class="clickable" src="{{ asset('icons/seat_free.png') }}" data-action="click->booking#toggleBook" data-booking-target="seat" data-booking-type-param="seat" data-booking-seatid-param="{{ seats[indexSeat].id }}" />
-                                                {% endif %}
+                                    <td>
+                                        {% if seats[indexSeat].ticket_id is null %}
+                                            {% if seats[indexSeat].for_disabled %}
+                                                <img class="clickable" src="{{ asset('icons/wheelchair.png') }}" data-action="click->booking#toggleBook" data-booking-target="seat" data-booking-type-param="wheelchair" data-booking-seatid-param="{{ seats[indexSeat].id }}" />
                                             {% else %}
-                                                    <img src="{{ asset('icons/seat_booked.png') }}" />
+                                                <img class="clickable" src="{{ asset('icons/seat_free.png') }}" data-action="click->booking#toggleBook" data-booking-target="seat" data-booking-type-param="seat" data-booking-seatid-param="{{ seats[indexSeat].id }}" />
                                             {% endif %}
-                                        </td>
-                                        {% set indexSeat = indexSeat + 1 %}
-                                    {% endfor %}
-                                        {% if not loop.last %}
-                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        {% else %}
+                                                <img src="{{ asset('icons/seat_booked.png') }}" />
                                         {% endif %}
+                                    </td>
+                                    {% set indexSeat = indexSeat + 1 %}
                                 {% endfor %}
-                            </tr>
-                        {% endfor %}
-                    </table>
-                
+                                    {% if not loop.last %}
+                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
             <div class="col-4">
-                <h2 class="">Récapitulatif</h2>
-                <button class="btn btn-primary" data-action="click->booking#book">Réserver</button>
+                <div class="card" id="cardBooking" style="display:none">
+                    <div class="card-body">
+                        <h2 class="">Récapitulatif commande</h2>
+                        <p>Nombre de place(s) : <span id="numberOfSeats">0</span> pour <span id="orderTotal">0</span> €</p>
+                        <button class="btn btn-primary" data-action="click->booking#book">Réserver</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

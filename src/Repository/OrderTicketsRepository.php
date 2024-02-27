@@ -30,11 +30,13 @@ class OrderTicketsRepository extends ServiceEntityRepository
     public function findOderTicketsByUser($userId):array
     {
         return $this->createQueryBuilder('OrderTickets')
-            ->select('OrderTickets.purchaseDate, COUNT(Ticket.id) as tickets, SUM(Ticket.price) as total')
+            ->select('OrderTickets.purchaseDate, Movie.title, COUNT(Ticket.id) as tickets, SUM(Ticket.price) as total')
             ->leftJoin('OrderTickets.tickets', 'Ticket')
+            ->join('App\Entity\MovieSession', 'MovieSession', 'WITH', 'MovieSession.id = Ticket.movieSession')
+            ->join('App\Entity\Movie', 'Movie', 'WITH', 'Movie.id = MovieSession.movie')
             ->where('OrderTickets.user = :userId')
             ->setParameter('userId', $userId)
-            ->groupBy('OrderTickets.id')
+            ->groupBy('OrderTickets.id, Movie.title')
             ->orderBy('OrderTickets.purchaseDate', 'DESC')
             ->getQuery()
             ->getResult();
