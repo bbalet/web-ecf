@@ -72,7 +72,7 @@
             <div class="col-12" id="moviesDeck" data-masonry='{"percentPosition": true }'>
             {% for movie in movies %}
                 <div class="card" style="width: 18rem;">
-                    <img src="{{ asset("posters/#{ movie.imdb_id }.jpg") }}" class="card-img-top" alt="{{ movie.title }}">
+                    <img src="{{ path('app_movies_poster', {imdbId: movie.imdb_id}) }}" class="card-img-top" alt="{{ movie.title }}">
                     <div class="card-body">
                     <h5 class="card-title">{{ movie.title }}</h5>
                     {% if movie.is_team_favorite  %}
