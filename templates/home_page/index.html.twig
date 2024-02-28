@@ -19,7 +19,7 @@
                 <div class="carousel-inner">
                     {% for movie in movies %}
                     <div class="carousel-item {{ (loop.first) ? 'active' : '' }}">
-                    <img src="{{ asset("posters/#{movie.imdbId}.jpg") }}" class="img-fluid" alt="{{ movie.title }}">
+                    <img src="{{ path('app_movies_poster', {imdbId: movie.imdbId}) }}" class="img-fluid" alt="{{ movie.title }}">
                     </div>
                     {% endfor %}
                 </div>
