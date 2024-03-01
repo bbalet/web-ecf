@@ -1,0 +1,133 @@
+#set document(
+    title: [Mode d'emploi de l'application Cinéphoria],
+    author: "Benjamin BALET",
+    date: auto,
+)
+
+#set page(
+  paper: "a4",
+  header: locate(loc => {
+        if counter(page).at(loc).first() > 1 [
+            Mode d'emploi de l'application Cinéphoria
+        ]
+    }),
+  footer: [Benjamin BALET],
+  numbering: "1",
+  number-align: right,
+)
+
+#align(center, text(17pt)[
+  *Mode d'emploi de l'application Cinéphoria*
+])
+
+#pagebreak()
+
+#outline(
+    title: [Table des matières]
+)
+
+#pagebreak()
+
+#show par: set block(spacing: 0.65em)
+#set par(
+  first-line-indent: 1em,
+  justify: true,
+)
+
+
+
+= Introduction
+
+Cinéphoria est une application fictive de gestion de cinéma.
+
+Ce guide utilisateur vous guidera dans les écrans de l'application #link("https://cinephoria.cloud/")[Cinéphoria].
+Il décrit les fonctionnalités :
+- De l'application web (dont le site web grand public),
+- De l'application mobile,
+- De l'application desktop.
+
+
+
+
+
+= Fonctionnalités de l'application web
+
+== Page d'accueil
+
+La #link("https://cinephoria.cloud/")[page d'accueil] liste les films ajoutés mercredi dernier.
+
+== Les films disponibles
+
+La #link("https://cinephoria.cloud/movies")[page des films] liste les films disponibles. 
+Il est possible de filtrer selon le cinéma, le genre ou le jour de projection préféré.
+
+#figure(
+  image("images/movies_page.png", width: 80%),
+  caption: [Page des films disponibles.],
+)
+
+== Faire une réservation
+
+
+== Connexion à l'application
+
+Cette page vous permet de vous connecter à l'application quelque soit votre rôle.
+
+#figure(
+  image("images/login_page.png", width: 80%),
+  caption: [Page de connexion à l'application.],
+)
+
+Des comptes fictifs sont disponibles si vous choisissez de charger le jeu d'essai de l'application (fixtures ou fichier SQL).
+Dans le cas où vous choisiriez de ne pas charger le jeu d'essai, seul le compte administrateur est disponible.
+
+#figure(
+    table(
+    columns: (1fr, auto, auto),
+    inset: 10pt,
+    align: horizon,
+    
+    [*Role*], [*Login*], [*Password*],
+    [Utilisateur], [`visitor@example.org`], [visitor],
+    [Utilisateur], [`visitor1@example.org`], [visitor1],
+    [Employé], [`employee@example.org`], [employee],
+    [Administrator], [`admin@example.org`], [admin]
+    ),
+    caption: [Comptes utilisateur]
+)
+
+#pagebreak()
+
+
+
+
+
+
+
+= Fonctionnalités de l'application mobile
+
+
+
+
+
+
+
+
+#pagebreak()
+
+= Fonctionnalités de l'application desktop
+
+
+#pagebreak()
+
+= Annexes
+
+#outline(
+  title: [Table des illustrations],
+  target: figure.where(kind: image),
+)
+
+#outline(
+  title: [Table des tableaux],
+  target: figure.where(kind: table),
+)

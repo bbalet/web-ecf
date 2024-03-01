@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
 import Masonry from 'masonry-layout'
+import imagesLoaded from 'imagesloaded'
 import * as Turbo from '@hotwired/turbo'
 import Swal from 'sweetalert2'
 
@@ -21,7 +22,11 @@ export default class extends Controller {
         this.theaterId = null
         this.genreId = null
         this.dayNumber = null
-        const msnry = new Masonry('#moviesDeck', { percentPosition: true })
+        imagesLoaded('#moviesDeck', () => {
+            const msnry = new Masonry('#moviesDeck', {
+                percentPosition: true
+            })
+        })
     }
 
     /**

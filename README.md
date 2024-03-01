@@ -1,6 +1,7 @@
 ![GitHub CI](https://github.com/bbalet/web-ecf/actions/workflows/symfony.yml/badge.svg)
 [![codecov](https://codecov.io/gh/bbalet/web-ecf/graph/badge.svg?token=JARJRZD07D)](https://codecov.io/gh/bbalet/web-ecf)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d319208984315580dace/maintainability)](https://codeclimate.com/github/bbalet/web-ecf/maintainability)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 # Cinephoria
 

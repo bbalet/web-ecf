@@ -69,7 +69,7 @@
         </div>
     
         <div class="row">
-            <div class="col-12" id="moviesDeck" data-masonry='{"percentPosition": true }'>
+            <div class="col-12" id="moviesDeck">
             {% for movie in movies %}
                 <div class="card" style="width: 18rem;">
                     <img src="{{ path('app_movies_poster', {imdbId: movie.imdb_id}) }}" class="card-img-top" alt="{{ movie.title }}">
