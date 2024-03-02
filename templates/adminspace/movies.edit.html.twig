@@ -25,20 +25,27 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-8">
+        <div class="col-12">
             {% include 'adminspace/navs.html.twig' %}
-            <h2 class="">Dashboard</h2>
-            {% if availability.status %}
-                {{ render_chart(chart) }}
-            {% else %}
-                <div class="alert alert-danger">
-                    <p>MongoDB n'est pas disponible</p>
-                    <p>{{ availability.message }}</p>
-                </div>
-            {% endif %}
-            
         </div>
-        <div class="col-8">&nbsp;</div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 id="titleEquipes">Modification du film {{ movie.imdbId|e }}</h2>
+
+{{ movie.imdbId|e }}<br />
+{{ movie.title|e }}<br />
+{{ movie.description|e }}<br />
+{{ movie.id }}<br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a class="btn btn-primary" href="#">Enregistrer</a>
+            <a class="btn btn-secondary" href="{{ path('app_adminspace_movies') }}">Annuler</a>
+        </div>
+    </div>
+            
+
 </div>
 {% endblock %}

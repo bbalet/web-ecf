@@ -39,6 +39,9 @@ L'application est alors accessible avec les comptes suivants
 | visitor...            | ...               |
 | visitor19@example.org | visitor19         |
 
+## Charger des données dans 
+
+
 ## Librairies
 
 https://github.com/chillerlan/php-qrcode

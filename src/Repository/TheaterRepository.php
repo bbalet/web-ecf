@@ -21,6 +21,11 @@ class TheaterRepository extends ServiceEntityRepository
         parent::__construct($registry, Theater::class);
     }
 
+    /**
+     * Return the list of theaters ordered by city
+     *
+     * @return array
+     */
     public function findAllOrderByCity(): array
     {
         return $this->findBy([], ['city' => 'ASC']);

@@ -22,7 +22,7 @@
                         <div class="card" style="width: 18rem;">
                             <img src="{{ path('app_movies_poster', {imdbId: movie.imdbId}) }}" class="card-img-top" alt="{{ movie.title }}">
                             <div class="card-body">
-                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <h5 class="card-title">{{ movie.title|e }}</h5>
                             </div>
                         </div>
                         {% endfor %}

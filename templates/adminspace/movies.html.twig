@@ -25,12 +25,49 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-8">
+        <div class="col-12">
             {% include 'adminspace/navs.html.twig' %}
-            <h2 class="">Gestion des films</h2>
-            
         </div>
-        <div class="col-8">&nbsp;</div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 id="titleEquipes">Gestion des films</h2>
+            {% if movies is empty %}
+            <p id="msgNoMoviesFound">Aucun film n'existe</p>
+            {% else %}
+            <p>Cliquez sur une ligne pour modifier les informations d'un film :</p>
+
+            <div data-controller="tableManager">
+
+                <div class="form-floating gx-2">
+                    <input name="txtFilter" data-tableManager-target="source" data-action="input->tableManager#filter" type="text" class="form-control" />
+                    <label for="txtFilter" class="form-label">Chercher un film :</label>
+                </div>
+                <br />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>IMDB Id</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for movie in movies %}
+                        <tr class="clickable" 
+                        data-tableManager-target="filterable" data-tableManager-key='{{ movie.imdbId|e }} {{ movie.title|e }}'
+                        data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_adminspace_movie_edit', {id: movie.id}) }}">
+                            <td>{{ movie.imdbId|e }}</td>
+                            <td>{{ movie.title|e }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+            
+
 </div>
 {% endblock %}

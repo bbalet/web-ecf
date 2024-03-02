@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-12">
             <p>Cinéma sélectionné : {{ theater.city }} <a href="{{ path('app_booking') }}"><i class="bi bi-x-circle-fill"></i></a></p>
-            <p>Film sélectionné : {{ movie.title }} <a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}"><i class="bi bi-x-circle-fill"></i></a></p>
+            <p>Film sélectionné : {{ movie.title|e }} <a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}"><i class="bi bi-x-circle-fill"></i></a></p>
             <h2 class="">Choisissez votre scéance</h2>
             {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                 <p>Vous devez être <a href="{{ path('app_login') }}">connecté</a> pour réserver une scéance.
