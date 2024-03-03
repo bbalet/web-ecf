@@ -46,7 +46,8 @@ Il décrit les fonctionnalités :
 - De l'application mobile,
 - De l'application desktop.
 
-Un #link(<_testing_tools>)[chapitre]) donne également des indications sur les possibilités de test de l'application. Plus particulièrement sur le test des emails envoyés et reçus.
+Un #link(<_testing_tools>)[chapitre] donne également des indications sur les possibilités de test de l'application. 
+Plus particulièrement sur le test des emails envoyés et reçus.
 
 
 
@@ -118,16 +119,34 @@ vous êtes redirigé vers l'écran d'accueil (notez qu'un webmail fictif est ins
   caption: [Page d'enregistrement.],
 )
 
+== Formulaire de contact
 
+Un formulaire de contact (depuis le menu, cliquer sur « Contact ») permet à un visiteur de contacter l'équipe. 
+S'il peut laisser un nom ou un compte utilisateur tel qu'un email, les champs titre et description sont obligatoire. 
+Après la saisie, un email est envoyé à l'équipe (notez qu'un webmail fictif est installé sur le serveur, voir le paragraphe sur les #link(<_testing_tools>)[outils de test]).
 
+#figure(
+  image("images/contact_page.png", width: 80%),
+  caption: [Formulaire de contact.],
+)
 
+== L'espace administrateur
 
+=== Tableau de bord des ventes de tickets
+
+Une fois connecté avec un compte administrateur, vous pouvez cliquer sur « Dashboard » dans le sous-menu.
+Le dashboard montre les ventes de tickets des 7 derniers jours classées par titre de film.
+
+#figure(
+  image("images/admin_dashboard_page.png", width: 80%),
+  caption: [Dashboard des ventes de tickets par film.],
+)
 
 
 
 = Fonctionnalités de l'application mobile
 
-
+Une application mobile est disponible pour Android.
 
 
 
@@ -139,6 +158,9 @@ vous êtes redirigé vers l'écran d'accueil (notez qu'un webmail fictif est ins
 = Fonctionnalités de l'application desktop
 
 Une application desktop est disponible pour Windows et Linux.
+
+
+
 
 
 
