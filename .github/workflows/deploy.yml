@@ -65,6 +65,7 @@ jobs:
           envkey_MONGODB_DB: ${{ secrets.MONGODB_DB }}
           envkey_MONGODB_COLLECTION: ${{ secrets.MONGODB_COLLECTION }}
           envkey_THEMOVIEDB_API_KEY: ${{ secrets.THEMOVIEDB_API_KEY }}
+          envkey_EMAIL_ADMIN: 'admin@cinephoria.cloud'
           file_name: .env
 
       #Setup SSH
