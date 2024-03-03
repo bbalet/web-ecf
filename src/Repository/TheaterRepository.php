@@ -22,7 +22,7 @@ class TheaterRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return all theaters ordered by city
+     * Return the list of theaters ordered by city
      *
      * @return array
      */

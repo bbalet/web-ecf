@@ -15,7 +15,7 @@
             <h2 class="">Choisissez votre film</h2>
             <ul>
                 {% for movie in movies %}
-                    <li><a href="{{ path('app_booking_theater_movie', {theaterId: theater.id, movieId: movie.id}) }}">{{ movie.title }}</a></li>
+                    <li><a href="{{ path('app_booking_theater_movie', {theaterId: theater.id, movieId: movie.id}) }}">{{ movie.title|e }}</a></li>
                 {% endfor %}
             </ul>
         </div>

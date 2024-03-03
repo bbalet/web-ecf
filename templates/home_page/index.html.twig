@@ -6,6 +6,21 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
+            {% for msg in app.session.flashBag.get('success') %}
+                <div class="alert alert-success">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+                
+            {% for msg in app.session.flashBag.get('error') %}
+                <div class="alert alert-danger">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <h1 class="">Bienvenue sur le site de Cinéphoria</h1>
         </div>
     </div>
@@ -15,22 +30,19 @@
             {% if movies is empty %}
             <p>Aucun film n'a été ajouté récemment.</p>
             {% else %}
-            <div id="carouselNewMovies" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    {% for movie in movies %}
-                    <div class="carousel-item {{ (loop.first) ? 'active' : '' }}">
-                    <img src="{{ path('app_movies_poster', {imdbId: movie.imdbId}) }}" class="img-fluid" alt="{{ movie.title }}">
+            <div data-controller="lastMovies">
+                <div class="row">
+                    <div class="col" id="moviesDeck">
+                        {% for movie in movies %}
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ path('app_movies_poster', {imdbId: movie.imdbId}) }}" class="card-img-top" alt="{{ movie.title }}">
+                            <div class="card-body">
+                            <h5 class="card-title">{{ movie.title|e }}</h5>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselNewMovies" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Précédent</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselNewMovies" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Suivant</span>
-                </button>
             </div>
             {% endif %}
         </div>

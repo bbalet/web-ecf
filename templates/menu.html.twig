@@ -17,12 +17,12 @@
             <a class="nav-link" href="{{ path('app_movies') }}">Films</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
           </li>
           {% if is_granted('IS_AUTHENTICATED_FULLY') %}
           {% if is_granted('ROLE_ADMIN') %}
           <li class="nav-item">
-            <a class="nav-link" id="cmdAdmin" href="#">Administration</a>
+            <a class="nav-link" id="cmdAdmin" href="{{ path('app_adminspace') }}">Administration</a>
           </li>
           {% else %}
           <li class="nav-item">

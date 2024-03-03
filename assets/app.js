@@ -8,5 +8,14 @@ import './bootstrap.js';
 import './styles/app.scss'
 import { Tooltip, Toast, Popover } from 'bootstrap'
 import Masonry from 'masonry-layout'
+
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+// register globally for all charts
+document.addEventListener('chartjs:init', function (event) {
+    const Chart = event.detail.Chart;
+    Chart.register(ChartDataLabels);
+});
+
 require('bootstrap-icons/font/bootstrap-icons.css')
 

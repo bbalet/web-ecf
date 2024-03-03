@@ -1,0 +1,194 @@
+#set document(
+    title: [Mode d'emploi de l'application Cinéphoria],
+    author: "Benjamin BALET",
+    date: auto,
+)
+
+#set page(
+  paper: "a4",
+  header: locate(loc => {
+        if counter(page).at(loc).first() > 1 [
+            Mode d'emploi de l'application Cinéphoria
+        ]
+    }),
+  footer: [Benjamin BALET],
+  numbering: "1",
+  number-align: right,
+)
+
+#align(center, text(17pt)[
+  *Mode d'emploi de l'application Cinéphoria*
+])
+
+#pagebreak()
+
+#outline(
+    title: [Table des matières]
+)
+
+#pagebreak()
+
+#show par: set block(spacing: 0.65em)
+#set par(
+  first-line-indent: 1em,
+  justify: true,
+)
+
+
+
+= Introduction
+
+Cinéphoria est une application fictive de gestion de cinéma.
+
+Ce guide utilisateur vous guidera dans les écrans de l'application #link("https://cinephoria.cloud/")[Cinéphoria].
+Il décrit les fonctionnalités :
+- De l'application web (dont le site web grand public),
+- De l'application mobile,
+- De l'application desktop.
+
+Un #link(<_testing_tools>)[chapitre] donne également des indications sur les possibilités de test de l'application. 
+Plus particulièrement sur le test des emails envoyés et reçus.
+
+
+
+
+
+= Fonctionnalités de l'application web
+
+== Page d'accueil
+
+La #link("https://cinephoria.cloud/")[page d'accueil] liste les films ajoutés mercredi dernier.
+
+#figure(
+  image("images/home_page.png", width: 80%),
+  caption: [Page d'accueil du site.],
+)
+
+== Les films disponibles
+
+La #link("https://cinephoria.cloud/movies")[page des films] liste les films disponibles. 
+Il est possible de filtrer selon le cinéma, le genre ou le jour de projection préféré à l'aide des champs situés avant les listes des affiches de films.
+
+#figure(
+  image("images/movies_page.png", width: 80%),
+  caption: [Page des films disponibles.],
+)
+
+== Faire une réservation
+
+La fonctionnalité de réservation se déroule en plusieurs étapes.
+
+== Connexion à l'application
+
+Cette page vous permet de vous connecter à l'application quelque soit votre rôle.
+Si vous n'avez pas de compte, vous pouvez en créer un en cliquant sur le bouton « #link(<_registration>)[Créer un compte] ».
+
+#figure(
+  image("images/login_page.png", width: 80%),
+  caption: [Page de connexion à l'application.],
+)
+
+Des comptes fictifs sont disponibles si vous choisissez de charger le jeu d'essai de l'application (fixtures ou fichier SQL).
+Dans le cas où vous choisiriez de ne pas charger le jeu d'essai, seul le compte administrateur est disponible.
+
+#figure(
+    table(
+    columns: (1fr, auto, auto),
+    inset: 10pt,
+    align: horizon,
+    
+    [*Role*], [*Login*], [*Password*],
+    [Utilisateur], [`visitor@example.org`], [visitor],
+    [Utilisateur], [`visitor1@example.org`], [visitor1],
+    [Employé], [`employee@example.org`], [employee],
+    [Administrator], [`admin@example.org`], [admin]
+    ),
+    caption: [Comptes utilisateur]
+)
+
+#pagebreak()
+
+== Créer un compte utilisateur <_registration>
+
+Cette page vous permet de créer un compte utilisateur. Vous ne pouvez pas créer plusieurs comptes ayant la même adresse email.
+Et le mot de passe doit être long d'au moins six caractères. Après avoir saisi le formulaire et cliqué sur le bouton « S'enregistrer »,
+vous êtes redirigé vers l'écran d'accueil (notez qu'un webmail fictif est installé sur le serveur, voir le paragraphe sur les #link(<_testing_tools>)[outils de test]).
+
+#figure(
+  image("images/registration_page.png", width: 80%),
+  caption: [Page d'enregistrement.],
+)
+
+== Formulaire de contact
+
+Un formulaire de contact (depuis le menu, cliquer sur « Contact ») permet à un visiteur de contacter l'équipe. 
+S'il peut laisser un nom ou un compte utilisateur tel qu'un email, les champs titre et description sont obligatoire. 
+Après la saisie, un email est envoyé à l'équipe (notez qu'un webmail fictif est installé sur le serveur, voir le paragraphe sur les #link(<_testing_tools>)[outils de test]).
+
+#figure(
+  image("images/contact_page.png", width: 80%),
+  caption: [Formulaire de contact.],
+)
+
+== L'espace administrateur
+
+=== Tableau de bord des ventes de tickets
+
+Une fois connecté avec un compte administrateur, vous pouvez cliquer sur « Dashboard » dans le sous-menu.
+Le dashboard montre les ventes de tickets des 7 derniers jours classées par titre de film.
+
+#figure(
+  image("images/admin_dashboard_page.png", width: 80%),
+  caption: [Dashboard des ventes de tickets par film.],
+)
+
+
+
+= Fonctionnalités de l'application mobile
+
+Une application mobile est disponible pour Android.
+
+
+
+
+
+
+#pagebreak()
+
+= Fonctionnalités de l'application desktop
+
+Une application desktop est disponible pour Windows et Linux.
+
+
+
+
+
+
+
+
+
+#pagebreak()
+
+= Outils de test <_testing_tools>
+
+Un serveur SMTP fictif est installé sur le serveur. Il possède une interface webmail rudimentaire accessible à cette adresse #link("http://mailhog.cinephoria.cloud/")[http://mailhog.cinephoria.cloud/].
+Il liste à la fois les emails envoyés aux clients et aux adminsitrateurs du site.
+
+#figure(
+  image("images/webmail_server.png", width: 80%),
+  caption: [Interface webmail du serveur mail de test.],
+)
+
+#pagebreak()
+
+= Annexes
+
+#outline(
+  title: [Table des illustrations],
+  target: figure.where(kind: image),
+)
+
+#outline(
+  title: [Table des tableaux],
+  target: figure.where(kind: table),
+)

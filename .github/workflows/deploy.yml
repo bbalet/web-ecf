@@ -64,6 +64,8 @@ jobs:
           envkey_MONGODB_DSN: ${{ secrets.MONGODB_DSN }}
           envkey_MONGODB_DB: ${{ secrets.MONGODB_DB }}
           envkey_MONGODB_COLLECTION: ${{ secrets.MONGODB_COLLECTION }}
+          envkey_THEMOVIEDB_API_KEY: ${{ secrets.THEMOVIEDB_API_KEY }}
+          envkey_EMAIL_ADMIN: 'admin@cinephoria.cloud'
           file_name: .env
 
       #Setup SSH
@@ -90,7 +92,7 @@ jobs:
           passphrase: ''
           script: |
             cd ${{ secrets.REMOTE_TARGET_DEPLOY }}
-            php bin/console secrets:generate-keys
+            php bin/console lexik:jwt:generate-keypair --overwrite -n
             php bin/console doctrine:schema:drop --full-database --force
             php bin/console doctrine:migrations:migrate --no-interaction
             php bin/console doctrine:fixtures:load --env=dev --no-interaction

@@ -69,12 +69,12 @@
         </div>
     
         <div class="row">
-            <div class="col-12" id="moviesDeck" data-masonry='{"percentPosition": true }'>
+            <div class="col-12" id="moviesDeck">
             {% for movie in movies %}
                 <div class="card" style="width: 18rem;">
                     <img src="{{ path('app_movies_poster', {imdbId: movie.imdb_id}) }}" class="card-img-top" alt="{{ movie.title }}">
                     <div class="card-body">
-                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <h5 class="card-title">{{ movie.title|e }}</h5>
                     {% if movie.is_team_favorite  %}
                     <p class="card-text"><i class="bi bi-award-fill"></i> Coup de cœur de l'équipe</p>
                     {% endif %}
@@ -91,7 +91,7 @@
                         {% endfor %}
                             <span class="ps-1">{{ movie.rating|round(1, 'floor') }}</span>
                     </div>
-                    <p class="card-text">{{ movie.description }}</p>
+                    <p class="card-text">{{ movie.description|e }}</p>
                     <button class="btn btn-primary" data-action="click->movies#seeSessions" data-movies-movie-id-param="{{ movie.id }}">Voir les séances</button>
                     </div>
                 </div>
