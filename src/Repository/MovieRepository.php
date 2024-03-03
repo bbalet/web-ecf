@@ -22,6 +22,16 @@ class MovieRepository extends ServiceEntityRepository
     }
 
     /**
+     * Return the list of movies ordered by title
+     *
+     * @return array
+     */
+    public function findAllOrderByTitle(): array
+    {
+        return $this->findBy([], ['title' => 'ASC']);
+    }
+
+    /**
     * Return the list of movies that were added wednesday last week
     * @return MovieSession[] Returns an array of MovieSession objects
     */
@@ -37,6 +47,12 @@ class MovieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Get the average score of a movie
+     *
+     * @param [type] $id movie id
+     * @return integer|null
+     */
     public function getAverageScore($id): ?int
     {
         return $this->createQueryBuilder('review')

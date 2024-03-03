@@ -15,7 +15,7 @@
             <div class="col-12">
                 <h1 class="">Réserver une scéance</h1>
                 <p>Cinéma sélectionné : {{ theater.city }} <a href="{{ path('app_booking') }}"><i class="bi bi-x-circle-fill"></i></a></p>
-                <p>Film sélectionné : {{ movie.title }} <a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}"><i class="bi bi-x-circle-fill"></i></a></p>
+                <p>Film sélectionné : {{ movie.title|e }} <a href="{{ path('app_booking_theater', {theaterId: theater.id}) }}"><i class="bi bi-x-circle-fill"></i></a></p>
                 <p>
                     Session : {{ sessionDetails.startdate }}</a> &mdash; {{ sessionDetails.enddate }}, il reste {{ sessionDetails.seats_left }} place(s) disponible(s) à {{ sessionDetails.price }} € (qualité {{ sessionDetails.name }}).
                     <a href="{{ path('app_booking_theater_movie', {theaterId: theater.id, movieId: movie.id }) }}"><i class="bi bi-x-circle-fill"></i></a>
@@ -25,6 +25,7 @@
         <div class="row">
             <div class="col-8">
                 <h2 class="">Choisissez vos sièges</h2>
+                <p>Disposition de la salle : {{ room.number }}</p>
                 {% set seatsByRow = (sessionDetails.columns * sessionDetails.columns) - 1 %}
                 {% set rows = (sessionDetails.capacity / seatsByRow) - 1 %}
                 {% set indexSeat = 0 %}

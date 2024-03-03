@@ -8,9 +8,7 @@ use App\Repository\MovieSessionRepository;
 use App\Repository\SeatRepository;
 use App\Entity\OrderTickets;
 use App\Entity\Ticket;
-use Exception;
-use MongoDB\Client;
-use MongoDB\Driver\ServerApi;
+use App\Service\MongoDbService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,6 +88,7 @@ class BookingController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // Get the movie session
         $session = $movieSessionRepository->findOneById($movieSessionId);
+        $room = $session->getRoom();
         if (is_null($session)) {
             throw $this->createNotFoundException('Scéance non trouvée');
         }
@@ -105,6 +104,7 @@ class BookingController extends AbstractController
             'theater' => $theater,
             'movie' => $movie,
             'session' => $session,
+            'room' => $room,
             'sessionDetails' => $sessionDetails,
             'seats' => $seats
         ]);
@@ -117,7 +117,7 @@ class BookingController extends AbstractController
      */
     #[Route('/booking/moviesessions/{movieSessionId}/seats/{seats}', name: 'app_booking_booking')]
     public function booking(int $movieSessionId, string $seats, MovieSessionRepository $movieSessionRepository,
-        SeatRepository $seatRepository, EntityManagerInterface $entityManager): Response
+        SeatRepository $seatRepository, EntityManagerInterface $entityManager, MongoDbService $mongoDbService): Response
     {
         // User needs to be authenticated to access the personal page
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -142,17 +142,8 @@ class BookingController extends AbstractController
         }
         $entityManager->flush();
 
-        // Create a new MongoDB client and store the booking for later analysis
-        $date = new \MongoDB\BSON\UTCDateTime();
-        $uri = $_ENV['MONGODB_DSN'];
-        $apiVersion = new ServerApi(ServerApi::V1);
-        $client = new Client($uri, [], ['serverApi' => $apiVersion]);
-        $collection = $client->selectDatabase($_ENV['MONGODB_DB'])->selectCollection($_ENV['MONGODB_COLLECTION']);
-        $insertOneResult = $collection->insertOne([
-            'movieTitle' => $session->getMovie()->getTitle(),
-            'tickets' => count($seatIds),
-            'timestamp' => $date
-        ]);
+        // Attempt to store the booking in MongoDB for later analysis
+        $mongoDbService->storeBooking($session, $seatIds);
 
         $this->addFlash('success', 'Séance réservée avec succès !');
         return $this->redirectToRoute('app_userspace');

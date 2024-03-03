@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration Cinéphoria{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {% for msg in app.session.flashBag.get('success') %}
+                <div class="alert alert-success">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+                
+            {% for msg in app.session.flashBag.get('error') %}
+                <div class="alert alert-danger">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="">Espace d'Administration</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            {% include 'adminspace/navs.html.twig' %}
+            <h2 class="">Espace d'Administration</h2>
+            <p>L'espace Administration vous permet de gérer l'application :</p>
+            <ul>
+                <li>Les films</li>
+                <li>Les salles</li>
+                <li>Les séances</li>
+                <li>Les employés</li>
+                <li>Le tableau de bord des ventes</li>
+            </ul>
+        </div>
+        <div class="col-8">&nbsp;</div>
+    </div>
+</div>
+{% endblock %}
