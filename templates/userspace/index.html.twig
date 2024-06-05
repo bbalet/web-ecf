@@ -31,6 +31,7 @@
                 <thead>
                     <tr>
                         <th>Date de commande</th>
+                        <th>Date de séance</th>
                         <th>Film</th>
                         <th>Tickets</th>
                         <th>Montant</th>
@@ -40,7 +41,13 @@
                     {% for order in orders %}
                     <tr>
                         <td>{{ order.purchaseDate|date('d/m/Y') }}</td>
-                        <td>{{ order.title }}</td>
+                        <td>{{ order.startdate|date('d/m/Y') }}</td>
+                        <td>
+                            {% if order.startdate | date("U") < "now" | date("U") %}
+                            <a data-bs-toggle="tooltip" data-bs-placement="top" title="Noter le film" href="#"><i class="bi bi-pencil-square"></i></a>
+                            {% endif %}
+                            {{ order.title }}
+                        </td>
                         <td>{{ order.tickets }}</td>
                         <td>{{ order.total }} €</td>
                     </tr>
