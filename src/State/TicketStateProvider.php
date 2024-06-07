@@ -40,7 +40,7 @@ class TicketStateProvider implements ProviderInterface
         if ($operation instanceof CollectionOperationInterface) {
             return $this->getListOfTickets($user->getId());
         }
-        return $this->getOneTicket($uriVariables['id']);
+        return $this->getOneTicket($uriVariables['ticketId']);
     }
 
     /**
@@ -59,7 +59,7 @@ class TicketStateProvider implements ProviderInterface
             $ticket = new ApiTicket();
             // Encode the id to obfuscate it
             $sqids = new Sqids();
-            $ticket->id = $sqids->encode([$dbTicket->getId()]);
+            $ticket->ticketId = $sqids->encode([$dbTicket->getId()]);
             $ticket->imdbId = $dbTicket->getMovieSession()->getMovie()->getImdbId();
             $ticket->movieTitle = $dbTicket->getMovieSession()->getMovie()->getTitle();
             $carbon = Carbon::instance($dbTicket->getMovieSession()->getStartdate());
@@ -86,10 +86,10 @@ class TicketStateProvider implements ProviderInterface
 
         $dbTicket = $this->ticketRepository->findTicketById($id);
         if (!$dbTicket) {
-            throw new \Exception('Ticket not found');
+            throw new \Exception('Ticket <' . $sqId . '> not found');
         } else {
             $ticket = new ApiTicket();
-            $ticket->id = $sqId;
+            $ticket->ticketId = $sqId;
             $ticket->imdbId = $dbTicket->getMovieSession()->getMovie()->getImdbId();
             $ticket->movieTitle = $dbTicket->getMovieSession()->getMovie()->getTitle();
             $carbon = Carbon::instance($dbTicket->getMovieSession()->getStartdate());

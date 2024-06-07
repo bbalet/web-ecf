@@ -6,9 +6,9 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use App\Repository\TheaterRepository;
 
 /**
- * Test fonctionnel des endpoints de l'API Rencontre
+ * Test fonctionnel des endpoints de l'API Cinéphoria / Salles
  */
-class ApiRoom extends ApiTestCase
+class ApiRoomTest extends ApiTestCase
 {
     private Client $client;
     private JWTTokenManagerInterface $jwtManager;
@@ -29,7 +29,7 @@ class ApiRoom extends ApiTestCase
     {
         $theaterRepository = static::getContainer()->get(TheaterRepository::class);
         $theater = $theaterRepository->findAll()[0];
-        $this->client->request('GET', '/api/theaters/' . $theater->getId() . '/rooms');
+        $this->client->request('GET', '/api/rooms?theaterId=' . $theater->getId());
         $this->assertResponseStatusCodeSame(200);
         $content = $this->client->getResponse()->getContent();
         $data = json_decode($content, true);
@@ -38,7 +38,7 @@ class ApiRoom extends ApiTestCase
 
     public function testGetRoomsOfAnInvalidTheater(): void
     {
-        $this->client->request('GET', '/api/theaters/99999999/rooms');
+        $this->client->request('GET', '/api/rooms?theaterId=99999999');
         $this->assertResponseStatusCodeSame(500);
     }
 }

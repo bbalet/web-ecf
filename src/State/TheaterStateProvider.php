@@ -39,7 +39,7 @@ class TheaterStateProvider implements ProviderInterface
                 );
                 foreach ($dbTheaters as $dbTheater) {
                     $theater = new ApiTheater();
-                    $theater->id = $dbTheater['id'];
+                    $theater->theaterId = $dbTheater['id'];
                     $theater->city = $dbTheater['city'];
                     $theater->latitude = $dbTheater['latitude'];
                     $theater->longitude = $dbTheater['longitude'];
@@ -55,7 +55,7 @@ class TheaterStateProvider implements ProviderInterface
 
         foreach ($dbTheaters as $dbTheater) {
             $theater = new ApiTheater();
-            $theater->id = $dbTheater->getId();
+            $theater->theaterId = $dbTheater->getId();
             $theater->city = $dbTheater->getCity();
             $theater->latitude = $dbTheater->getLatitude();
             $theater->longitude = $dbTheater->getLongitude();
