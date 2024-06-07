@@ -22,7 +22,8 @@ use ApiPlatform\Metadata\Get;
 class ApiUser
 {
     #[Ignore]
-    public ?string $id = null;
+    #[ApiProperty(identifier: true)]
+    public ?string $userId = null;
 
     public ?string $firstName = null;
 

@@ -2,26 +2,17 @@
 namespace App\Tests;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 /**
- * Test fonctionnel des endpoints de l'API Rencontre
+ * Test fonctionnel des endpoints de l'API Cinéphoria / Cinéma
  */
-class ApiTheater extends ApiTestCase
+class ApiTheaterTest extends ApiTestCase
 {
     private Client $client;
-    private JWTTokenManagerInterface $jwtManager;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        // Get the JWT Token Manager from the container
-        $this->jwtManager = static::getContainer()->get(JWTTokenManagerInterface::class);
-    }
-
-    private function createAuthenticatedToken($user): string
-    {
-        return $this->jwtManager->create($user);
     }
 
     public function testGetTheaters(): void

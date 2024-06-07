@@ -2,6 +2,9 @@
 
 namespace App\ApiResource;
 
+use App\Filter\TheaterFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
 use App\State\RoomStateProvider;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
@@ -12,15 +15,14 @@ use ApiPlatform\Metadata\GetCollection;
     provider: RoomStateProvider::class,
     paginationEnabled: false,
     operations: [
-        new GetCollection(
-            description: 'Get the list of the rooms in a theater',
-            uriTemplate: '/theaters/{id}/rooms',
-        ),
+        new GetCollection()
     ]
 )]
+#[ApiFilter(TheaterFilter::class, properties: ['theaterId'])]
 class ApiRoom
 {
-    public ?int $id = null;
+    #[ApiProperty(identifier: true)]
+    public ?int $roomId = null;
 
     public ?string $number = null;
 }
