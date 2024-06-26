@@ -5,6 +5,7 @@ use ApiPlatform\Symfony\Bundle\Test\Client;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use App\Repository\UserRepository;
 use App\Repository\TheaterRepository;
+use App\Repository\RoomRepository;
 use App\Repository\IssueRepository;
 
 /**
@@ -87,4 +88,61 @@ class ApiIssueTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(403);
     }
 
+    public function testPostIssue(): void
+    {
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $user = $userRepository->findOneByEmail('employee@example.org');
+        $token = $this->createAuthenticatedToken($user);
+        $roomRepository = static::getContainer()->get(RoomRepository::class);
+        $rooms = $roomRepository->findAll();
+        $this->client->request('POST', '/api/issues', [
+            'auth_bearer' => $token,
+            'json' => [
+                'roomId' => $rooms[0]->getId(),
+                'title' => 'Test Issue API',
+                'status' => 'Nouveau',
+                'description' => 'Issue created by PHPUnit',
+            ],
+        ]);
+        $this->assertResponseStatusCodeSame(201);   // 201 = Created
+        $content = $this->client->getResponse()->getContent();
+        $data = json_decode($content, true);
+        $this->assertArrayHasKey('@id', $data);
+        $issueId = $data['issueId'];
+        $issueRepository = static::getContainer()->get(IssueRepository::class);
+        $issue = $issueRepository->findOneById($issueId);
+        $this->assertEquals($issue->getId(), $data['issueId']);
+        $this->assertEquals($issue->getStatusAsString(), $data['status']);
+        $this->assertEquals('Nouveau', $data['status']);
+    }
+
+    public function testPatchIssue(): void
+    {
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $user = $userRepository->findOneByEmail('employee@example.org');
+        $token = $this->createAuthenticatedToken($user);
+        $issueRepository = static::getContainer()->get(IssueRepository::class);
+        $issue = $issueRepository->findAll()[0];
+        $randStr = substr(str_shuffle(str_repeat($x='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10/strlen($x)) )),1,10);
+        $this->client->request('PATCH', '/api/issues/' . $issue->getId(), [
+            'auth_bearer' => $token,
+            'headers' => [
+                'Content-Type' => 'application/merge-patch+json',
+            ],
+            'json' => [
+                'issueId' => $issue->getId(),
+                'roomId' => $issue->getRoom()->getId(),
+                'title' => $randStr,
+                'status' => 'Ouvert',
+                'description' => 'Issue patched by PHPUnit',
+            ],
+        ]);
+        $this->assertResponseStatusCodeSame(200);   // 200 = Modified
+        $content = $this->client->getResponse()->getContent();
+        $data = json_decode($content, true);
+        $issue = $issueRepository->findOneById($data['issueId']);
+        $this->assertEquals($issue->getTitle(), $randStr);
+        $this->assertEquals($issue->getStatusAsString(), $data['status']);
+        $this->assertEquals('Ouvert', $data['status']);
+    }
 }
