@@ -52,7 +52,7 @@ class IssueStateProcessor implements ProcessorInterface
                 $issue->setDate(new \DateTime());
                 $issue->setTitle($data->title);
                 $issue->setDescription($data->description);
-                $issue->setStatus(Issue::STATUS_NEW);
+                $issue->setStatusFromString($data->status);
                 $this->entityManager->persist($issue);
                 $this->entityManager->flush();
                 //Return the updated issue from DB
@@ -73,7 +73,7 @@ class IssueStateProcessor implements ProcessorInterface
             } else {            
                 $issue->setTitle($data->title);
                 $issue->setDescription($data->description);
-                $issue->setStatus(intval($data->status));
+                $issue->setStatusFromString($data->status);
                 $this->entityManager->persist($issue);
                 $this->entityManager->flush();
                 //Return the updated issue from DB

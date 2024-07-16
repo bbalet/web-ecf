@@ -124,6 +124,23 @@ class Issue
         }
     }
 
+    public function setStatusFromString(string $statusStr): void
+    {
+        switch ($statusStr) {
+            case 'Nouveau':
+                $this->status = Issue::STATUS_NEW;
+                break; 
+            case 'Ouvert':
+                $this->status = Issue::STATUS_OPEN;
+                break;
+            case 'Terminé':
+                $this->status = Issue::STATUS_CLOSED;
+                break;
+            default:
+                $this->status = 99;
+        }
+    }
+
     public function setStatus(int $status): static
     {
         $this->status = $status;
