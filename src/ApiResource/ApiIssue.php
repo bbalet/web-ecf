@@ -2,8 +2,11 @@
 
 namespace App\ApiResource;
 
+use App\Filter\RoomFilter;
 use App\State\IssueStateProvider;
 use App\State\IssueStateProcessor;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
@@ -14,36 +17,23 @@ use ApiPlatform\Metadata\Patch;
     shortName: 'Issue',
     description: 'Issue Management. Restricted to employees.',
     paginationEnabled: false,
+    provider: IssueStateProvider::class,
+    processor: IssueStateProcessor::class,
+    security: "is_granted('ROLE_EMPLOYEE')",
     operations: [
-        new GetCollection(
-            description: 'Get the list of issues for a room.',
-            uriTemplate: '/rooms/{id}/issues',
-            security: "is_granted('ROLE_EMPLOYEE')",
-            provider: IssueStateProvider::class
-        ),
-        new Get(
-            description: 'Get an issue by its id.',
-            uriTemplate: '/issues/{id}',
-            security: "is_granted('ROLE_EMPLOYEE')",
-            provider: IssueStateProvider::class
-        ),
-        new Post(
-            description: 'Create a new issue.',
-            security: "is_granted('ROLE_EMPLOYEE')",
-            uriTemplate: '/rooms/{id}/issues',
-            processor: IssueStateProcessor::class
-        ),
-        new Patch(
-            description: 'Update an existing issue.',
-            security: "is_granted('ROLE_EMPLOYEE')",
-            uriTemplate: '/issues/{id}',
-            processor: IssueStateProcessor::class
-        )
+        new GetCollection(),
+        new Get(),
+        new Post(),
+        new Patch()
     ]
 )]
+#[ApiFilter(RoomFilter::class, properties: ['roomId'])]
 class ApiIssue
 {
-    public ?int $id = null;
+    #[ApiProperty(identifier: true)]
+    public ?int $issueId = null;
+
+    public ?int $roomId = null;
 
     public ?string $title = null;
 

@@ -3,6 +3,7 @@
 namespace App\ApiResource;
 
 use App\Filter\GeoFilter;
+use ApiPlatform\Metadata\ApiProperty;
 use App\State\TheaterStateProvider;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
@@ -14,17 +15,15 @@ use ApiPlatform\Metadata\GetCollection;
     provider: TheaterStateProvider::class,
     paginationEnabled: false,
     operations: [
-        new GetCollection(
-            description: 'Get the list of theaters',
-            uriTemplate: '/theaters',
-        ),
+        new GetCollection()
     ]
 )]
 #[ApiFilter(GeoFilter::class, properties: ['latitude', 'longitude'])]
 class ApiTheater
 {
     /** Identifier of the theater */
-    public ?int $id = null;
+    #[ApiProperty(identifier: true)]
+    public ?int $theaterId = null;
 
     /** City where the theater is located */
     public ?string $city = null;

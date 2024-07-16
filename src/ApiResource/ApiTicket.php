@@ -20,13 +20,11 @@ use ApiPlatform\Metadata\Get;
     paginationEnabled: false,
     operations: [
         new GetCollection(
-            description: 'Get the list of future tickets for the current user',
-            uriTemplate: '/tickets',
+            description: 'Get the list of tickets',
             normalizationContext: ['groups' => 'ticket:list']
         ),
         new Get(
             description: 'Get a ticket by its id. Allow an employee to access any ticket. Allow a user to access only his tickets.',
-            uriTemplate: '/tickets/{id}',
             normalizationContext: ['groups' => 'ticket:item'],
             security: "is_granted('ROLE_EMPLOYEE') or object.owner == user"
         ),
@@ -35,7 +33,8 @@ use ApiPlatform\Metadata\Get;
 class ApiTicket
 {
     #[Groups(['ticket:list', 'ticket:item'])]
-    public ?string $id = null;
+    #[ApiProperty(identifier: true)]
+    public ?string $ticketId = null;
 
     #[Groups(['ticket:list', 'ticket:item'])]
     public ?string $imdbId = null;

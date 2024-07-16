@@ -8,8 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\ApiResource\ApiIssue;
 use App\Entity\Issue;
 
-use ApiPlatform\Metadata\PostOperationInterface;
-use ApiPlatform\Metadata\PatchOperationInterface;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
 use Psr\Log\LoggerInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
@@ -36,13 +36,15 @@ class IssueStateProcessor implements ProcessorInterface
         if ($user === null) {
             throw new AuthenticationException('Not authenticated or invalid token.');
         }
+        $this->logger->info('Processing an issue : ' . get_class($operation) . ' operation');
         
-        if ($operation instanceof PostOperationInterface) {
-            $roomId = $uriVariables['id'];
+        if ($operation instanceof Post) {
+            $this->logger->info('Creating a new issue');
+            $roomId = $data->roomId;
             $this->logger->info('Creating a new issue for room ' . $roomId);
             $room = $this->roomRepository->findOneBy(['id' => $roomId]);
             if (!$room) {
-                throw new NotFoundHttpException('Room not found.');
+                throw new NotFoundHttpException('Room #' . $roomId . ' not found.');
             } else { 
                 $issue = new Issue();
                 $issue->setUser($user);
@@ -50,19 +52,20 @@ class IssueStateProcessor implements ProcessorInterface
                 $issue->setDate(new \DateTime());
                 $issue->setTitle($data->title);
                 $issue->setDescription($data->description);
-                $issue->setStatus(Issue::STATUS_NEW);
+                $issue->setStatusFromString($data->status);
                 $this->entityManager->persist($issue);
                 $this->entityManager->flush();
                 //Return the updated issue from DB
                 $issueApi = new ApiIssue();
-                $issueApi->id = $issue->getId();
+                $issueApi->issueId = $issue->getId();
                 $issueApi->title = $issue->getTitle();
                 $issueApi->status = $issue->getStatusAsString();
                 $issueApi->description = $issue->getDescription();
                 return $issueApi;
             }
-        } else if ($operation instanceof PatchOperationInterface) {
-            $issueId = $uriVariables['id'];
+        } else if ($operation instanceof Patch) {
+            $this->logger->info('Updating an issue');
+            $issueId = $data->issueId;
             $this->logger->info('Updating issue ' . $issueId);
             $issue = $this->issueRepository->findOneBy(['id' => $issueId]);
             if (!$issue) {
@@ -70,12 +73,12 @@ class IssueStateProcessor implements ProcessorInterface
             } else {            
                 $issue->setTitle($data->title);
                 $issue->setDescription($data->description);
-                $issue->setStatus(intval($data->status));
+                $issue->setStatusFromString($data->status);
                 $this->entityManager->persist($issue);
                 $this->entityManager->flush();
                 //Return the updated issue from DB
                 $issueApi = new ApiIssue();
-                $issueApi->id = $issue->getId();
+                $issueApi->issueId = $issue->getId();
                 $issueApi->title = $issue->getTitle();
                 $issueApi->status = $issue->getStatusAsString();
                 $issueApi->description = $issue->getDescription();

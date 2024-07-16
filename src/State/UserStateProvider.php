@@ -25,7 +25,7 @@ class UserStateProvider implements ProviderInterface
             throw new AuthenticationException('Not authenticated or invalid token.');
         } else {
             $apiUser = new ApiUser();
-            $apiUser->id = $user->getId();
+            $apiUser->userId = $user->getId();
             $apiUser->firstName = $user->getFirstName();
             $apiUser->lastName = $user->getLastName();
             $apiUser->role = $user->getRoles()[0];

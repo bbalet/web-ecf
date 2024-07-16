@@ -29,26 +29,28 @@ class IssueStateProvider implements ProviderInterface
             throw new AuthenticationException('Not authenticated or invalid token.');
         }
         if ($operation instanceof CollectionOperationInterface) {
-            return $this->getListOIssues($uriVariables['id']);
+            return $this->getListOIssues($context);
         }
-        return $this->getOneIssue($uriVariables['id']);
+        return $this->getOneIssue($uriVariables['issueId']);
     }
 
     /**
-     * Return the list of issues for a room
+     * Return the list of issues for a given room
      *
+     * @param mixed $context can be used to pass filter on the room
      * @param [type] $context
-     * @param integer $roomId Identifier of the room
      * @return array
      */
-    private function getListOIssues(int $roomId): array
+    private function getListOIssues($context): array
     {
+        $roomId = $context['filters']['roomId'];
         $issues = [];
         $dbIssues = $this->roomRepository->findOneBy(['id' => $roomId])->getIssues();
 
         foreach ($dbIssues as $dbIssue) {
             $issue = new ApiIssue();
-            $issue->id = $dbIssue->getId();
+            $issue->roomId = $dbIssue->getRoom()->getId();
+            $issue->issueId = $dbIssue->getId();
             $issue->title = $dbIssue->getTitle();
             $issue->status = $dbIssue->getStatusAsString();
             $issue->description = $dbIssue->getDescription();
@@ -60,17 +62,18 @@ class IssueStateProvider implements ProviderInterface
     /**
      * Return an issue by its id
      *
-     * @param string $sqId
+     * @param string $issueId
      * @return ApiTicket
      */
     private function getOneIssue(string $issueId): ApiIssue
     {
         $dbIssue = $this->issueRepository->findOneBy(['id' => $issueId]);
         if (!$dbIssue) {
-            throw new \Exception('Issue not found');
+            throw new \Exception('Issue #' . $issueId . ' not found');
         } else {
             $issue = new ApiIssue();
-            $issue->id = $dbIssue->getId();
+            $issue->issueId = $dbIssue->getId();
+            $issue->roomId = $dbIssue->getRoom()->getId();
             $issue->title = $dbIssue->getTitle();
             $issue->status = $dbIssue->getStatusAsString();
             $issue->description = $dbIssue->getDescription();

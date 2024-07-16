@@ -43,7 +43,7 @@ class TicketRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find a ticket by its id and the user id
+     * Find a ticket by its id
      * 
      * @param [type] $id Ticket Id (not obfuscated id)
      * @return Ticket|null

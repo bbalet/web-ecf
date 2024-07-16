@@ -18,7 +18,7 @@ class RoomStateProvider implements ProviderInterface
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        return $this->getListOfRoomsInATheater($uriVariables['id']);
+        return $this->getListOfRoomsInATheater($context['filters']['theaterId']);
     }
 
     /**
@@ -29,11 +29,16 @@ class RoomStateProvider implements ProviderInterface
     private function getListOfRoomsInATheater($theaterId): array
     {
         $rooms = [];
+        $theater = $this->theaterRepository->findOneBy(['id' => $theaterId]);
+        if (!$theater) {
+            throw new \Exception('Theater #' .$theaterId . ' not found');
+        }
+
         $dbRooms = $this->theaterRepository->findOneBy(['id' => $theaterId])->getRooms();
 
         foreach ($dbRooms as $dbRoom) {
             $room = new ApiRoom();
-            $room->id = $dbRoom->getId();
+            $room->roomId = $dbRoom->getId();
             $room->number = $dbRoom->getNumber();
             $rooms[] = $room;
         }
