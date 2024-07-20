@@ -5,7 +5,9 @@ namespace App\Controller;
 use Carbon\Carbon;
 use App\Repository\GenreRepository;
 use App\Repository\TheaterRepository;
+use App\Repository\MovieRepository;
 use App\Repository\MovieSessionRepository;
+use App\Form\MovieType;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -18,7 +20,7 @@ use Tmdb\Event\Listener\Request\UserAgentRequestListener;
 use Tmdb\Event\Listener\RequestListener;
 use Http\Client\Common\Plugin;
 use Tmdb\Event\Listener\Psr6CachedRequestListener;
-use Tmdb\Repository\MovieRepository;
+use Tmdb\Repository\MovieRepository as TmdbMovieRepository;
 use Tmdb\Repository\FindRepository;
 use Tmdb\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -169,5 +171,59 @@ class MoviesController extends AbstractController
         $response->headers->set('Content-Disposition', $disposition);
         $response->headers->set('Content-Type', 'image/png');
         return $response;
+    }
+
+    /**
+     * Display or edit a movies
+     *
+     * @param int $id Identifier of the movie
+     * @return Response
+     */
+    #[Route('/movies/{id}', name: 'app_movies_edit')]
+    public function edit(int $id, MovieRepository $movieRepository): Response
+    {
+        // Admin needs to be authenticated to access the admin pages
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // Get the movie and throw an exception if it does not exist
+        $movie = $movieRepository->findOneById($id);
+        if (!$movie) {
+            throw $this->createNotFoundException('Le film n\'existe pas.');
+        }
+
+        // Display the form to edit the movie
+        $form = $this->createForm(MovieType::class, $movie);
+        
+
+        return $this->render('movies/edit.html.twig', [
+            'currentPage' => 'movies',
+            'form' => $form,
+            'movie' => $movie
+        ]);
+    }
+
+    /**
+     * Delete a movie from the database
+     *
+     * @param int $id Identifier of the movie
+     * @return Response
+     */
+    #[Route('/movies/{id}', name: 'app_movies_delete', methods: ["DELETE"])]
+    public function delete(int $id, MovieRepository $movieRepository): Response
+    {
+        // Admin needs to be authenticated to access the admin pages
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // Get the movie and throw an exception if it does not exist
+        $movie = $movieRepository->findOneById($id);
+        if (!$movie) {
+            throw $this->createNotFoundException('Le film n\'existe pas.');
+        }
+
+        // Delete the movie
+        $movieRepository->delete($movie);
+
+        $this->addFlash('success', 'Film supprimé avec succès !');
+        return $this->redirectToRoute('app_adminspace_movies');
     }
 }

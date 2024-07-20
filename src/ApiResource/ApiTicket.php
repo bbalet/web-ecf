@@ -49,6 +49,9 @@ class ApiTicket
     public ?string $roomNumber = null;
 
     #[Groups(['ticket:list', 'ticket:item'])]
+    public ?string $seats = null;
+
+    #[Groups(['ticket:list', 'ticket:item'])]
     public ?\DateTimeInterface $startDate = null;
 
     #[Groups(['ticket:list', 'ticket:item'])]
