@@ -50,27 +50,6 @@ class AdminSpaceController extends AbstractController
     }
 
     /**
-     * Display the edit page of a movies
-     *
-     * @param int $id Identifier of the movie
-     * @return Response
-     */
-    #[Route('/adminspace/movies/{id}', name: 'app_adminspace_movie_edit')]
-    public function movieEdit(int $id, MovieRepository $movieRepository): Response
-    {
-        // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-        // Get all movies
-        $movie = $movieRepository->findOneById($id);
-
-        return $this->render('adminspace/movies.edit.html.twig', [
-            'currentPage' => 'movies',
-            'movie' => $movie
-        ]);
-    }
-
-    /**
      * Display the list of sessions
      *
      * @return Response

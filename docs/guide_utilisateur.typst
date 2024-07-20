@@ -22,6 +22,13 @@
 
 #pagebreak()
 
+#show outline.entry.where(
+  level: 1
+): it => {
+  v(12pt, weak: true)
+  strong(it)
+}
+
 #outline(
     title: [Table des matières]
 )
@@ -131,6 +138,18 @@ Après la saisie, un email est envoyé à l'équipe (notez qu'un webmail fictif 
 )
 
 == L'espace administrateur
+
+=== Gérer les films et les séances
+
+Pour ajouter un film, on peut se rendre sur le site IMDB et par exemple la page des parutions : https://www.imdb.com/calendar/?ref_=nv_mv_cal
+L'application utilisant le même système d'identification des films, on peut utiliser l'ID du film dans l'URL, par example avec le film "Bad Newz"
+https://www.imdb.com/title/tt24517830/?ref_=rlm, on utilisera "tt24517830" comme identifiant du film dans notre application.
+Ce qui permettra de récupérer automatiquement le poster du film.
+
+Se rendre dans l'espace d'administration
+Cliquer sur l'onglet "Films" dans la barre de navigation.
+
+
 
 === Tableau de bord des ventes de tickets
 
