@@ -255,22 +255,51 @@ Si le scan est un échec (il y a un problème d'incohérence dans le contenu), o
 = Fonctionnalités de l'application desktop
 
 Une application desktop est disponible pour Windows et Linux (non testée sur les autres environnements).
+Elle n'est disponible que pour les employées.
+On commence par se connecter avec un compte employé :
 
+#figure(
+  image("images/desktop_login.png", width: 40%),
+  caption: [Page de connexion de l'application desktop.],
+)
 
+Après la connexion, l'utilisateur accède à une page listant les cinémas :
 
+#figure(
+  image("images/desktop_theaters.png", width: 40%),
+  caption: [Page listant les cinémas dans l'application desktop.],
+)
 
+En cliquant sur un des cinémas, l'utilisateur accède à une page listant les salles :
 
+#figure(
+  image("images/desktop_rooms.png", width: 40%),
+  caption: [Page listant les salles dans l'application desktop.],
+)
 
+En cliquant sur une des salles, l'utilisateur accède à une page listant les problèmes :
 
+#figure(
+  image("images/desktop_issues.png", width: 40%),
+  caption: [Page listant les problèmes dans l'application desktop.],
+)
 
+Il y a alors deux possibilités :
+ - Modifier un des problèmes en cliquant dessus ;
+ - Créer un nouveau problème (lié à la salle précédemant sélectionné) en cliquant sur « Nouveau problème ».
 
+Les deux écrans (création et modification) fonctionnent de la même manière :
 
+#figure(
+  image("images/desktop_edit_issue.png", width: 40%),
+  caption: [Page listant les problèmes dans l'application desktop.],
+)
 
 #pagebreak()
 
 = Outils de test <_testing_tools>
 
-Un serveur SMTP fictif est installé sur le serveur. Il possède une interface webmail rudimentaire accessible à cette adresse #link("http://mailhog.cinephoria.cloud/")[http://mailhog.cinephoria.cloud/].
+Un serveur SMTP fictif est installé sur le serveur. Il possède une interface webmail rudimentaire accessible à cette adresse #link("https://mailhog.jorani.org/")[https://mailhog.jorani.org/].
 Il liste à la fois les emails envoyés aux clients et aux adminsitrateurs du site.
 
 #figure(
