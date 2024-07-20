@@ -43,17 +43,74 @@
 
 = 1. Palette de couleurs et police de caractères
 
+La palette de couleurs des applications est la suivante :
 
 #figure(
-  image("images/github-gitflow.png", width: 80%),
-  caption: [Gitflow sur le projet Cinéphoria],
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        square(size: 40pt, fill: rgb("#228B22")),
+        square(size: 40pt, fill: rgb("#FFD700")),
+        square(size: 40pt, fill: rgb("#FF6347")),
+        square(size: 40pt, fill: rgb("#191970")),
+        square(size: 40pt, fill: rgb("#FFF8E7"))
+    ),
+    caption: "Couleurs : primary, secondary, success, danger, accent, background"
 )
+
+La police de caractères est celle du navigateur par défaut.
 
 = 2. Maquettes du projet
 
 == 2.1 Application web
 
 == 2.2 Application mobile
+
+Le parcours d'un « visiteur » (client du cinéma Cinéphoria) est le suivant :
+
+#figure(
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        image("images/wireframe_mobile_homepage.png", width: 18%),
+        image("images/wireframe_mobile_login.png", width: 18%),
+        image("images/wireframe_mobile__menu_visiteur.png", width: 18%),
+        image("images/wireframe_mobile_mes_tickets.png", width: 18%),
+        image("images/wireframe_mobile_mon_ticket.png", width: 18%)
+    ),
+    caption: "Parcours visiteur"
+)
+
+
+Le parcours d'un employé est le suivant – pour un ticket scanné avec succès :
+
+#figure(
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        image("images/wireframe_mobile_homepage.png", width: 18%),
+        image("images/wireframe_mobile_login.png", width: 18%),
+        image("images/wireframe_mobile_menu_employe.png", width: 18%),
+        image("images/wireframe_mobile_scanner_ticket.png", width: 18%),
+        image("images/wireframe_mobile_scanner_ticket_OK.png", width: 18%)
+    ),
+    caption: "Parcours employé"
+)
+
+Le parcours d'un employé est le suivant – pour un ticket scanné en erreur :
+
+#figure(
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        image("images/wireframe_mobile_homepage.png", width: 18%),
+        image("images/wireframe_mobile_login.png", width: 18%),
+        image("images/wireframe_mobile_menu_employe.png", width: 18%),
+        image("images/wireframe_mobile_scanner_ticket.png", width: 18%),
+        image("images/wireframe_mobile_scanner_ticket_KO.png", width: 18%)
+    ),
+    caption: "Parcours employé"
+)
 
 == 2.3 Application bureautique
 
@@ -64,9 +121,4 @@
 #outline(
   title: [Table des illustrations],
   target: figure.where(kind: image),
-)
-
-#outline(
-  title: [Table des tableaux],
-  target: figure.where(kind: table),
 )
