@@ -1,0 +1,72 @@
+#set document(
+    title: [Charte graphique du projet Cinéphoria],
+    author: "Benjamin BALET",
+    date: auto,
+)
+
+#set page(
+  paper: "a4",
+  header: locate(loc => {
+        if counter(page).at(loc).first() > 1 [
+            Charte graphique du projet Cinéphoria
+        ]
+    }),
+  footer: [Benjamin BALET],
+  numbering: "1",
+  number-align: right,
+)
+
+#align(center, text(17pt)[
+  *Charte graphique du projet Cinéphoria*
+])
+
+#pagebreak()
+
+#show outline.entry.where(
+  level: 1
+): it => {
+  v(12pt, weak: true)
+  strong(it)
+}
+
+#outline(
+    title: [Table des matières]
+)
+
+#pagebreak()
+
+#show par: set block(spacing: 0.65em)
+#set par(
+  first-line-indent: 1em,
+  justify: true,
+)
+
+= 1. Palette de couleurs et police de caractères
+
+
+#figure(
+  image("images/github-gitflow.png", width: 80%),
+  caption: [Gitflow sur le projet Cinéphoria],
+)
+
+= 2. Maquettes du projet
+
+== 2.1 Application web
+
+== 2.2 Application mobile
+
+== 2.3 Application bureautique
+
+#pagebreak()
+
+= Annexes
+
+#outline(
+  title: [Table des illustrations],
+  target: figure.where(kind: image),
+)
+
+#outline(
+  title: [Table des tableaux],
+  target: figure.where(kind: table),
+)
