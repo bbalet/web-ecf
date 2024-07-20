@@ -1,0 +1,147 @@
+#set document(
+    title: [Charte graphique du projet Cinéphoria],
+    author: "Benjamin BALET",
+    date: auto,
+)
+
+#set page(
+  paper: "a4",
+  header: locate(loc => {
+        if counter(page).at(loc).first() > 1 [
+            Charte graphique du projet Cinéphoria
+        ]
+    }),
+  footer: [Benjamin BALET],
+  numbering: "1",
+  number-align: right,
+)
+
+#align(center, text(17pt)[
+  *Charte graphique du projet Cinéphoria*
+])
+
+#pagebreak()
+
+#show outline.entry.where(
+  level: 1
+): it => {
+  v(12pt, weak: true)
+  strong(it)
+}
+
+#outline(
+    title: [Table des matières]
+)
+
+#pagebreak()
+
+#show par: set block(spacing: 0.65em)
+#set par(
+  first-line-indent: 1em,
+  justify: true,
+)
+
+= 1. Palette de couleurs et police de caractères
+
+La palette de couleurs des applications est la suivante :
+
+#figure(
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        square(size: 60pt, fill: rgb("#60B45A"))[\#60B45A],
+        square(size: 60pt, fill: rgb("#5A60B4"))[\#5A60B4],
+        square(size: 60pt, fill: rgb("#B45A60"))[\#B45A60],
+        square(size: 60pt, fill: rgb("#191970"))[\#191970],
+        square(size: 60pt, fill: rgb("#FFF8E7"))[\#FFF8E7]
+    ),
+    caption: "Couleurs : primary, secondary, success, danger, accent, background"
+)
+
+La police de caractères est Anek Gujarati #link("https://fonts.google.com/specimen/Anek+Gujarati")[cf. Google Fonts] :
+
+#figure(
+  image("images/charter_anek_gujarati_font.png", width: 80%),
+  caption: [Police de caractères du projet.],
+)
+
+= 2. Maquettes du projet
+
+== 2.1 Application web
+
+== 2.2 Application mobile
+
+Le parcours d'un « visiteur » (client du cinéma Cinéphoria) est le suivant :
+
+#figure(
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        image("images/wireframe_mobile_homepage.png", width: 18%),
+        image("images/wireframe_mobile_login.png", width: 18%),
+        image("images/wireframe_mobile__menu_visiteur.png", width: 18%),
+        image("images/wireframe_mobile_mes_tickets.png", width: 18%),
+        image("images/wireframe_mobile_mon_ticket.png", width: 18%)
+    ),
+    caption: "Parcours visiteur dans l'application mobile."
+)
+
+
+Le parcours d'un employé est le suivant – pour un ticket scanné avec succès :
+
+#figure(
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        image("images/wireframe_mobile_homepage.png", width: 18%),
+        image("images/wireframe_mobile_login.png", width: 18%),
+        image("images/wireframe_mobile_menu_employe.png", width: 18%),
+        image("images/wireframe_mobile_scanner_ticket.png", width: 18%),
+        image("images/wireframe_mobile_scanner_ticket_OK.png", width: 18%)
+    ),
+    caption: "Parcours employé nominal dans l'application mobile."
+)
+
+Le parcours d'un employé est le suivant – pour un ticket scanné en erreur :
+
+#figure(
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        image("images/wireframe_mobile_homepage.png", width: 18%),
+        image("images/wireframe_mobile_login.png", width: 18%),
+        image("images/wireframe_mobile_menu_employe.png", width: 18%),
+        image("images/wireframe_mobile_scanner_ticket.png", width: 18%),
+        image("images/wireframe_mobile_scanner_ticket_KO.png", width: 18%)
+    ),
+    caption: "Parcours employé non nominal dans l'application mobile."
+)
+
+== 2.3 Application bureautique
+
+L'application est reservée aux employées pour gérer et créer des problèmes liés aux salles.
+On note que l'écran de création et de modification d'un problème est identique.
+Le parcours d'un employé est le suivant :
+
+#figure(
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        image("images/wireframe_desktop_login.png", width: 18%),
+        image("images/wireframe_desktop_theaters.png", width: 18%),
+        image("images/wireframe_desktop_rooms.png", width: 18%),
+        image("images/wireframe_desktop_issues.png", width: 18%),
+        image("images/wireframe_desktop_edit_issue.png", width: 18%)
+    ),
+    caption: "Parcours employé dans l'application bureautique"
+)
+
+
+#pagebreak()
+
+= Annexes
+
+#outline(
+  title: [Table des illustrations],
+  target: figure.where(kind: image),
+)

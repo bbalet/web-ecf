@@ -56,7 +56,7 @@
                     {% for movie in movies %}
                         <tr class="clickable" 
                         data-tableManager-target="filterable" data-tableManager-key='{{ movie.imdbId|e }} {{ movie.title|e }}'
-                        data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_adminspace_movie_edit', {id: movie.id}) }}">
+                        data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_movies_edit', {id: movie.id}) }}">
                             <td>{{ movie.imdbId|e }}</td>
                             <td>{{ movie.title|e }}</td>
                         </tr>

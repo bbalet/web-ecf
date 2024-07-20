@@ -65,6 +65,12 @@ class TicketStateProvider implements ProviderInterface
             $carbon = Carbon::instance($dbTicket->getMovieSession()->getStartdate());
             $ticket->day = $carbon->dayName;
             $ticket->roomNumber = $dbTicket->getMovieSession()->getRoom()->getNumber();
+            $orderTickets = $dbTicket->getOrdertickets();
+            // List all the seats in the ticket order
+            foreach ($orderTickets->getTickets() as $ticketInOrder) {
+                $ticket->seats = $ticket->seats . $ticketInOrder->getSeat()->getNumber() . ', ';
+            }
+            $ticket->seats = rtrim($ticket->seats, ', ');
             $ticket->startDate = $dbTicket->getMovieSession()->getStartdate();
             $ticket->endDate = $dbTicket->getMovieSession()->getEnddate();
             $tickets[] = $ticket;
