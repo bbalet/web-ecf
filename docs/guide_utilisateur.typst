@@ -163,6 +163,11 @@ Le dashboard montre les ventes de tickets des 7 derniers jours classées par tit
 
 
 
+
+
+
+
+
 = Fonctionnalités de l'application mobile
 
 Une application mobile est disponible pour Android. Elle permet :
@@ -249,7 +254,9 @@ Si le scan est un échec (il y a un problème d'incohérence dans le contenu), o
 
 = Fonctionnalités de l'application desktop
 
-Une application desktop est disponible pour Windows et Linux.
+Une application desktop est disponible pour Windows et Linux (non testée sur les autres environnements).
+
+
 
 
 

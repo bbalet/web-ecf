@@ -49,16 +49,21 @@ La palette de couleurs des applications est la suivante :
     stack(
         dir: ltr,
         spacing: 2mm,
-        square(size: 40pt, fill: rgb("#228B22")),
-        square(size: 40pt, fill: rgb("#FFD700")),
-        square(size: 40pt, fill: rgb("#FF6347")),
-        square(size: 40pt, fill: rgb("#191970")),
-        square(size: 40pt, fill: rgb("#FFF8E7"))
+        square(size: 60pt, fill: rgb("#60B45A"))[\#60B45A],
+        square(size: 60pt, fill: rgb("#5A60B4"))[\#5A60B4],
+        square(size: 60pt, fill: rgb("#B45A60"))[\#B45A60],
+        square(size: 60pt, fill: rgb("#191970"))[\#191970],
+        square(size: 60pt, fill: rgb("#FFF8E7"))[\#FFF8E7]
     ),
     caption: "Couleurs : primary, secondary, success, danger, accent, background"
 )
 
-La police de caractères est celle du navigateur par défaut.
+La police de caractères est Anek Gujarati #link("https://fonts.google.com/specimen/Anek+Gujarati")[cf. Google Fonts] :
+
+#figure(
+  image("images/charter_anek_gujarati_font.png", width: 80%),
+  caption: [Police de caractères du projet.],
+)
 
 = 2. Maquettes du projet
 
@@ -78,7 +83,7 @@ Le parcours d'un « visiteur » (client du cinéma Cinéphoria) est le suivant :
         image("images/wireframe_mobile_mes_tickets.png", width: 18%),
         image("images/wireframe_mobile_mon_ticket.png", width: 18%)
     ),
-    caption: "Parcours visiteur"
+    caption: "Parcours visiteur dans l'application mobile."
 )
 
 
@@ -94,7 +99,7 @@ Le parcours d'un employé est le suivant – pour un ticket scanné avec succès
         image("images/wireframe_mobile_scanner_ticket.png", width: 18%),
         image("images/wireframe_mobile_scanner_ticket_OK.png", width: 18%)
     ),
-    caption: "Parcours employé"
+    caption: "Parcours employé nominal dans l'application mobile."
 )
 
 Le parcours d'un employé est le suivant – pour un ticket scanné en erreur :
@@ -109,10 +114,28 @@ Le parcours d'un employé est le suivant – pour un ticket scanné en erreur :
         image("images/wireframe_mobile_scanner_ticket.png", width: 18%),
         image("images/wireframe_mobile_scanner_ticket_KO.png", width: 18%)
     ),
-    caption: "Parcours employé"
+    caption: "Parcours employé non nominal dans l'application mobile."
 )
 
 == 2.3 Application bureautique
+
+L'application est reservée aux employées pour gérer et créer des problèmes liés aux salles.
+On note que l'écran de création et de modification d'un problème est identique.
+Le parcours d'un employé est le suivant :
+
+#figure(
+    stack(
+        dir: ltr,
+        spacing: 2mm,
+        image("images/wireframe_desktop_login.png", width: 18%),
+        image("images/wireframe_desktop_theaters.png", width: 18%),
+        image("images/wireframe_desktop_rooms.png", width: 18%),
+        image("images/wireframe_desktop_issues.png", width: 18%),
+        image("images/wireframe_desktop_edit_issue.png", width: 18%)
+    ),
+    caption: "Parcours employé dans l'application bureautique"
+)
+
 
 #pagebreak()
 
