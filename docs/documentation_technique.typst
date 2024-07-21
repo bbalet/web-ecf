@@ -64,31 +64,30 @@ La figure ci-dessous montre les différents composants du système Cinéphoria :
   caption: [Schéma d'architecture logicielle.],
 )
 
+Voici la description du système et de son fonctionnement :
+
 1. Un navigateur permet d'accéder à l'application web avec une connexion sécurisée. 
-    Le frontend est développé avec la bibliothèque Stimulus qui donne l'illusion d'une application SPA en navigant entre les pages.
+    Le frontend est développé avec la bibliothèque Stimulus qui donne l'illusion d'une application SPA lorsque l'on navigue entre les pages (car seulement une partie est rechargée).
     Cette application permet de faire de la réservation de tickets et de gérér les données référentielles et opérationnelles du système.
 2. Une application multiplateformes accède à l'application via une API REST (avec une connexion sécurisée).
     Un mécanisme de jetons JWT permet de transmettre l'identité de l'utlisateur entre les appels REST.
-    Cette application permet de gérer les incidents.
+    Cette application permet de gérer les incidents liées aux salles des cinémas.
 3. Une application Android accède à l'application via une API REST (avec une connexion sécurisée).
     Un mécanisme de jetons JWT permet de transmettre l'identité de l'utlisateur entre les appels REST.
-    Cette application
+    Cette application permet aux clients de voir leurs réservations (notamment les séances du jour et futures) et d'afficher le QR Code de leurs tickets.
+    Cette même application peut être utilisée par un employé afin de scanner ces tickets et de vérifier leur validité.
 4. L'application principale du système est développée pour PHP8.2+ avec le framework MVC Symfony 7.0. 
     Elle est compatible avec les principales bases de données relationnelles, car elle s'appuie sur un ORM.
     Elle s'appuie sur différentes bibliothèques PHP par ex. pour générer un QR Code, gérer les jetons JWT, ou créer une API REST avec OpenAPI.
-5. La base de données relationnelle recommandée est MariaDB. Elle stocke les données référentielles et opérationnelles.
-6. Un cache sur le système de fichier permet de réduire les appels à l'API themoviedb en stockant les affiches des films.
+5. La base de données relationnelle recommandée est MariaDB. Elle stocke les données référentielles et opérationnelles du système.
+6. Un cache sur le système de fichier du serveur web permet de réduire les appels à l'API themoviedb en stockant les affiches des films et évitant de les redemander une fois en cache.
 7. Une API REST sécurisée (avec authentification, permissions) permet aux applications tierces d'accéder à certaines fonctionnalités du système.
 8. Une base de données NoSQL (mongoDB hébergée sur le cloud) stocke les statistiques de vente de tickets.
-   Le schéma ne contient qu'une collection "Cinephoria.Booking" destinée à stocker des documents optimisés pour les timeseries.
-9.
-10.
-
-
-
-== Remarques sur le fonctionnement
-
-
+   Le schéma ne contient qu'une collection "Booking" destinée à stocker des documents contenant les réservations.
+   Cette collection est optimisés pour les requêtes de type timeseries (car nous souhaitons des statistiques dans le temps sur les ventes).
+9. Pour obtenir des informations sur les films (principalement les posters) nous nous appuyons sur une API publique tierce déjà existante.
+10. L'application web est hébergée sur un VPS. Sur lequel est installé nginx (pour les ressources statiques et en _reverse proxy_ pour les pages dynamiques).
+    Le code PHP est exécuté par un serveur PHP-FPM (sur lequel opcache est activé).
 
 
 
@@ -163,23 +162,26 @@ La sécurité est une priorité dans le développement de l'application. Les mes
 
 
 
+
+
 = Configuration de l'environnement de travail
 
 == Pour le développement web
 
-L'environnement de travail se base sur WSL et Docker. 
+L'environnement de travail se base sur Windows, WSL et Docker. 
 WSL permet d'exécuter des commandes Linux ce qui peut faciliter l'emploi d'utilitaires diffcilement disponibles sous Windows.
-Concernant Docker, nous ne basons sur le focntionnement de Symfony.
+Concernant Docker, nous nous basons sur le focntionnement de Symfony sans configuration particulière pour les _dev containers_.
 
 == Pour le développement desktop
 
 L'environnement de travail se base sur WSL et Docker pour réaliser la cross-compilation.
 Un environnement Windows est utilisé afin de tester la version win_64 du produit.
+Le projet utilise l'API déployée sur l'environnement cible (i.e. https://cinephoria.jorani.org/api/docs).
 
 == Pour le développement mobile
 
 L'environnement de travail se base sur Android Studio sans autre dépendance locale.
-Le projet utilise l'API déployée sur l'environnement cible (i.e. https://cinephoria.jorani.org/api/docs)
+Le projet utilise l'API déployée sur l'environnement cible (i.e. https://cinephoria.jorani.org/api/docs).
 
 
 
@@ -191,43 +193,45 @@ Le projet utilise l'API déployée sur l'environnement cible (i.e. https://cinep
 
 Le schéma ci-dessous est le MCD de l'application :
 
-
 #figure(
-  image("images/UCD.png", width: 80%),
+  image("images/MCD.png", width: 80%),
   caption: [Modèle Conceptuel des Données.],
 )
 
 
-
-
 == Base de données NoSQL
 
+Concenrnant la base de données NoSQL, nous avons opté pour une base de données orientée document.
+Nous avons défini la collection Booking comportant le document structuré comme dans cet exemple :
 
-```timestamp
-2024-02-24T20:46:21.227+00:00
-movieTitle
-"The Godfather"
-_id
-65da559dd187bb9ebd221cf0
-tickets
-4```
+```
+timestamp: 2024-02-24T20:46:21.227+00:00
+movieTitle: "The Godfather"
+_id: 65da559dd187bb9ebd221cf0
+tickets: 4
+```
+
+Un index est postionné sur le champ ```timestamp``` puisque les requêtes concernent des statistiques chronologiques.
 
 
 
-= Diagramme d’utilisation et de séquence
+
+
+
+= Diagramme d’utilisation et d'activité
 
 Le diagramme d'uilisation est le suivant:
 
 #figure(
-  image("images/UCD.png", width: 80%),
+  image("images/UCD.png", height: 60%),
   caption: [Use Case Diagram.],
 )
 
-Concernant les diagrammes de séquence, seul le principe de fonctionnement de la réservation est intéressant :
+Concernant les diagrammes d'activité, seul le principe de fonctionnement de la réservation est intéressant à modéliser :
 
 
 #figure(
-  image("images/UCD.png", width: 80%),
+  image("images/booking-activity-diagram.png", height: 50%),
   caption: [Diagramme de séquence de la réservation.],
 )
 
@@ -360,9 +364,4 @@ sudo mysql -u root -D app < copy-theater.sql
 #outline(
   title: [Table des illustrations],
   target: figure.where(kind: image),
-)
-
-#outline(
-  title: [Table des tableaux],
-  target: figure.where(kind: table),
-)
+) 

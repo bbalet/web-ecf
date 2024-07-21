@@ -22,7 +22,7 @@ class BookingTest extends WebTestCase
         $crawler = $this->client->request('GET', 'booking');
         $this->assertResponseIsSuccessful();
         $this->assertPageTitleContains("Réservation Cinéphoria");
-        $this->assertSelectorTextContains('h1', "Réserver une scéance");
+        $this->assertSelectorTextContains('h1', "Réserver une séance");
         $this->assertSelectorTextContains('h2', "Choisissez votre cinéma");
 
         $theaterRepository = static::getContainer()->get(TheaterRepository::class);
@@ -30,7 +30,7 @@ class BookingTest extends WebTestCase
         $crawler = $this->client->request('GET', '/booking/theaters/' . $theater->getId());
         $this->assertResponseIsSuccessful();
         $this->assertPageTitleContains("Réservation Cinéphoria");
-        $this->assertSelectorTextContains('h1', "Réserver une scéance");
+        $this->assertSelectorTextContains('h1', "Réserver une séance");
         $this->assertSelectorTextContains('h2', "Choisissez votre film");
 
         $movieSessionRepository = static::getContainer()->get(MovieSessionRepository::class);
@@ -39,8 +39,8 @@ class BookingTest extends WebTestCase
                                                     '/movies/' . $movie['id']);
         $this->assertResponseIsSuccessful();
         $this->assertPageTitleContains("Réservation Cinéphoria");
-        $this->assertSelectorTextContains('h1', "Réserver une scéance");
-        $this->assertSelectorTextContains('h2', "Choisissez votre scéance");
+        $this->assertSelectorTextContains('h1', "Réserver une séance");
+        $this->assertSelectorTextContains('h2', "Choisissez votre séance");
 
         // /booking/moviesessions/704  => we need to be logged in => check redirection
         $session = $movieSessionRepository->findSessionsForTheaterAndMovie($theater->getId(), $movie['id'])[0];
@@ -52,7 +52,7 @@ class BookingTest extends WebTestCase
         $this->client->loginUser($testUser);
         $crawler = $this->client->request('GET', '/booking/moviesessions/' . $session['movie_session_id']);
         $this->assertPageTitleContains("Réservation Cinéphoria");
-        $this->assertSelectorTextContains('h1', "Réserver une scéance");
+        $this->assertSelectorTextContains('h1', "Réserver une séance");
         $this->assertSelectorTextContains('h2', "Choisissez vos sièges");
     }
 }
