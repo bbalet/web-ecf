@@ -90,7 +90,7 @@ class BookingController extends AbstractController
         $session = $movieSessionRepository->findOneById($movieSessionId);
         $room = $session->getRoom();
         if (is_null($session)) {
-            throw $this->createNotFoundException('Scéance non trouvée');
+            throw $this->createNotFoundException('Séance non trouvée');
         }
         $sessionDetails = $movieSessionRepository->getSessionDetails($movieSessionId);
 

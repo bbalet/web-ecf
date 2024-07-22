@@ -27,8 +27,44 @@
     <div class="row">
         <div class="col-8">
             {% include 'adminspace/navs.html.twig' %}
-            <h2 class="">Gestion des salles</h2>
-            
+            <h2 class="">Gestion des salles <a title="ajouter une salle" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_room_create') }}"><i class="bi bi-plus-square-fill"></i></a></h2>
+
+
+            {% if rooms is empty %}
+            <p id="msgNoMoviesFound">Aucune salle n'existe</p>
+            {% else %}
+
+            <p>Cliquez sur une ligne pour modifier les informations d'une salle :</p>
+
+            <div data-controller="tableManager">
+
+                <div class="form-floating gx-2">
+                    <input name="txtFilter" data-tableManager-target="source" data-action="input->tableManager#filter" type="text" class="form-control" />
+                    <label for="txtFilter" class="form-label">Chercher une salle :</label>
+                </div>
+                <br />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Cinéma</th>
+                            <th>Salle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for room in rooms %}
+                        <tr class="clickable" 
+                        data-tableManager-target="filterable" data-tableManager-key='{{ room.theater.city|e }} {{ room.number|e }}'
+                        data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_room_edit', {id: room.id}) }}">
+                            <td>{{ room.theater.city|e }}</td>
+                            <td>{{ room.number|e }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
         </div>
         <div class="col-8">&nbsp;</div>
     </div>
