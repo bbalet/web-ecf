@@ -23,7 +23,9 @@ class RoomController extends AbstractController
     public function edit(int $id, RoomRepository $roomRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_EMPLOYEE')) {
+            throw $this->createAccessDeniedException();
+        }
 
         // Get the movie and throw an exception if it does not exist
         $room = $roomRepository->findOneById($id);
@@ -58,7 +60,9 @@ class RoomController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_EMPLOYEE')) {
+            throw $this->createAccessDeniedException();
+        }
 
         // Display the form to edit the movie session
         $room = new room();

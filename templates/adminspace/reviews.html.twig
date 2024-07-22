@@ -21,57 +21,56 @@
     </div>
     <div class="row">
         <div class="col-12">
-            {% if is_granted('ROLE_ADMIN') %}
-            <h1 class="">Espace d'Administration</h1>
-            {% else %}
             <h1 class="">Espace Intranet</h1>
-            {% endif %}
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-8">
             {% include 'adminspace/navs.html.twig' %}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <h2 id="titleEquipes">Gestion des films <a title="ajouter un film" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_movies_create') }}"><i class="bi bi-plus-square-fill"></i></a></h2>
-            {% if movies is empty %}
-            <p id="msgNoMoviesFound">Aucun film n'existe</p>
+            <h2 class="">Gestion des avis</h2>
+
+
+            {% if reviews is empty %}
+            <p id="msgNoReviewsFound">Aucun avis n'existe</p>
             {% else %}
-            <p>Cliquez sur une ligne pour modifier les informations d'un film :</p>
 
             <div data-controller="tableManager">
 
                 <div class="form-floating gx-2">
                     <input name="txtFilter" data-tableManager-target="source" data-action="input->tableManager#filter" type="text" class="form-control" />
-                    <label for="txtFilter" class="form-label">Chercher une séance :</label>
+                    <label for="txtFilter" class="form-label">Chercher un avis :</label>
                 </div>
                 <br />
 
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>IMDB Id</th>
-                            <th>Titre</th>
+                            <th>Film</th>
+                            <th>Avis</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {% for movie in movies %}
+                    {% for review in reviews %}
                         <tr class="clickable" 
-                        data-tableManager-target="filterable" data-tableManager-key='{{ movie.imdbId|e }} {{ movie.title|e }}'
-                        data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_movies_edit', {id: movie.id}) }}">
-                            <td>{{ movie.imdbId|e }}</td>
-                            <td><a class="btn btn-secondary" href="{{ path('app_adminspace_sessions', {movieId: movie.id}) }}">Séances</a>&nbsp;&nbsp;{{ movie.title|e }}</td>
+                        data-tableManager-target="filterable" data-tableManager-key='{{ review.movie.title|e }} {{ review.comment|e }}'>
+                            <td>
+                                {% if review.validated %}
+                                    <a title="Désapprouver l'avis" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_review_unvalidate', {id: review.id}) }}"><i class="bi bi-x-circle-fill"></i></a>
+                                {% else %}
+                                    <a title="Approuver l'avis" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_review_validate', {id: review.id}) }}"><i class="bi bi-check-circle-fill"></i></a>
+                                {% endif %}
+                                {{ review.movie.title|e }}
+                            </td>
+                            <td>{{ review.comment|e }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
             {% endif %}
-        </div>
-    </div>
-            
 
+        </div>
+        <div class="col-8">&nbsp;</div>
+    </div>
 </div>
 {% endblock %}

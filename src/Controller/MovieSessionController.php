@@ -24,7 +24,9 @@ class MovieSessionController extends AbstractController
     public function edit(int $id, MovieSessionRepository $movieSessionRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_EMPLOYEE')) {
+            throw $this->createAccessDeniedException();
+        }
 
         // Get the movie and throw an exception if it does not exist
         $moviesession = $movieSessionRepository->findOneById($id);
@@ -62,7 +64,9 @@ class MovieSessionController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_EMPLOYEE')) {
+            throw $this->createAccessDeniedException();
+        }
 
         // Display the form to edit the movie session
         $moviesession = new MovieSession();
@@ -94,7 +98,9 @@ class MovieSessionController extends AbstractController
     public function delete(int $id, MovieSessionRepository $movieSessionRepository, TicketRepository $ticketRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
         // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_EMPLOYEE')) {
+            throw $this->createAccessDeniedException();
+        }
 
         // Get the movie and throw an exception if it does not exist
         $moviesession = $movieSessionRepository->findOneById($id);
