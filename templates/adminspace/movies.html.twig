@@ -21,7 +21,11 @@
     </div>
     <div class="row">
         <div class="col-12">
+            {% if is_granted('ROLE_ADMIN') %}
             <h1 class="">Espace d'Administration</h1>
+            {% else %}
+            <h1 class="">Espace Intranet</h1>
+            {% endif %}
         </div>
     </div>
     <div class="row">
@@ -31,7 +35,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <h2 id="titleEquipes">Gestion des films</h2>
+            <h2 id="titleEquipes">Gestion des films <a title="ajouter un film" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_movies_create') }}"><i class="bi bi-plus-square-fill"></i></a></h2>
             {% if movies is empty %}
             <p id="msgNoMoviesFound">Aucun film n'existe</p>
             {% else %}
@@ -41,7 +45,7 @@
 
                 <div class="form-floating gx-2">
                     <input name="txtFilter" data-tableManager-target="source" data-action="input->tableManager#filter" type="text" class="form-control" />
-                    <label for="txtFilter" class="form-label">Chercher un film :</label>
+                    <label for="txtFilter" class="form-label">Chercher une séance :</label>
                 </div>
                 <br />
 
@@ -49,16 +53,16 @@
                     <thead>
                         <tr>
                             <th>IMDB Id</th>
-                            <th>Description</th>
+                            <th>Titre</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for movie in movies %}
                         <tr class="clickable" 
                         data-tableManager-target="filterable" data-tableManager-key='{{ movie.imdbId|e }} {{ movie.title|e }}'
-                        data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_adminspace_movie_edit', {id: movie.id}) }}">
+                        data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_movies_edit', {id: movie.id}) }}">
                             <td>{{ movie.imdbId|e }}</td>
-                            <td>{{ movie.title|e }}</td>
+                            <td><a class="btn btn-secondary" href="{{ path('app_adminspace_sessions', {movieId: movie.id}) }}">Séances</a>&nbsp;&nbsp;{{ movie.title|e }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

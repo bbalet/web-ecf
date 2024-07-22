@@ -24,7 +24,13 @@
           <li class="nav-item">
             <a class="nav-link" id="cmdAdmin" href="{{ path('app_adminspace') }}">Administration</a>
           </li>
-          {% else %}
+          {% endif %}
+          {% if is_granted('ROLE_EMPLOYEE') %}
+          <li class="nav-item">
+            <a class="nav-link" id="cmdAdmin" href="{{ path('app_adminspace') }}">Intranet</a>
+          </li>
+          {% endif %}
+          {% if is_granted('ROLE_USER') %}
           <li class="nav-item">
             <a class="nav-link" id="cmdMyProfile" href="{{ path('app_userspace') }}">Mon espace</a>
           </li>        

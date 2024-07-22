@@ -31,6 +31,6 @@
         "chartjs-plugin-datalabels": "^2.2.0",
         "imagesloaded": "^5.0.0",
         "masonry-layout": "^4.2.2",
-        "sweetalert2": "^11.10.5"
+        "sweetalert2": "^11.6.13"
     }
 }

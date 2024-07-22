@@ -21,7 +21,11 @@
     </div>
     <div class="row">
         <div class="col-12">
+            {% if is_granted('ROLE_ADMIN') %}
             <h1 class="">Espace d'Administration</h1>
+            {% else %}
+            <h1 class="">Espace Intranet</h1>
+            {% endif %}
         </div>
     </div>
     <div class="row">
@@ -29,23 +33,31 @@
             {% include 'adminspace/navs.html.twig' %}
         </div>
     </div>
+    {{ form_start(form, {action: path('app_moviesession_edit', { id:moviesession.id }) }) }}
     <div class="row">
         <div class="col-12">
-            <h2 id="titleEquipes">Modification du film {{ movie.imdbId|e }}</h2>
+            <h2 id="titleEquipes">Modification d'une séance</h2>
 
-{{ movie.imdbId|e }}<br />
-{{ movie.title|e }}<br />
-{{ movie.description|e }}<br />
-{{ movie.id }}<br />
+            {{ form_rest(form) }}
+            <input type="hidden" id="csrf_token" value="{{ token }}" />
         </div>
     </div>
+    
+    <div class="row"><div class="col-12">&nbsp;</div></div>
+    
     <div class="row">
         <div class="col-12">
-            <a class="btn btn-primary" href="#">Enregistrer</a>
-            <a class="btn btn-secondary" href="{{ path('app_adminspace_movies') }}">Annuler</a>
+            <input type="submit" class="btn btn-primary" value="Enregistrer" />
+            <a class="btn btn-secondary" href="{{ path('app_adminspace_sessions') }}">Annuler</a>
+            <button class="btn btn-danger" data-controller="confirmation" data-action="click->confirmation#alert"
+                     data-confirmation-url-param="{{ path('app_moviesession_delete', {id: moviesession.id}) }}" 
+                     data-confirmation-redirect-param="{{ path('app_adminspace_sessions') }}">Supprimer</button>
         </div>
     </div>
-            
+    {{ form_end(form) }}
 
 </div>
 {% endblock %}
+
+
+

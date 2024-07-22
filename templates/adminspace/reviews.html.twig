@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration Cinéphoria{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {% for msg in app.session.flashBag.get('success') %}
+                <div class="alert alert-success">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+                
+            {% for msg in app.session.flashBag.get('error') %}
+                <div class="alert alert-danger">
+                    {{ msg }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="">Espace Intranet</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            {% include 'adminspace/navs.html.twig' %}
+            <h2 class="">Gestion des avis</h2>
+
+
+            {% if reviews is empty %}
+            <p id="msgNoReviewsFound">Aucun avis n'existe</p>
+            {% else %}
+
+            <div data-controller="tableManager">
+
+                <div class="form-floating gx-2">
+                    <input name="txtFilter" data-tableManager-target="source" data-action="input->tableManager#filter" type="text" class="form-control" />
+                    <label for="txtFilter" class="form-label">Chercher un avis :</label>
+                </div>
+                <br />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Film</th>
+                            <th>Avis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for review in reviews %}
+                        <tr class="clickable" 
+                        data-tableManager-target="filterable" data-tableManager-key='{{ review.movie.title|e }} {{ review.comment|e }}'>
+                            <td>
+                                {% if review.validated %}
+                                    <a title="Désapprouver l'avis" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_review_unvalidate', {id: review.id}) }}"><i class="bi bi-x-circle-fill"></i></a>
+                                {% else %}
+                                    <a title="Approuver l'avis" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_review_validate', {id: review.id}) }}"><i class="bi bi-check-circle-fill"></i></a>
+                                {% endif %}
+                                {{ review.movie.title|e }}
+                            </td>
+                            <td>{{ review.comment|e }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+        </div>
+        <div class="col-8">&nbsp;</div>
+    </div>
+</div>
+{% endblock %}

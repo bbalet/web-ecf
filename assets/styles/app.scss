@@ -1,9 +1,18 @@
 // customize some Bootstrap variables
-$primary: #228B22;
-$secondary: #FFD700;
-$success: #708090;
-$danger: #FF6347;
+$primary: #60B45A;
+$secondary: #5A60B4;
+$success: #191970;
+$danger: #B45A60;
 $accent: #191970;
+
+@font-face {
+    font-family: 'AnekGujarati';
+    src: url('./fonts/AnekGujarati-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+$font-family-sans-serif: 'AnekGujarati', sans-serif;
 
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";

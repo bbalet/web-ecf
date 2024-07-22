@@ -1,9 +1,18 @@
 
 <nav class="nav nav-pills">
+  {% if is_granted('ROLE_ADMIN') %}
   <a class="nav-link{{ (currentPage=='home') ? ' active" aria-current="page' : '' }}" href="{{ path('app_adminspace') }}">Administration</a>
+  {% else %}
+  <a class="nav-link{{ (currentPage=='home') ? ' active" aria-current="page' : '' }}" href="{{ path('app_adminspace') }}">Intranet</a>
+  {% endif %}
   <a class="nav-link{{ (currentPage=='movies') ? ' active" aria-current="page' : '' }}" href="{{ path('app_adminspace_movies') }}">Films</a>
   <a class="nav-link{{ (currentPage=='sessions') ? ' active" aria-current="page' : '' }}" href="{{ path('app_adminspace_sessions') }}">Séances</a>
   <a class="nav-link{{ (currentPage=='rooms') ? ' active" aria-current="page' : '' }}" href="{{ path('app_adminspace_rooms') }}">Salles</a>
+  {% if is_granted('ROLE_EMPLOYEE') %}
+  <a class="nav-link{{ (currentPage=='reviews') ? ' active" aria-current="page' : '' }}" href="{{ path('app_adminspace_reviews') }}">Avis</a>
+  {% endif %}
+  {% if is_granted('ROLE_ADMIN') %}
   <a class="nav-link{{ (currentPage=='employees') ? ' active" aria-current="page' : '' }}" href="{{ path('app_adminspace_employees') }}">Employés</a>
   <a class="nav-link{{ (currentPage=='dashboard') ? ' active" aria-current="page' : '' }}" href="{{ path('app_adminspace_dashboard') }}">Dashboard</a>
+  {% endif %}
 </nav>

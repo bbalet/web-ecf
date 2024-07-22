@@ -20,4 +20,14 @@ class RoomRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Room::class);
     }
+
+    /**
+     * Return the list of rooms ordered by theater and number
+     *
+     * @return array
+     */
+    public function findAllOrderByTheaterAndNumber(): array
+    {
+        return $this->findBy([], ['theater' => 'ASC', 'number' => 'ASC']);
+    }
 }

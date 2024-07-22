@@ -22,6 +22,13 @@
 
 #pagebreak()
 
+#show outline.entry.where(
+  level: 1
+): it => {
+  v(12pt, weak: true)
+  strong(it)
+}
+
 #outline(
     title: [Table des matières]
 )
@@ -78,7 +85,7 @@ Il est possible de filtrer selon le cinéma, le genre ou le jour de projection p
 
 La fonctionnalité de réservation se déroule en plusieurs étapes.
 
-== Connexion à l'application
+== Connexion à l'application <_connection>
 
 Cette page vous permet de vous connecter à l'application quelque soit votre rôle.
 Si vous n'avez pas de compte, vous pouvez en créer un en cliquant sur le bouton « #link(<_registration>)[Créer un compte] ».
@@ -119,6 +126,48 @@ vous êtes redirigé vers l'écran d'accueil (notez qu'un webmail fictif est ins
   caption: [Page d'enregistrement.],
 )
 
+== Réserver une séance
+
+La réservation d'une séance nécessite d'être connecté pour réaliser la dernière étape (la réservation proprement dite).
+Si l'utilisateur n'est pas connecté au moment de cette étape, il sera redirigé vers l'écran de connexion afin de finaliser la réservation.
+
+On démarre le processus de réservation en cliquant sur « Réservation » dans la barre de menu, puis en sélectionnant un cinéma :
+
+#figure(
+  image("images/web_booking_theaters.png", width: 80%),
+  caption: [Réservation : sélection du cinéma.],
+)
+
+Dans l'écran suivant, on sélectionne le film disponible à la projection dans le cinéma :
+
+#figure(
+  image("images/web_booking_movies.png", width: 80%),
+  caption: [Réservation : sélection du film.],
+)
+
+Dans l'écran suivant, on sélectionne la séance parmi celles disponibles aujourd'hui ou dans le futur :
+
+#figure(
+  image("images/web_booking_sessions.png", width: 80%),
+  caption: [Réservation : sélection de la séance.],
+)
+
+Dans l'écran suivant, on sélectionne le ou les sièges en fonction de leur emplacement, leur disponibilité et si on est handicapé.
+Le prix est mis à jour automatiquement en fonction de la séance, de la qualité de la projection et du nombre de places.
+Si la sélection et le prix conviennent, on clique sur le bouton « Réserver » :
+
+#figure(
+  image("images/web_booking_seats.png", width: 80%),
+  caption: [Réservation : sélection du ou des sièges.],
+)
+
+La réservation est effectuée et on est redirigé vers l'espace personnel où cette réservation et les précédentes sont consultables :
+
+#figure(
+  image("images/web_booking_myspace.png", width: 80%),
+  caption: [Réservation : récapitulatif dand l'espace personnel.],
+)
+
 == Formulaire de contact
 
 Un formulaire de contact (depuis le menu, cliquer sur « Contact ») permet à un visiteur de contacter l'équipe. 
@@ -132,6 +181,18 @@ Après la saisie, un email est envoyé à l'équipe (notez qu'un webmail fictif 
 
 == L'espace administrateur
 
+=== Gérer les films et les séances
+
+Pour ajouter un film, on peut se rendre sur le site IMDB et par exemple la page des parutions : https://www.imdb.com/calendar/?ref_=nv_mv_cal
+L'application utilisant le même système d'identification des films, on peut utiliser l'ID du film dans l'URL, par example avec le film "Bad Newz"
+https://www.imdb.com/title/tt24517830/?ref_=rlm, on utilisera "tt24517830" comme identifiant du film dans notre application.
+Ce qui permettra de récupérer automatiquement le poster du film.
+
+Se rendre dans l'espace d'administration
+Cliquer sur l'onglet "Films" dans la barre de navigation.
+
+
+
 === Tableau de bord des ventes de tickets
 
 Une fois connecté avec un compte administrateur, vous pouvez cliquer sur « Dashboard » dans le sous-menu.
@@ -144,34 +205,143 @@ Le dashboard montre les ventes de tickets des 7 derniers jours classées par tit
 
 
 
+
+
+
+
+
 = Fonctionnalités de l'application mobile
 
-Une application mobile est disponible pour Android.
+Une application mobile est disponible pour Android. Elle permet :
+ - Aux clients de voir leurs tickets du jour et à venir. Et de présenter un ticket dématérialisé.
+ - Aux employés de scanner les tickets.
 
+Télécharger l'#link("https://github.com/bbalet/mobile-ecf/releases/download/v1.0.0/mon-cinephoria.apk")[APK] depuis la page de Release du projet.
+à l'ouverture, on obtient une page de menu :
 
+#figure(
+  image("images/mobile_homepage.png", width: 25%),
+  caption: [Page de menu de l'application mobile.],
+)
 
+On peut cliquer sur « se connecter » dans le menu avec un compte _visiteur_ ou _employé_ (voir #link(<_connection>)[la liste des comptes]):
 
+#figure(
+  image("images/mobile_login.png", width: 25%),
+  caption: [Page de connexion de l'application mobile.],
+)
+
+== Fonctionnalités pour le visiteur
+
+Le visiteur accède à un menu avec des fonctionnalités restreintes :
+
+#figure(
+  image("images/mobile_menu_visitor.png", width: 25%),
+  caption: [Page de menu pour le visiteur de l'application mobile.],
+)
+
+Il peut cliquer sur « mes tickets » dans le menu afin de voir la liste des tickets du jour et à venir :
+
+#figure(
+  image("images/mobile_mytickets_list.png", width: 25%),
+  caption: [Liste des tickets du jour et à venir dans l'application mobile.],
+)
+
+En cliquant sur un des éléments de la liste, il peut afficher le QR Code :
+
+#figure(
+  image("images/mobile_myticket.png", width: 25%),
+  caption: [QR Code d'un ticket dans l'application mobile.],
+)
+
+== Fonctionnalités pour l'employé
+
+L'employé accède à un menu avec des fonctionnalités restreintes :
+
+#figure(
+  image("images/mobile_menu_employee.png", width: 25%),
+  caption: [Page de menu pour l'employé de l'application mobile.],
+)
+
+Il peut accéder à la page de scan du QR code d'un ticket :
+
+#figure(
+  image("images/mobile_scan_ticket.png", width: 25%),
+  caption: [Page de scan d'un ticket dans l'application mobile.],
+)
+
+Pour scanner un ticket, on clique sur le bouton idoine et on veille à ce que la caméra soit bien alignée :
+
+#figure(
+  image("images/mobile_scan_align.png", width: 50%),
+  caption: [Scanner un ticket dans l'application mobile.],
+)
+
+Si le scan est un succès (il y a une vérification des données côté serveur), on obtient cet affichage :
+
+#figure(
+  image("images/mobile_scan_success.png", width: 25%),
+  caption: [Succès du scan du ticket dans l'application mobile.],
+)
+
+Si le scan est un échec (il y a un problème d'incohérence dans le contenu), on obtient cet affichage :
+
+#figure(
+  image("images/mobile_scan_fail.png", width: 25%),
+  caption: [Échec du scan du ticket dans l'application mobile.],
+)
 
 
 #pagebreak()
 
 = Fonctionnalités de l'application desktop
 
-Une application desktop est disponible pour Windows et Linux.
+Une application desktop est disponible pour Windows et Linux (non testée sur les autres environnements).
+Elle n'est disponible que pour les employées.
+On commence par se connecter avec un compte employé :
 
+#figure(
+  image("images/desktop_login.png", width: 40%),
+  caption: [Page de connexion de l'application desktop.],
+)
 
+Après la connexion, l'utilisateur accède à une page listant les cinémas :
 
+#figure(
+  image("images/desktop_theaters.png", width: 40%),
+  caption: [Page listant les cinémas dans l'application desktop.],
+)
 
+En cliquant sur un des cinémas, l'utilisateur accède à une page listant les salles :
 
+#figure(
+  image("images/desktop_rooms.png", width: 40%),
+  caption: [Page listant les salles dans l'application desktop.],
+)
 
+En cliquant sur une des salles, l'utilisateur accède à une page listant les problèmes :
 
+#figure(
+  image("images/desktop_issues.png", width: 40%),
+  caption: [Page listant les problèmes dans l'application desktop.],
+)
 
+Il y a alors deux possibilités :
+ - Modifier un des problèmes en cliquant dessus ;
+ - Créer un nouveau problème (lié à la salle précédemant sélectionné) en cliquant sur « Nouveau problème ».
+
+Les deux écrans (création et modification) fonctionnent de la même manière :
+
+#figure(
+  image("images/desktop_edit_issue.png", width: 40%),
+  caption: [Page listant les problèmes dans l'application desktop.],
+)
 
 #pagebreak()
 
 = Outils de test <_testing_tools>
 
-Un serveur SMTP fictif est installé sur le serveur. Il possède une interface webmail rudimentaire accessible à cette adresse #link("http://mailhog.cinephoria.cloud/")[http://mailhog.cinephoria.cloud/].
+Un serveur SMTP fictif est installé sur le serveur. Il possède une interface webmail rudimentaire accessible à cette adresse #link("https://mailhog.jorani.org/")[https://mailhog.jorani.org/].
 Il liste à la fois les emails envoyés aux clients et aux adminsitrateurs du site.
 
 #figure(
