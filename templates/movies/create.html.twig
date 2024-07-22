@@ -21,7 +21,11 @@
     </div>
     <div class="row">
         <div class="col-12">
+            {% if is_granted('ROLE_ADMIN') %}
             <h1 class="">Espace d'Administration</h1>
+            {% else %}
+            <h1 class="">Espace Intranet</h1>
+            {% endif %}
         </div>
     </div>
     <div class="row">

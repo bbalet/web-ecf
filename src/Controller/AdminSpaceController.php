@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MovieRepository;
 use App\Repository\MovieSessionRepository;
 use App\Repository\RoomRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use App\Service\MongoDbService;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
@@ -24,8 +25,9 @@ class AdminSpaceController extends AbstractController
     public function index(): Response
     {
         // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_EMPLOYEE')) {
+            throw $this->createAccessDeniedException();
+        }
 
         return $this->render('adminspace/index.html.twig', [
             'currentPage' => 'home'
@@ -41,7 +43,9 @@ class AdminSpaceController extends AbstractController
     public function movies(MovieRepository $movieRepository): Response
     {
         // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_EMPLOYEE')) {
+            throw $this->createAccessDeniedException();
+        }
 
         // Get all movies
         $movies = $movieRepository->findAllOrderByTitle();
@@ -61,7 +65,10 @@ class AdminSpaceController extends AbstractController
     public function sessions(int $movieId, MovieSessionRepository $movieSessionRepository): Response
     {
         // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_EMPLOYEE')) {
+            throw $this->createAccessDeniedException();
+        }
+
         if ($movieId === -1) {
             $sessions = $movieSessionRepository->findAll();
         } else {
@@ -84,7 +91,9 @@ class AdminSpaceController extends AbstractController
     public function rooms(RoomRepository $roomRepository): Response
     {
         // Admin needs to be authenticated to access the admin pages
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_EMPLOYEE')) {
+            throw $this->createAccessDeniedException();
+        }
 
         // Get all rooms
         $rooms = $roomRepository->findAllOrderByTheaterAndNumber();
@@ -92,6 +101,26 @@ class AdminSpaceController extends AbstractController
         return $this->render('adminspace/rooms.html.twig', [
             'currentPage' => 'rooms',
             'rooms' => $rooms
+        ]);
+    }
+
+    /**
+     * Display the list of rooms
+     *
+     * @return Response
+     */
+    #[Route('/adminspace/reviews', name: 'app_adminspace_reviews')]
+    public function reviews(ReviewRepository $reviewRepository): Response
+    {
+        // Employee needs to be authenticated to access the admin pages
+        $this->denyAccessUnlessGranted('ROLE_EMPLOYEE');
+
+        // Get all rooms
+        $reviews = $reviewRepository->findAll();
+
+        return $this->render('adminspace/reviews.html.twig', [
+            'currentPage' => 'reviews',
+            'reviews' => $reviews
         ]);
     }
 
