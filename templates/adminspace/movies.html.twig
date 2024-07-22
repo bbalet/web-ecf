@@ -31,7 +31,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <h2 id="titleEquipes">Gestion des films</h2>
+            <h2 id="titleEquipes">Gestion des films <a title="ajouter un film" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_movies_create') }}"><i class="bi bi-plus-square-fill"></i></a></h2>
             {% if movies is empty %}
             <p id="msgNoMoviesFound">Aucun film n'existe</p>
             {% else %}

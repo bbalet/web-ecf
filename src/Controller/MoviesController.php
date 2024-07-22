@@ -7,6 +7,8 @@ use App\Repository\GenreRepository;
 use App\Repository\TheaterRepository;
 use App\Repository\MovieRepository;
 use App\Repository\MovieSessionRepository;
+use App\Repository\TicketRepository;
+use App\Entity\Movie;
 use App\Form\MovieType;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -25,9 +27,11 @@ use Tmdb\Repository\FindRepository;
 use Tmdb\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Doctrine\ORM\EntityManagerInterface;
 
 class MoviesController extends AbstractController
 {
@@ -174,13 +178,13 @@ class MoviesController extends AbstractController
     }
 
     /**
-     * Display or edit a movies
+     * Display or edit a movie
      *
      * @param int $id Identifier of the movie
      * @return Response
      */
-    #[Route('/movies/{id}', name: 'app_movies_edit')]
-    public function edit(int $id, MovieRepository $movieRepository): Response
+    #[Route('/movies/{id}', name: 'app_movies_edit', requirements: ['id' => '\d+'])]
+    public function edit(int $id, MovieRepository $movieRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Admin needs to be authenticated to access the admin pages
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -194,13 +198,54 @@ class MoviesController extends AbstractController
         // Display the form to edit the movie
         $form = $this->createForm(MovieType::class, $movie);
         
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $movie = $form->getData();
+            $entityManager->flush();
+            $this->addFlash('success', 'Le film a été mis à jour');
+            return $this->redirectToRoute('app_adminspace_movies');
+        }
 
+        $tokenProvider = $this->container->get('security.csrf.token_manager');
+        $token = $tokenProvider->getToken('delete-movie')->getValue();
         return $this->render('movies/edit.html.twig', [
             'currentPage' => 'movies',
+            'token' => $token,
             'form' => $form,
             'movie' => $movie
         ]);
     }
+
+    /**
+     * Create a new movie
+     *
+     * @return Response
+     */
+    #[Route('/movies/create', name: 'app_movies_create')]
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Admin needs to be authenticated to access the admin pages
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // Display the form to edit the movie
+        $movie = new Movie();
+        $form = $this->createForm(MovieType::class, $movie);
+        
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $movie = $form->getData();
+            $entityManager->persist($movie);
+            $entityManager->flush();
+            $this->addFlash('success', 'Le film a été créé avec succès');
+            return $this->redirectToRoute('app_adminspace_movies');
+        }
+
+        return $this->render('movies/create.html.twig', [
+            'currentPage' => 'movies',
+            'form' => $form
+        ]);
+    }
+
 
     /**
      * Delete a movie from the database
@@ -208,8 +253,9 @@ class MoviesController extends AbstractController
      * @param int $id Identifier of the movie
      * @return Response
      */
-    #[Route('/movies/{id}', name: 'app_movies_delete', methods: ["DELETE"])]
-    public function delete(int $id, MovieRepository $movieRepository): Response
+    #[Route('/movies/{id}/delete', name: 'app_movies_delete', methods: ["DELETE"])]
+    public function delete(int $id, MovieRepository $movieRepository, MovieSessionRepository $movieSessionRepository,
+                            TicketRepository $ticketRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
         // Admin needs to be authenticated to access the admin pages
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -220,10 +266,36 @@ class MoviesController extends AbstractController
             throw $this->createNotFoundException('Le film n\'existe pas.');
         }
 
-        // Delete the movie
-        $movieRepository->delete($movie);
+        //Is XSRF token valid ?
+        $response = new Response();
+        $token = $request->headers->get('X-CSRF-TOKEN');
+        if (!$this->isCsrfTokenValid('delete-movie', $token)) {
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $response;
+        }
 
-        $this->addFlash('success', 'Film supprimé avec succès !');
-        return $this->redirectToRoute('app_adminspace_movies');
+        // Delete the movie and all its related entities
+        // List the movie sessions linked to the movie
+        $entityManager->beginTransaction();
+        $movieSessions = $movieSessionRepository->findByMovie($id);
+        foreach ($movieSessions as $movieSession) {
+            // List the ordered tickets linked to the movie session
+            $tickets = $ticketRepository->findByMovieSession($movieSession->getId());
+            foreach ($tickets as $ticket) {
+                $entityManager->remove($ticket);
+                $entityManager->flush();
+                // orderdetails will be automatically removed as they are linked to the ticket
+            }
+            $entityManager->flush();
+            $entityManager->remove($movieSession);
+        }
+        $entityManager->flush();
+        // movie reviews will be automatically removed as they are linked to the movie
+        $entityManager->remove($movie);
+        $entityManager->flush();
+        $entityManager->commit();
+        $this->addFlash('success', 'Le film a été supprimé avec succès');
+        $response->setStatusCode(Response::HTTP_OK);
+        return $response;
     }
 }

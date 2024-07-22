@@ -29,22 +29,18 @@
             {% include 'adminspace/navs.html.twig' %}
         </div>
     </div>
-    {{ form_start(form, {action: path('app_movies_edit', { id:movie.id }) }) }}
+    {{ form_start(form, {action: path('app_movies_create') }) }}
     <div class="row">
         <div class="col-12">
-            <h2 id="titleEquipes">Modification du film {{ movie.title|e }}</h2>
+            <h2 id="titleEquipes">Créer un nouveau film</h2>
 
             {{ form_rest(form) }}
-            <input type="hidden" id="csrf_token" value="{{ token }}" />
         </div>
     </div>
     <div class="row">
         <div class="col-12">
             <input type="submit" class="btn btn-primary" value="Enregistrer" />
             <a class="btn btn-secondary" href="{{ path('app_adminspace_movies') }}">Annuler</a>
-            <button class="btn btn-danger" data-controller="confirmation" data-action="click->confirmation#alert"
-                     data-confirmation-url-param="{{ path('app_movies_delete', {id: movie.id}) }}" 
-                     data-confirmation-redirect-param="{{ path('app_adminspace_movies') }}">Supprimer</button>
         </div>
     </div>
     {{ form_end(form) }}

@@ -19,3 +19,8 @@ document.addEventListener('chartjs:init', function (event) {
 
 require('bootstrap-icons/font/bootstrap-icons.css')
 
+// Enable tooltips everywhere
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new Tooltip(tooltipTriggerEl)
+})
