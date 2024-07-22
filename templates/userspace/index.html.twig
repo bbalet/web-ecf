@@ -24,31 +24,40 @@
             <h1 class="">Mon espace personnel</h1>
         </div>
     </div>
-    <div class="row">
-        <div class="col-8">
-            <h2 class="">Mes commandes</h2>
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th>Date de commande</th>
-                        <th>Film</th>
-                        <th>Tickets</th>
-                        <th>Montant</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in orders %}
-                    <tr>
-                        <td>{{ order.purchaseDate|date('d/m/Y') }}</td>
-                        <td>{{ order.title }}</td>
-                        <td>{{ order.tickets }}</td>
-                        <td>{{ order.total }} €</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div data-controller="review">
+        <div class="row">
+            <div class="col-8">
+                <h2 class="">Mes commandes</h2>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Date de commande</th>
+                            <th>Date de séance</th>
+                            <th>Film</th>
+                            <th>Tickets</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ order.purchaseDate|date('d/m/Y') }}</td>
+                            <td>{{ order.startdate|date('d/m/Y') }}</td>
+                            <td>
+                                {% if order.startdate | date("U") < "now" | date("U") %}
+                                <i class="bi bi-pencil-square clickable" data-bs-toggle="tooltip" title="Noter le film" data-action="click->review#rate" data-review-url-param="{{ path('app_review_rate', { id: order.movieId }) }}"></i></a>
+                                {% endif %}
+                                {{ order.title }}
+                            </td>
+                            <td>{{ order.tickets }}</td>
+                            <td>{{ order.total }} €</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-8">&nbsp;</div>
         </div>
-        <div class="col-8">&nbsp;</div>
     </div>
 </div>
 {% endblock %}

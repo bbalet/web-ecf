@@ -58,6 +58,7 @@ class MovieRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('review')
             ->select('AVG(review.rating) as average')
             ->andWhere('review.movie_id = :id')
+            ->andWhere('review.validated is true')
             ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();
