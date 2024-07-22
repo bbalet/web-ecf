@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MovieRepository;
 use App\Repository\MovieSessionRepository;
 use App\Repository\RoomRepository;
+use App\Repository\UserRepository;
 use App\Service\MongoDbService;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
@@ -100,17 +101,16 @@ class AdminSpaceController extends AbstractController
      * @return Response
      */
     #[Route('/adminspace/employees', name: 'app_adminspace_employees')]
-    public function employees(): Response
+    public function employees(UserRepository $userRepository): Response
     {
         // Admin needs to be authenticated to access the admin pages
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        /** @var User */
-        $user = $this->getUser();
 
-        
+        $employees = $userRepository->findByRole('ROLE_EMPLOYEE');
 
         return $this->render('adminspace/employees.html.twig', [
-            'currentPage' => 'employees'
+            'currentPage' => 'employees',
+            'employees' => $employees
         ]);
     }
 

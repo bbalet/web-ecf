@@ -27,8 +27,44 @@
     <div class="row">
         <div class="col-8">
             {% include 'adminspace/navs.html.twig' %}
-            <h2 class="">Gestion des employés</h2>
+            <h2 class="">Gestion des employés <a title="ajouter un employé" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_employees_create') }}"><i class="bi bi-plus-square-fill"></i></a></h2>
             
+            {% if employees is empty %}
+            <p id="msgNoEmployeesFound">Aucun employé n'existe</p>
+            {% else %}
+            <p>Cliquez sur une ligne pour modifier les informations d'un employé :</p>
+
+            <div data-controller="tableManager">
+
+                <div class="form-floating gx-2">
+                    <input name="txtFilter" data-tableManager-target="source" data-action="input->tableManager#filter" type="text" class="form-control" />
+                    <label for="txtFilter" class="form-label">Chercher une employé :</label>
+                </div>
+                <br />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email (login)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for employee in employees %}
+                        <tr class="clickable" 
+                        data-tableManager-target="filterable" data-tableManager-key='{{ employee.lastname|e }} {{ employee.firstname|e }} {{ employee.email|e }}'
+                        data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_employees_edit', {id: employee.id}) }}">
+                            <td>{{ employee.lastname|e }}</td>
+                            <td>{{ employee.firstname|e }}</td>
+                            <td>{{ employee.email|e }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
         </div>
         <div class="col-8">&nbsp;</div>
     </div>
