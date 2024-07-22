@@ -49,7 +49,7 @@
                     <thead>
                         <tr>
                             <th>IMDB Id</th>
-                            <th>Description</th>
+                            <th>Titre</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,7 +58,7 @@
                         data-tableManager-target="filterable" data-tableManager-key='{{ movie.imdbId|e }} {{ movie.title|e }}'
                         data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_movies_edit', {id: movie.id}) }}">
                             <td>{{ movie.imdbId|e }}</td>
-                            <td>{{ movie.title|e }}</td>
+                            <td><a class="btn btn-secondary" href="{{ path('app_adminspace_sessions', {movieId: movie.id}) }}">Séances</a>&nbsp;&nbsp;{{ movie.title|e }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

@@ -27,7 +27,55 @@
     <div class="row">
         <div class="col-8">
             {% include 'adminspace/navs.html.twig' %}
-            <h2 class="">Gestion des séances</h2>
+            <h2 class="">Gestion des séances  <a title="ajouter une séance" data-bs-toggle="tooltip" data-bs-placement="bottom" href="{{ path('app_moviesession_create') }}"><i class="bi bi-plus-square-fill"></i></a></h2>
+
+            {% if sessions is empty %}
+            <p id="msgNoMoviesFound">Aucune séance n'existe</p>
+            {% else %}
+            {% if movieId != -1 %}
+            <a class="btn btn-secondary" href="{{ path('app_adminspace_sessions') }}">Supprimer le filtre en cours</a>
+            <br /><br />
+            {% endif %}
+
+            <p>Cliquez sur une ligne pour modifier les informations d'une séance :</p>
+
+            <div data-controller="tableManager">
+
+                <div class="form-floating gx-2">
+                    <input name="txtFilter" data-tableManager-target="source" data-action="input->tableManager#filter" type="text" class="form-control" />
+                    <label for="txtFilter" class="form-label">Chercher un film :</label>
+                </div>
+                <br />
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Cinéma</th>
+                            <th>Salle</th>
+                            <th>Film</th>
+                            <th>Qualité</th>
+                            <th>Début</th>
+                            <th>Fin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for session in sessions %}
+                        <tr class="clickable" 
+                        data-tableManager-target="filterable" data-tableManager-key='{{ session.room.theater.city|e }} {{ session.room.number|e }} {{ session.movie.title|e }} {{ session.room.quality.name|e }} {{ session.startdate|date("j F Y H:i") }}'
+                        data-action="click->tableManager#show" data-tableManager-url-param="{{ path('app_moviesession_edit', {id: session.id}) }}">
+                            <td>{{ session.room.theater.city|e }}</td>
+                            <td>{{ session.room.number|e }}</td>
+                            <td>{{ session.movie.title|e }}</td>
+                            <td>{{ session.room.quality.name|e }}</td>
+                            <td>{{ session.startdate|date("j F Y - H:i") }}</td>
+                            <td>{{ session.enddate|date("H:i") }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
 
         </div>
         <div class="col-8">&nbsp;</div>
