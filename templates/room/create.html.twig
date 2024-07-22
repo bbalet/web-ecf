@@ -29,10 +29,10 @@
             {% include 'adminspace/navs.html.twig' %}
         </div>
     </div>
-    {{ form_start(form, {action: path('app_moviesession_create') }) }}
+    {{ form_start(form, {action: path('app_room_create') }) }}
     <div class="row">
         <div class="col-12">
-            <h2 id="titleEquipes">Création d'une séance</h2>
+            <h2 id="titleEquipes">Création d'une salle</h2>
 
             {{ form_rest(form) }}
         </div>
@@ -43,7 +43,7 @@
     <div class="row">
         <div class="col-12">
             <input type="submit" class="btn btn-primary" value="Enregistrer" />
-            <a class="btn btn-secondary" href="{{ path('app_adminspace_sessions') }}">Annuler</a>
+            <a class="btn btn-secondary" href="{{ path('app_adminspace_rooms') }}">Annuler</a>
         </div>
     </div>
     {{ form_end(form) }}

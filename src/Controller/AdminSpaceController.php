@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MovieRepository;
 use App\Repository\MovieSessionRepository;
+use App\Repository\RoomRepository;
 use App\Service\MongoDbService;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
@@ -79,14 +80,17 @@ class AdminSpaceController extends AbstractController
      * @return Response
      */
     #[Route('/adminspace/rooms', name: 'app_adminspace_rooms')]
-    public function rooms(): Response
+    public function rooms(RoomRepository $roomRepository): Response
     {
         // Admin needs to be authenticated to access the admin pages
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        // Get all rooms
+        $rooms = $roomRepository->findAllOrderByTheaterAndNumber();
 
         return $this->render('adminspace/rooms.html.twig', [
-            'currentPage' => 'rooms'
+            'currentPage' => 'rooms',
+            'rooms' => $rooms
         ]);
     }
 
