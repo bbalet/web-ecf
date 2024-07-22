@@ -21,20 +21,33 @@
     </div>
     <div class="row">
         <div class="col-12">
+            {% if is_granted('ROLE_ADMIN') %}
             <h1 class="">Espace d'Administration</h1>
+            {% else %}
+            <h1 class="">Espace Intranet</h1>
+            {% endif %}
         </div>
     </div>
     <div class="row">
         <div class="col-8">
             {% include 'adminspace/navs.html.twig' %}
-            <h2 class="">Espace d'Administration</h2>
-            <p>L'espace Administration vous permet de gérer l'application :</p>
+            {% if is_granted('ROLE_ADMIN') %}
+            <h2 class="">Administration</h1>
+            {% else %}
+            <h2 class="">Intranet</h1>
+            {% endif %}
+            <p>Cet espace vous permet de gérer l'application :</p>
             <ul>
                 <li>Les films</li>
                 <li>Les salles</li>
                 <li>Les séances</li>
+                {% if is_granted('ROLE_EMPLOYEE') %}
+                <li>Les avis sur les films</li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
                 <li>Les employés</li>
                 <li>Le tableau de bord des ventes</li>
+                {% endif %}
             </ul>
         </div>
         <div class="col-8">&nbsp;</div>

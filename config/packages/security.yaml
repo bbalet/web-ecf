@@ -49,15 +49,10 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/$, roles: PUBLIC_ACCESS }
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/intranet, roles: ROLE_EMPLOYEE }
+        - { path: ^/adminspace, roles: [ROLE_ADMIN, ROLE_EMPLOYEE] }
         - { path: ^/userspace, roles: ROLE_USER }
         - { path: ^/docs, roles: PUBLIC_ACCESS }
         - { path: ^/auth, roles: PUBLIC_ACCESS }
-
-    role_hierarchy:
-        ROLE_ADMIN: ROLE_EMPLOYEE
-        ROLE_EMPLOYEE: ROLE_USER
 
 when@test:
     security:
