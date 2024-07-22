@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\MovieRepository;
+use App\Repository\MovieSessionRepository;
+use App\Repository\RoomRepository;
+use App\Repository\UserRepository;
 use App\Service\MongoDbService;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
@@ -54,15 +57,21 @@ class AdminSpaceController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/adminspace/sessions', name: 'app_adminspace_sessions')]
-    public function sessions(): Response
+    #[Route('/adminspace/sessions/{movieId}', name: 'app_adminspace_sessions', defaults: ['movieId' => -1])]
+    public function sessions(int $movieId, MovieSessionRepository $movieSessionRepository): Response
     {
         // Admin needs to be authenticated to access the admin pages
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
+        if ($movieId === -1) {
+            $sessions = $movieSessionRepository->findAll();
+        } else {
+            $sessions = $movieSessionRepository->findBy(['movie' => $movieId]);
+        }
 
         return $this->render('adminspace/sessions.html.twig', [
-            'currentPage' => 'sessions'
+            'currentPage' => 'sessions',
+            'movieId' => $movieId,
+            'sessions' => $sessions
         ]);
     }
 
@@ -72,14 +81,17 @@ class AdminSpaceController extends AbstractController
      * @return Response
      */
     #[Route('/adminspace/rooms', name: 'app_adminspace_rooms')]
-    public function rooms(): Response
+    public function rooms(RoomRepository $roomRepository): Response
     {
         // Admin needs to be authenticated to access the admin pages
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        // Get all rooms
+        $rooms = $roomRepository->findAllOrderByTheaterAndNumber();
 
         return $this->render('adminspace/rooms.html.twig', [
-            'currentPage' => 'rooms'
+            'currentPage' => 'rooms',
+            'rooms' => $rooms
         ]);
     }
 
@@ -89,23 +101,22 @@ class AdminSpaceController extends AbstractController
      * @return Response
      */
     #[Route('/adminspace/employees', name: 'app_adminspace_employees')]
-    public function employees(): Response
+    public function employees(UserRepository $userRepository): Response
     {
         // Admin needs to be authenticated to access the admin pages
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        /** @var User */
-        $user = $this->getUser();
 
-        // Get all orders for the user
+        $employees = $userRepository->findByRole('ROLE_EMPLOYEE');
 
         return $this->render('adminspace/employees.html.twig', [
-            'currentPage' => 'employees'
+            'currentPage' => 'employees',
+            'employees' => $employees
         ]);
     }
 
     /**
-     * Display the dashboard space
-     *
+     * Display the dashboard of the quantity of tickets sold by movie
+     * this is a bar chart built from a NoSQL database
      * @return Response
      */
     #[Route('/adminspace/dashboard', name: 'app_adminspace_dashboard')]

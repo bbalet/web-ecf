@@ -126,6 +126,48 @@ vous êtes redirigé vers l'écran d'accueil (notez qu'un webmail fictif est ins
   caption: [Page d'enregistrement.],
 )
 
+== Réserver une séance
+
+La réservation d'une séance nécessite d'être connecté pour réaliser la dernière étape (la réservation proprement dite).
+Si l'utilisateur n'est pas connecté au moment de cette étape, il sera redirigé vers l'écran de connexion afin de finaliser la réservation.
+
+On démarre le processus de réservation en cliquant sur « Réservation » dans la barre de menu, puis en sélectionnant un cinéma :
+
+#figure(
+  image("images/web_booking_theaters.png", width: 80%),
+  caption: [Réservation : sélection du cinéma.],
+)
+
+Dans l'écran suivant, on sélectionne le film disponible à la projection dans le cinéma :
+
+#figure(
+  image("images/web_booking_movies.png", width: 80%),
+  caption: [Réservation : sélection du film.],
+)
+
+Dans l'écran suivant, on sélectionne la séance parmi celles disponibles aujourd'hui ou dans le futur :
+
+#figure(
+  image("images/web_booking_sessions.png", width: 80%),
+  caption: [Réservation : sélection de la séance.],
+)
+
+Dans l'écran suivant, on sélectionne le ou les sièges en fonction de leur emplacement, leur disponibilité et si on est handicapé.
+Le prix est mis à jour automatiquement en fonction de la séance, de la qualité de la projection et du nombre de places.
+Si la sélection et le prix conviennent, on clique sur le bouton « Réserver » :
+
+#figure(
+  image("images/web_booking_seats.png", width: 80%),
+  caption: [Réservation : sélection du ou des sièges.],
+)
+
+La réservation est effectuée et on est redirigé vers l'espace personnel où cette réservation et les précédentes sont consultables :
+
+#figure(
+  image("images/web_booking_myspace.png", width: 80%),
+  caption: [Réservation : récapitulatif dand l'espace personnel.],
+)
+
 == Formulaire de contact
 
 Un formulaire de contact (depuis le menu, cliquer sur « Contact ») permet à un visiteur de contacter l'équipe. 

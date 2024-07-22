@@ -69,6 +69,43 @@ La police de caractères est Anek Gujarati #link("https://fonts.google.com/speci
 
 == 2.1 Application web
 
+Le parcours d'un visiteur souhaitant effectuer une réservation est le suivant :
+
+Choix du cinéma :
+
+#figure(
+  image("images/wireframe_web_booking_theaters.png", width: 80%),
+  caption: [Réservation : Choix du cinéma.],
+)
+
+Choix du film :
+
+#figure(
+  image("images/wireframe_web_booking_movies.png", width: 80%),
+  caption: [Réservation : choix du film .],
+)
+
+Choix de la séance :
+
+#figure(
+  image("images/wireframe_web_booking_sessions.png", width: 80%),
+  caption: [Réservation : choix de la séance.],
+)
+
+Choix du ou des sièges :
+
+#figure(
+  image("images/wireframe_web_booking_seats.png", width: 80%),
+  caption: [Réservation : choix du ou des sièges.],
+)
+
+Voir les tickets réservés dans l'espace personnel :
+
+#figure(
+  image("images/wireframe_web_booking_userspace.png", width: 80%),
+  caption: [Réservation : espace personnel.],
+)
+
 == 2.2 Application mobile
 
 Le parcours d'un « visiteur » (client du cinéma Cinéphoria) est le suivant :
