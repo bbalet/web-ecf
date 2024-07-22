@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\OrderTicketsRepository;
+use App\Repository\ReviewRepository;
+use App\Repository\MovieRepository;
 
 class UserSpaceController extends AbstractController
 {
